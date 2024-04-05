@@ -1,6 +1,7 @@
 <template>
   <div id="login">
     <form v-on:submit.prevent="login">
+     <h1>WeWatchWhat</h1>
       <h1 >Please Sign In</h1>
       <div role="alert" v-if="invalidCredentials">
         Invalid username and password!
@@ -17,6 +18,7 @@
         <input type="password" id="password" v-model="user.password" required />
       </div>
       <button type="submit">Sign in</button>
+      <button type="cancel">Cancel</button>
       <p>
       <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
     </form>

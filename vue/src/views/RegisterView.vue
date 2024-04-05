@@ -1,10 +1,15 @@
 <template>
   <div id="register" class="text-center">
     <form v-on:submit.prevent="register">
+      <h1>WeWatchWhat</h1>
       <h1>Create Account</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
+      <div class="form-input-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" v-model="user.name" required autofocus />
+      </div>      
       <div class="form-input-group">
         <label for="username">Username</label>
         <input type="text" id="username" v-model="user.username" required autofocus />
@@ -17,7 +22,28 @@
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
+      <div class="form-input-group">
+        <label for="email">Email</label>
+        <input type="text" id="email" v-model="user.email" required autofocus />
+      </div>
+      <div class="form-input-group">
+        <label for="birthday">Birthday</label>
+        <input type="datetime-local" id="datetime-local" v-model="user.birthday" required autofocus />
+      </div>
+      <div class="form-input-group">
+        <label for="genres">Genres</label>
+        <select width=300 style="width: 350px" 
+                size="8" multiple>
+            <option value='thriller'>Thriller</option>
+            <option value='comedy'>Comedy</option>
+            <option value='science-fiction'>Science Fiction</option>
+            <option value='horror'>Horror</option>
+            <option value='romance'>Romance</option>
+        </select>
+      </div>
+
       <button type="submit">Create Account</button>
+      <button type="cancel">Cancel</button>
       <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
   </div>
