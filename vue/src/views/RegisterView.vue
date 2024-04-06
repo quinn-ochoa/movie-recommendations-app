@@ -1,50 +1,76 @@
 <template>
-  <div id="register" class="text-center">
-    <form v-on:submit.prevent="register">
+  <div id="register" class="text-center">   
+      <img alt="Glasses logo" src="../assets/logo.png">   
       <h1>WeWatchWhat</h1>
-      <h1>Create Account</h1>
+      <h2>Create an account</h2>
+    <form v-on:submit.prevent="register">
+
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
+      <section id="all-entries">
+      <section id="left-entries">  
       <div class="form-input-group">
+        <!-- <label for="username">Username</label> -->
+        <input type="text" id="username" v-model="user.username" placeholder="Username" required autofocus />
+      </div>
+      <div class="form-input-group">
+        <!-- <label for="password">Password</label> -->
+        <input type="password" id="password" v-model="user.password" placeholder="Password"  required />
+      </div>
+      <div class="form-input-group">
+        <!-- <label for="confirmPassword">Confirm Password</label> -->
+        <input type="password" id="confirm-password" v-model="user.confirmPassword" placeholder="Confirm Password" required />
+      </div>
+      </section>
+
+      <!-- <section id="right-entries">
+        <div class="form-input-group">
         <label for="name">Name</label>
-        <input type="text" id="name" v-model="user.name" required autofocus />
-      </div>      
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <div class="form-input-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
-      </div>
+        <input type="text" id="name" v-model="user.name" placeholder="Name" required autofocus />
+      </div>    
       <div class="form-input-group">
         <label for="email">Email</label>
-        <input type="text" id="email" v-model="user.email" required autofocus />
+        <input type="text" id="email" v-model="user.email" placeholder="Email" required autofocus />
       </div>
       <div class="form-input-group">
         <label for="birthday">Birthday</label>
-        <input type="datetime-local" id="datetime-local" v-model="user.birthday" required autofocus />
+        <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" placeholder="Birthday" v-model="user.birthday" required autofocus />
       </div>
-      <div class="form-input-group">
-        <label for="genres">Genres</label>
-        <select width=300 style="width: 350px" 
-                size="8" multiple>
-            <option value='thriller'>Thriller</option>
-            <option value='comedy'>Comedy</option>
-            <option value='science-fiction'>Science Fiction</option>
-            <option value='horror'>Horror</option>
-            <option value='romance'>Romance</option>
-        </select>
-      </div>
+    </section> -->
 
-      <button type="submit">Create Account</button>
+    <fieldset>
+    <legend>Choose your genres</legend>
+    <div>
+    <input type="checkbox" id="thriller" name="genre" value="thriller" />
+    <label for="thriller">Thriller</label>
+    </div>
+    <div>
+    <input type="checkbox" id="comedy" name="genre" value="comedy" />
+    <label for="comedy">Comedy</label>
+    </div>
+    <div>
+    <input type="checkbox" id="science-fiction" name="genre" value="science-fiction" />
+    <label for="science-fiction">Science Fiction</label>
+    </div>
+    <div>
+    <input type="checkbox" id="horror" name="genre" value="horror" />
+    <label for="horror">Horror</label>
+    </div>
+    <div>
+    <input type="checkbox" id="romance" name="genre" value="romance" />
+    <label for="romance">Romance</label>
+    </div>
+    </fieldset>
+  </section>
+  
+    <section id="buttons-section">
+      <button type="submit">Sign up</button>
       <button type="cancel">Cancel</button>
       <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
+    </section>
+
+      
     </form>
   </div>
 </template>
@@ -99,10 +125,90 @@ export default {
 </script>
 
 <style scoped>
+
 .form-input-group {
   margin-bottom: 1rem;
+
 }
 label {
   margin-right: 0.5rem;
 }
+
+h1 { 
+  text-align: center;
+
+}
+
+h2 {
+  text-align: center;
+  font-size: medium;
+
+}
+#register {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fff3bf;
+}
+
+#left-entries {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+/* #right-entries {
+  display: flex;
+  flex-direction: column;
+
+} */
+
+#all-entries {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  
+  margin-bottom: 20px;
+}
+
+
+
+#buttons-section {
+  text-align: center;
+
+}
+
+button {
+  background-color: #0c0077;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+
+}
+
+fieldset {
+  width: 20%;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100px;
+}
+
+#register :first-child:img {
+text-align: center;
+}
+
+#left-entries :first-child{
+  border-radius:10px;
+  border: none;
+  height: 40px;
+  text-align: center;
+ 
+
+}
+
 </style>
