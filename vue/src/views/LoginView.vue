@@ -91,4 +91,15 @@ label {
   margin-right: 0.5rem;
 }
 
+button {
+  background-color: #012f6d;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+
+}
+
 </style>

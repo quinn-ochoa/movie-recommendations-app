@@ -1,6 +1,5 @@
 <!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
-
   <div class="container">
     <div class="image">
       <img v-if="filteredMovies.length == 0 || filteredMovies.length == movies.length " src="../../src/assets/movie_collage.jpg" alt="Movie Poster Collage"/>
