@@ -2,24 +2,25 @@
   <div class="container">
       <div id="login">
         <form v-on:submit.prevent="login">
-          <h1><img alt ="Glasses logo" src="../assets/logo.png"></h1>
-        <h1>WeWatchWhat</h1>
-          <div role="alert" v-if="invalidCredentials">
-            Invalid username and password!
-          </div>
-          <div role="alert" v-if="this.$route.query.registration">
-            Thank you for registering, please sign in.
-          </div>
-          <div class="form-input-group">
-            <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
-          </div>
-          <div class="form-input-group">
-            <input type="password" id="password" placeholder="Password" v-model="user.password" required />
-          </div>
-          <button type="submit">Sign in</button>
-          <button type="cancel">Cancel</button>
-          <p>
-          <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
+          <img alt="Glasses logo" src="../assets/logo.png">  
+          <h1>WeWatchWhat</h1>
+            <div role="alert" v-if="invalidCredentials">
+              Invalid username and password!
+            </div>
+            <div role="alert" v-if="this.$route.query.registration">
+              Thank you for registering, please sign in.
+            </div>
+            <div class="form-input-group">
+              <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
+            </div>
+            <div class="form-input-group">
+              <input type="password" id="password" placeholder="Password" v-model="user.password" required />
+            </div>
+            <button type="submit">Sign in</button>
+            <button type="cancel">Cancel</button>
+            <p>
+            <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
+         
         </form>
       </div>
   </div>
