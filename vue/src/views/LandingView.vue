@@ -1,5 +1,4 @@
 <template>
-
   <div class="container">
     <div class="image">
       <img src="../../src/assets/movie_collage.jpg" alt="Movie Poster Collage"/>

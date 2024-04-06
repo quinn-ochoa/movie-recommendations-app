@@ -41,26 +41,84 @@
 
     <fieldset>
     <legend>Choose your genres</legend>
+    <section>
     <div>
-    <input type="checkbox" id="thriller" name="genre" value="thriller" />
-    <label for="thriller">Thriller</label>
+    <input type="checkbox" id="action" name="genre" value="action" />
+    <label for="action">Action</label>
+    </div>
+    <div>
+    <input type="checkbox" id="adventure" name="genre" value="adventure" />
+    <label for="adventure">Adventure</label>
+    </div>
+    <div>
+    <input type="checkbox" id="animation" name="genre" value="animation" />
+    <label for="animation">Animation</label>
     </div>
     <div>
     <input type="checkbox" id="comedy" name="genre" value="comedy" />
     <label for="comedy">Comedy</label>
     </div>
     <div>
-    <input type="checkbox" id="science-fiction" name="genre" value="science-fiction" />
-    <label for="science-fiction">Science Fiction</label>
+    <input type="checkbox" id="crime" name="genre" value="crime" />
+    <label for="crime">Crime</label>
+    </div>
+    <div>
+    <input type="checkbox" id="documentary" name="genre" value="documentary" />
+    <label for="documentary">Documentary</label>
+    </div>
+    </section>
+    <section>
+    <div>
+    <input type="checkbox" id="drama" name="genre" value="drama" />
+    <label for="drama">Drama</label>
+    </div>
+    <div>
+    <input type="checkbox" id="family" name="genre" value="family" />
+    <label for="family">Family</label>
+    </div>
+    <div>
+    <input type="checkbox" id="history" name="genre" value="history" />
+    <label for="history">History</label>
     </div>
     <div>
     <input type="checkbox" id="horror" name="genre" value="horror" />
     <label for="horror">Horror</label>
     </div>
     <div>
+    <input type="checkbox" id="music" name="genre" value="music" />
+    <label for="music">Music</label>
+    </div>
+    <div>
+    <input type="checkbox" id="mystery" name="genre" value="mystery" />
+    <label for="mystery">Mystery</label>
+    </div>
+    </section>
+    <section>
+    <div>
     <input type="checkbox" id="romance" name="genre" value="romance" />
     <label for="romance">Romance</label>
     </div>
+    <div>
+    <input type="checkbox" id="science-fiction" name="genre" value="science-fiction" />
+    <label for="science-fiction">Science Fiction</label>
+    </div>
+    <div>
+    <input type="checkbox" id="tv-movie" name="genre" value="tv-movie" />
+    <label for="tv-movie">TV Movie</label>
+    </div>
+    <div>
+    <input type="checkbox" id="thriller" name="genre" value="thriller" />
+    <label for="thriller">Thriller</label>
+    </div>
+    <div>
+    <input type="checkbox" id="war" name="genre" value="war" />
+    <label for="war">War</label>
+    </div>
+    <div>
+    <input type="checkbox" id="western" name="genre" value="western" />
+    <label for="western">Western</label>
+    </div>
+  </section>
     </fieldset>
   </section>
   
@@ -151,7 +209,8 @@ h2 {
 
 #left-entries {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 10px;
   
 }
 
@@ -163,9 +222,12 @@ h2 {
 
 #all-entries {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: 20px;
-  
+  gap: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -177,7 +239,7 @@ h2 {
 }
 
 button {
-  background-color: #0c0077;
+  background-color: #012f6d;
   color: white;
   padding: 14px 20px;
   margin: 8px;
@@ -188,7 +250,10 @@ button {
 }
 
 fieldset {
-  width: 20%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 40%;
+  justify-content: space-around;
 }
 
 img {
@@ -210,5 +275,13 @@ text-align: center;
  
 
 }
+
+ input[type="checkbox"] {
+  margin-right: 5px;
+
+}
+
+
+
 
 </style>
