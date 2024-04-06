@@ -6,7 +6,7 @@
         <p>Output:  </p>
         <p>{{ movie.title }}</p>
         <p>{{ movie.genre_ids }}</p>
-        <img class="poster" :src ="'../../src/assets/test' + movie.poster_path"/>
+        <img class="poster" src ="'../../src/assets/test' + movie.poster_path"/>
         <br/>
     </div>
 </template>
