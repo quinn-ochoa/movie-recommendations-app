@@ -1,10 +1,17 @@
 package com.techelevator.services;
 
+import com.techelevator.exception.DaoException;
+import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 public class TMDBService {
     //properties
@@ -34,7 +41,40 @@ public class TMDBService {
 
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No movies found for the given search term.");
 
-        } return movieApiResponse;
+        } movieApiResponse = addMovieNameToResponse(movieApiResponse);
+
+        return movieApiResponse;
+
+    }
+
+    private MovieApiResponse addMovieNameToResponse(MovieApiResponse movieApiResponse) {
+        //TODO Start Here
+        String sql = "SELECT name FROM genres WHERE id = ?;";
+        String currentSelectedGenreName;
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+
+        for (Movie movie : movieApiResponse.getResults()) {
+
+            for (Integer genre_id : movie.getGenre_ids()) {
+
+                try{
+
+                    currentSelectedGenreName = jdbcTemplate.queryForObject(sql, String.class, genre_id);
+                    movie.getGenre_names().add(currentSelectedGenreName);
+
+                } catch (CannotGetJdbcConnectionException e){
+
+                    throw new DaoException("Unable to connect to server or database", e);
+
+                } catch (DataIntegrityViolationException e){
+
+                    throw new DaoException("Data integrity violation", e);
+
+                }
+
+            }
+
+        } return null;
 
     }
 
