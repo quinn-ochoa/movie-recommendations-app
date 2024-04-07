@@ -1,19 +1,22 @@
 <template>
-    <div class="movie"
+    <div class="movie-card"
         v-bind:key="movie.id"
     >
         <br/>
         <p>Output:  </p>
         <p>{{ movie.title }}</p>
-        <p>{{ movie.genre_ids }}</p>
-        <img class="poster" src ="'../../src/assets/test' + movie.poster_path"/>
+        <p>{{ movie.genre_id }}</p>
+        <!-- <img class="poster" :src ="'../../src/assets/test' + movie.poster_path"/> -->
         <br/>
     </div>
 </template>
 
 <script>
     export default{
-        props:['movie']
+        name:'movie-card',
+        props:{
+            movie: Object
+        }
     }
 </script>
 
