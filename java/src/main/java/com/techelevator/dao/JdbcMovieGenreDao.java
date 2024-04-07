@@ -17,7 +17,7 @@ public class JdbcMovieGenreDao implements MovieGenreDao{
     }
     @Override
     public void updateMovieGenreAssociation(List<Integer> genreIds, int movieId) {
-        //TODO needs tested once database is up to date
+
         String sql = "INSERT INTO movies_genres (movie_id, genre_id)" +
                 " VALUES (?,?);";
 

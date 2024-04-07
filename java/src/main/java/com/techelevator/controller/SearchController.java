@@ -25,7 +25,7 @@ public class SearchController {
 
         TMDBService tmdbService = new TMDBService();
         MovieApiResponse movieApiResponse = tmdbService.getMoviesByTitle(term);
-//TODO test once Database is working
+
         for (Movie movie: movieApiResponse.getResults()) {
 
             if (!movieDao.isMovieInDatabase(movie.getId())) {
@@ -34,7 +34,9 @@ public class SearchController {
 
             }
 
-        } return movieApiResponse;
+        } movieDao.addGenreNameToResponse(movieApiResponse);
+
+        return movieApiResponse;
 
     }
 
