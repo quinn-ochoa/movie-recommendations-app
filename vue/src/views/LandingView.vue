@@ -28,10 +28,19 @@
           
             <div class="search">
               <input type="text" id="search" v-model="filter.title" required autofocus />
-            </div>
+            </div><br/>
+            
+            <button type="sign-in">
+              <router-link v-bind:to="{ name: 'login' }">
+                Sign in
+              </router-link>
+            </button>&nbsp;
 
-            <button type="sign-in">Sign in</button>&nbsp;
-            <button type="create-account">Create Account</button>
+            <button type="create-account">
+              <router-link v-bind:to="{ name: 'register' }">
+                Create Account
+              </router-link>
+            </button>
         </div>
     </div>
   </div>
@@ -122,6 +131,7 @@
     grid-template-areas: 
       "image home";
     height: 100vh;
+    max-height: 100vh;
     margin: 0px -10px;
     /* justify-items: center; */
   }
@@ -157,5 +167,15 @@
     flex-wrap: wrap;
   }
  
+  button {
+  background-color: #012f6d;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+
+}
   
   </style>
