@@ -10,10 +10,10 @@ CREATE TABLE users (
 
 CREATE TABLE movies (
 	id INT,
-	title VARCHAR(50) NOT NULL,
+	title VARCHAR(100) NOT NULL,
 	overview TEXT,
 	poster_path VARCHAR(200),
-	voting_average DECIMAL (3,1),
+	vote_average DECIMAL (5,3),
 	CONSTRAINT PK_movie_id PRIMARY KEY (id)
 );
 

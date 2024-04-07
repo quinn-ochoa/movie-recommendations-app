@@ -18,7 +18,7 @@ public class JdbcMovieDao implements MovieDao{
     @Override
     public boolean isMovieInDatabase(int movieId){
         //TODO needs tested once database is up to date
-        String sql = "SELECT EXISTS (SELECT 1 FROM movie WHERE id = ? LIMIT 1);";
+        String sql = "SELECT EXISTS (SELECT 1 FROM movies WHERE id = ? LIMIT 1);";
         boolean movieExists;
 
         try{
@@ -46,7 +46,7 @@ public class JdbcMovieDao implements MovieDao{
 
         try{
 
-            jdbcTemplate.update(sql, movie.getId(), movie.getTitle(), movie.getPoster_path(), movie.getVote_average());
+            jdbcTemplate.update(sql, movie.getId(), movie.getTitle(), movie.getOverview(), movie.getPoster_path(), movie.getVote_average());
             jdbcMovieGenreDao.updateMovieGenreAssociation(movie.getGenre_ids(), movie.getId());
 
         } catch (CannotGetJdbcConnectionException e){

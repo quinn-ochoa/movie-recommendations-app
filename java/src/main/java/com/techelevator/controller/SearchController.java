@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.JdbcMovieDao;
+import com.techelevator.dao.MovieDao;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
 import com.techelevator.services.TMDBService;
@@ -11,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class SearchController {
     //properties
-    JdbcTemplate jdbcTemplate = new JdbcTemplate();
-    JdbcMovieDao jdbcMovieDao = new JdbcMovieDao(jdbcTemplate);
+    MovieDao movieDao;
 
     //constructors
-    public SearchController() {
+    public SearchController(MovieDao movieDao) {
+        this.movieDao = movieDao;
     }
 
     //methods
@@ -25,12 +26,15 @@ public class SearchController {
         TMDBService tmdbService = new TMDBService();
         MovieApiResponse movieApiResponse = tmdbService.getMoviesByTitle(term);
 //TODO test once Database is working
-//        for (Movie movie: movieApiResponse.getResults()) {
-//
-//            jdbcMovieDao.isMovieInDatabase(movie.getId());
-//
-//        }
-            return movieApiResponse;
+        for (Movie movie: movieApiResponse.getResults()) {
+
+            if (!movieDao.isMovieInDatabase(movie.getId())) {
+
+                movieDao.addMovie(movie);
+
+            }
+
+        } return movieApiResponse;
 
     }
 
