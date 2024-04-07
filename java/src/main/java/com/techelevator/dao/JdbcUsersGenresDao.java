@@ -16,12 +16,15 @@ import java.util.Map;
 
 @Component
 public class JdbcUsersGenresDao implements UsersGenresDao {
+    //properties
     private final JdbcTemplate jdbcTemplate;
 
+    //constructors
     public JdbcUsersGenresDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    //methods
     @Override
     public Map<String, Boolean> getGenresByUserId(int user_id) {
 
@@ -44,6 +47,58 @@ public class JdbcUsersGenresDao implements UsersGenresDao {
             throw new DaoException("Unable to connect to server or database");
 
         } return mapUserGenres(genres);
+
+    }
+
+    @Override
+    public void setUsersGenresAssociations(int user_id, Map<String, Boolean> favoriteGenres) {
+
+        String sql = "INSERT INTO users_genres (user_id, genre_id) VALUES (?,?);";
+        deleteAllFavoriteGenresByUserId(user_id);
+        JdbcGenresDao jdbcGenresDao = new JdbcGenresDao(jdbcTemplate);
+
+        for (Map.Entry<String, Boolean> favoriteGenre: favoriteGenres.entrySet()) {
+
+            if (favoriteGenre.getValue()) {
+
+                try {
+
+                    jdbcTemplate.update(sql, user_id, jdbcGenresDao.getGenreIdByGenreName(favoriteGenre.getKey()));
+
+                } catch (CannotGetJdbcConnectionException e) {
+
+                    throw new DaoException("Unable to connect to server or database", e);
+
+                } catch (DataIntegrityViolationException e) {
+
+                    throw new DaoException("Data integrity violation", e);
+
+                }
+
+            }
+
+        }
+
+    }
+
+    @Override
+    public void deleteAllFavoriteGenresByUserId(int id) {
+
+        String sql = "DELETE FROM users_genres WHERE user_id = ?;";
+
+        try{
+
+            jdbcTemplate.update(sql, id);
+
+        } catch (CannotGetJdbcConnectionException e){
+
+            throw new DaoException("Unable to connect to server or database", e);
+
+        } catch (DataIntegrityViolationException e){
+
+            throw new DaoException("Data integrity violation", e);
+
+        }
 
     }
 
