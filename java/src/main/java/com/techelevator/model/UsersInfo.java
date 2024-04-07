@@ -10,12 +10,12 @@ public class UsersInfo {
     int user_id;
     String email;
     String full_name;
-    Time birthday;
+    Timestamp  birthday;
     String username;
     Map<String, Boolean> favoriteGenres;
 
     //constructors
-    public UsersInfo(int user_id, String email, String full_name, Time birthday, String username, Map<String, Boolean> favoriteGenres) {
+    public UsersInfo(int user_id, String email, String full_name, Timestamp birthday, String username, Map<String, Boolean> favoriteGenres) {
         this.user_id = user_id;
         this.email = email;
         this.full_name = full_name;
@@ -46,7 +46,7 @@ public class UsersInfo {
         return full_name;
     }
 
-    public Time getBirthday() {
+    public Timestamp getBirthday() {
         return birthday;
     }
 

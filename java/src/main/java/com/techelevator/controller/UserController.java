@@ -6,6 +6,7 @@ import com.techelevator.model.UsersInfo;
 import com.techelevator.model.UsersInfoDao;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
@@ -30,8 +31,8 @@ public class UserController {
 
     }
 
-    @RequestMapping(path = "/user/profile/update/{info}", method = RequestMethod.PUT)
-    public void addUserProfileInfo(@RequestBody @PathVariable UsersInfo usersInfo) {
+    @RequestMapping(path = "/user/profile/update/", method = RequestMethod.POST)
+    public void addUserProfileInfo(@Valid @RequestBody UsersInfo usersInfo) {
 
         usersInfo.setUser_id(userDao.getIdByUsername(usersInfo.getUsername()));
         usersInfoDao.addProfileInfo(usersInfo);
