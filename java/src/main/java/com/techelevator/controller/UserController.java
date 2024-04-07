@@ -12,10 +12,12 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 public class UserController {
+
     //properties
     UsersGenresDao usersGenresDao;
     UsersInfoDao usersInfoDao;
     UserDao userDao;
+
     //constructors
     public UserController(UsersGenresDao usersGenresDao, UsersInfoDao usersInfoDao, UserDao userDao) {
         this.usersGenresDao = usersGenresDao;

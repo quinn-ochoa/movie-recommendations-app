@@ -1,7 +1,5 @@
 package com.techelevator.model;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Map;
 
