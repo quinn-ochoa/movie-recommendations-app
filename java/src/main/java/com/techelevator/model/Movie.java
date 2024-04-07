@@ -10,6 +10,7 @@ public class Movie {
 
     //properties
     List<Integer> genre_ids;
+    List<String> genre_names = new ArrayList<>();
     int id;
     String title;
     String overview;
@@ -18,10 +19,10 @@ public class Movie {
 
     //constructors
     public Movie() {
-
     }
-    public Movie(List<Integer> genre_ids, int id, String title, String overview, String poster_path, BigDecimal vote_average) {
+    public Movie(List<Integer> genre_ids, List<String> genre_names, int id, String title, String overview, String poster_path, BigDecimal vote_average) {
        this.genre_ids = genre_ids;
+       this.genre_names = genre_names;
        this.id = id;
        this.title = title;
        this.overview = overview;
@@ -53,4 +54,13 @@ public class Movie {
     public BigDecimal getVote_average() {
         return vote_average;
     }
+
+    public void setGenre_names(List<String> genre_names) {
+        this.genre_names = genre_names;
+    }
+
+    public List<String> getGenre_names() {
+        return genre_names;
+    }
+
 }
