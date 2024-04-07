@@ -2,21 +2,21 @@
 <template>
   <div class="container">
     <div class="image">
-      <!-- <img 
-        v-if="filteredMovies.length == 0 || filteredMovies.length == movies.length " 
+      <img 
+        v-if="movies.length == 0" 
         src="../../src/assets/movie_collage.jpg" 
         alt="Movie Poster Collage"
-      /> -->
+      />
 
       <!-- test -->
-      <!-- <movie-card 
+      <movie-card 
         class="movie-container" 
         v-for="movie in movies" 
         v-bind:key="movie.id" 
         v-bind:movie="movie"
       > 
               
-      </movie-card> -->
+      </movie-card>
       <!-- test -->
     </div>
   
@@ -30,18 +30,6 @@
               <input type="search" class="form-control" v-model="query" />
               <input type="submit" class="btn"/>
             </form>
-            <br/>
-            <p>Search results</p>
-            {{( typeof movies)}}
-            <!-- {{ 
-              movies
-            }} -->
-            <!-- {{ movies}} -->
-            <!-- <ul v-for="item in movies" v-bind:key="item.id">
-              <li>{{ item.title }}</li>
-              <li>{{ item.overview }}</li>
-            </ul> -->
-
             <br/>
             
             <button type="sign-in">
@@ -67,11 +55,12 @@
 
   export default {
     components:{
-      // MovieCard
+      MovieCard
     },
     data(){
       return{
         query: null,
+        results:[],
         filter:{
           genre_ids:[],
           id: null,
@@ -107,8 +96,10 @@
       async getMovies(){
         await axios.get(`http://localhost:9000/search/${this.query}`)
         .then((response) => {
-          this.movies = response.data;
-          console.log(this.movies);
+          this.movies = response.data.results;
+          // console.log(this.movies);
+          this.results = Object.values(this.movies);
+          console.log(this.results);
         })
         
       }
@@ -156,11 +147,11 @@
     text-align: center;
   }
 
-  .movie-container {
+  /* .movie-card .movie-container {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-  }
+  } */
  
   button {
   background-color: #012f6d;
