@@ -26,7 +26,7 @@ public class JdbcUsersGenresDao implements UsersGenresDao {
     public Map<String, Boolean> getGenresByUserId(int user_id) {
 
         List<UsersGenres> genres = new ArrayList<>();
-        String sql = "SELECT name FROM genres WHERE id = (SELECT genre_id FROM users_genres WHERE user_id = ?);";
+        String sql = "SELECT name FROM genres WHERE id in (SELECT genre_id FROM users_genres WHERE user_id = ?);";
 
         try {
 

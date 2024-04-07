@@ -7,12 +7,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@Component
 public class TMDBService {
     //properties
     private final String API_BASE_URL = "https://api.themoviedb.org/3/search/movie?query=";
@@ -26,11 +28,11 @@ public class TMDBService {
         headers.set("Authorization", "Bearer " + bearerToken);
         HttpEntity<MovieApiResponse> entity = new HttpEntity<>(headers);
         MovieApiResponse movieApiResponse;
-        String formattedSearchTerm = searchTerm.replace(' ', '%');
+        String formattedSearchTerm = searchTerm.replace(" ", "%20");
 
         try {
 
-            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + formattedSearchTerm + "&page=1", HttpMethod.GET, entity, MovieApiResponse.class);
+            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + formattedSearchTerm + "&include_adult=false&page=1", HttpMethod.GET, entity, MovieApiResponse.class);
             movieApiResponse = response.getBody();
 
         } catch (RestClientException e) {
@@ -41,13 +43,15 @@ public class TMDBService {
 
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No movies found for the given search term.");
 
-        } movieApiResponse = addMovieNameToResponse(movieApiResponse);
+        }
+        //TODO Remember to uncomment
+        //movieApiResponse = addGenreNameToResponse(movieApiResponse);
 
         return movieApiResponse;
 
     }
 
-    private MovieApiResponse addMovieNameToResponse(MovieApiResponse movieApiResponse) {
+    private MovieApiResponse addGenreNameToResponse(MovieApiResponse movieApiResponse) {
         //TODO Start Here
         String sql = "SELECT name FROM genres WHERE id = ?;";
         String currentSelectedGenreName;
