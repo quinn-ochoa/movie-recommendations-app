@@ -2,10 +2,19 @@
 <template>
   <div class="container">
     <div class="image">
-      <img v-if="filteredMovies.length == 0 || filteredMovies.length == movies.length " src="../../src/assets/movie_collage.jpg" alt="Movie Poster Collage"/>
+      <img 
+        v-if="filteredMovies.length == 0 || filteredMovies.length == movies.length " 
+        src="../../src/assets/movie_collage.jpg" 
+        alt="Movie Poster Collage"
+      />
 
       <!-- test -->
-      <movie-card class="movie-container" v-else v-for="movie in filteredMovies" v-bind:key="movie.id" v-bind:movie="movie"> 
+      <movie-card 
+        class="movie-container" 
+        v-else v-for="movie in filteredMovies" 
+        v-bind:key="movie.id" 
+        v-bind:movie="movie"
+      > 
               
       </movie-card>
       <!-- test -->
