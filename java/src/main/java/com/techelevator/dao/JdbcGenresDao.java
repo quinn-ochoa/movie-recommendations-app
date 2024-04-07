@@ -25,7 +25,7 @@ public class JdbcGenresDao implements GenresDao{
     @Override
     public List<Genres> getAllGenres() {
 
-        String sql = "SELECT name FROM genres;";
+        String sql = "SELECT * FROM genres;";
         List<Genres> genres = new ArrayList<>();
 
         try {

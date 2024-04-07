@@ -10,7 +10,7 @@ public class Movie {
 
     //properties
     List<Integer> genre_ids;
-    List<String> genre_names;
+    List<String> genre_names = new ArrayList<>();
     int id;
     String title;
     String overview;

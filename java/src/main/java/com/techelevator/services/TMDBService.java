@@ -1,5 +1,7 @@
 package com.techelevator.services;
 
+import com.techelevator.dao.JdbcMovieDao;
+import com.techelevator.dao.MovieDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
@@ -43,42 +45,7 @@ public class TMDBService {
 
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No movies found for the given search term.");
 
-        }
-        //TODO Remember to uncomment
-        //movieApiResponse = addGenreNameToResponse(movieApiResponse);
-
-        return movieApiResponse;
-
-    }
-
-    private MovieApiResponse addGenreNameToResponse(MovieApiResponse movieApiResponse) {
-        //TODO Start Here
-        String sql = "SELECT name FROM genres WHERE id = ?;";
-        String currentSelectedGenreName;
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-
-        for (Movie movie : movieApiResponse.getResults()) {
-
-            for (Integer genre_id : movie.getGenre_ids()) {
-
-                try{
-
-                    currentSelectedGenreName = jdbcTemplate.queryForObject(sql, String.class, genre_id);
-                    movie.getGenre_names().add(currentSelectedGenreName);
-
-                } catch (CannotGetJdbcConnectionException e){
-
-                    throw new DaoException("Unable to connect to server or database", e);
-
-                } catch (DataIntegrityViolationException e){
-
-                    throw new DaoException("Data integrity violation", e);
-
-                }
-
-            }
-
-        } return null;
+        } return movieApiResponse;
 
     }
 

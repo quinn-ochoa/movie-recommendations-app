@@ -25,8 +25,8 @@ public class JdbcUsersGenresDao implements UsersGenresDao {
     @Override
     public Map<String, Boolean> getGenresByUserId(int user_id) {
 
-        List<UsersGenres> genres = new ArrayList<>();
-        String sql = "SELECT name FROM genres WHERE id in (SELECT genre_id FROM users_genres WHERE user_id = ?);";
+        List<Genres> genres = new ArrayList<>();
+        String sql = "SELECT * FROM genres WHERE id = (SELECT genre_id FROM users_genres WHERE user_id = ?);";
 
         try {
 
@@ -34,7 +34,8 @@ public class JdbcUsersGenresDao implements UsersGenresDao {
 
             while (result.next()){
 
-                genres.add(mapRowToUsersGenres(result));
+
+                genres.add(mapRowToGenres(result));
 
             }
 
@@ -46,46 +47,31 @@ public class JdbcUsersGenresDao implements UsersGenresDao {
 
     }
 
-    private Map<String, Boolean> mapUserGenres(List<UsersGenres> genres) {
+    private Map<String, Boolean> mapUserGenres(List<Genres> favoriteGenres) {
 
         JdbcGenresDao jdbcGenresDao = new JdbcGenresDao(jdbcTemplate);
         List<Genres> allGenres = jdbcGenresDao.getAllGenres();
         Map<String, Boolean> allGenresState = new HashMap<>();
-        String sql = "SELECT name FROM genres WHERE id = ?;";
-        String currentGenre;
 
         for (Genres genre : allGenres) {
 
             allGenresState.put(genre.getName(), false);
 
-        } for (UsersGenres genre : genres) {
+        } for (Genres genre : favoriteGenres) {
 
-            try{
-
-                currentGenre = jdbcTemplate.queryForObject(sql, String.class, genre.getGenre_id());
-                allGenresState.put(currentGenre, true);
-
-            } catch (CannotGetJdbcConnectionException e){
-
-                throw new DaoException("Unable to connect to server or database", e);
-
-            } catch (DataIntegrityViolationException e){
-
-                throw new DaoException("Data integrity violation", e);
-
-            }
+            allGenresState.put(genre.getName(), true);
 
         } return allGenresState;
 
     }
 
-    private UsersGenres mapRowToUsersGenres(SqlRowSet result) {
+    private Genres mapRowToGenres(SqlRowSet result) {
 
-        UsersGenres usersGenres = new UsersGenres();
-        usersGenres.setUser_id(result.getInt("user_id"));
-        usersGenres.setGenre_id(result.getInt("genre_id"));
+        Genres genres = new Genres();
+        genres.setId(result.getInt("id"));
+        genres.setName(result.getString("name"));
 
-        return usersGenres;
+        return genres;
     }
 
 }
