@@ -2,14 +2,14 @@ import axios from 'axios';
 
 export default {
 
-    //CONFIRM THESE 2 ENDPOINTS
-    list(){
-        return axios.get(`/movies`)
-    },
+    // //CONFIRM THESE 2 ENDPOINTS
+    // list(){
+    //     return axios.get(`/movies`)
+    // },
 
-    listMovie(movieId){
-        return axios.get(`/movies/${movieId}`)
-    },
+    // listMovie(movieId){
+    //     return axios.get(`/movies/${movieId}`)
+    // },
 
     //SEARCH TERM
     search(searchStr){
