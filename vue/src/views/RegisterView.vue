@@ -24,21 +24,18 @@
           <input type="password" id="confirm-password" v-model="user.confirmPassword" placeholder="Confirm Password" required />
         </div>
         </section>
-
+<!-- 
         <section id="right-entries">
           <div class="form-input-group">
-          <!-- <label for="name">Name</label> -->
-          <input type="text" id="name" v-model="user.name" placeholder="Name" required autofocus />
+          <input type="text" id="name" v-model="info.full_name" placeholder="Name" required autofocus />
         </div>    
         <div class="form-input-group">
-          <!-- <label for="email">Email</label> -->
-          <input type="text" id="email" v-model="user.email" placeholder="Email" required autofocus />
+          <input type="text" id="email" v-model="info.email" placeholder="Email" required autofocus />
         </div>
         <div class="form-input-group">
-          <!-- <label for="birthday">Birthday</label> -->
-          <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" placeholder="Birthday" v-model="user.birthday" required autofocus />
+          <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="birthday" placeholder="Birthday" v-model="info.birthday" required autofocus />
         </div>
-      </section>
+      </section> -->
 
       <fieldset>
         <legend>Choose your genres</legend>
@@ -136,19 +133,19 @@
 
 <script>
 import authService from '../services/AuthService';
-import userInfoService from '../services/UserInfoService';
+// import userInfoService from '../services/UserInfoService';
 
 export default {
   data() {
     return {
-      info: {
-        email: '',
-        full_name: '',
-        username: '',
-        birthday: '',
-        favoriteGenres: []
+      // info: {
+      //   email: '',
+      //   full_name: '',
+      //   username: '',
+      //   birthday: ''
+      //   // favoriteGenres: []
 
-      },
+      // },
 
       user: {
         username: '',
@@ -167,18 +164,7 @@ export default {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
       } else {
-       
-        userInfoService.register(this.info)
-        .then((response) => {
-          if (response.status == 201) {
-            this.$router.push({
-                path: '/login',
-                query: { registration: 'success' },
 
-            });
-          }
-        })
-        
         authService
           .register(this.user)
           .then((response) => {
@@ -188,7 +174,18 @@ export default {
                 query: { registration: 'success' },
               });
             }
-          })
+          })        
+          
+        //   userInfoService.register(this.info)
+        // .then((response) => {
+        //   if (response.status == 201) {
+        //     this.$router.push({
+        //         path: '/login',
+        //         query: { registration: 'success' },
+
+        //     });
+        //   }
+        // })
           .catch((error) => {
             const response = error.response;
             this.registrationErrors = true;

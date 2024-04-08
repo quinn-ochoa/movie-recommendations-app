@@ -10,6 +10,6 @@ export default {
     return axios.post('/register', user)
   }
 
-
+ 
 
 }
