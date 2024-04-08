@@ -24,6 +24,15 @@ CREATE TABLE genres (
 	CONSTRAINT UQ_id UNIQUE (id)
 );
 
+CREATE TABLE users_info (
+	user_id SERIAL,
+	email varchar(50),
+	full_name varchar(200),
+	birthday DATE NOT NULL,
+	CONSTRAINT PK_user_id PRIMARY KEY (user_id),
+	CONSTRAINT FK_user_info FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
 CREATE TABLE movies_genres (
     movie_id INT,
     genre_id INT,
