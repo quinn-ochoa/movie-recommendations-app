@@ -105,6 +105,8 @@
       }
     // created(){
     //   this.getMovie(this.$route.params.searchStr);
+    // }
+
     }
   };
   </script>
@@ -124,6 +126,9 @@
   .image{
     grid-area: image;
     background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
 
   .image img{
@@ -143,25 +148,18 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 10px;
+    /* padding: 10px; */
     text-align: center;
   }
-
-  /* .movie-card .movie-container {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-  } */
  
   button {
-  background-color: #012f6d;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
-
-}
+    background-color: #012f6d;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+  }
   
   </style>

@@ -3,8 +3,8 @@
         v-bind:key="movie.id"
     >
         <br/>
-        <p>{{ movie.title }}</p>
-        <p>{{ movie.genre_id }}</p>
+        <!-- <div class="movie-title">{{ movie.title }}</div> -->
+        <!-- <p>{{ movie.genre_id }}</p> -->
         <div class="poster">
             <img  :src ="'https://image.tmdb.org/t/p/original' + movie.poster_path"/>
         </div>
@@ -23,14 +23,18 @@
 
 <style>
  .movie-card{
-  /* border: 2px solid black; */
-  border-radius: 3px;
-  width: 130px;
-  height: 160px;
-  border: 1px solid red;
-  /* background-color: brown; */
-  /* margin: 20px; */
-  /* position: relative; */
-
+    width: 152px;
+    height: 250px;
+    margin-bottom: 5px;
+    margin-top: -10px;
+    /* border: 1px solid red; */
   }
+
+  .movie-card img{
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    padding-top: -10px;
+  }
+
 </style>
