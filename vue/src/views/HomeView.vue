@@ -15,6 +15,8 @@
     <body>
       <div>
         <h2>Based on your favorite genres</h2>
+        <button class="btn-add" v-on:click="$router.push({ name: 'AddGenresView' })">Add Genres</button>
+        <div>movies with favorite genres goes here</div>
       </div>
       <div>
         <h2>Suggested movies for you</h2>
