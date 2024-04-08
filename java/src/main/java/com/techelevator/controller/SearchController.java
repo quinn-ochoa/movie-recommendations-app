@@ -20,7 +20,7 @@ public class SearchController {
     }
 
     //methods
-    @RequestMapping(path = "/search/{term}", method = RequestMethod.GET)
+    @RequestMapping(path = "/search/{term}/", method = RequestMethod.GET)
     public MovieApiResponse getMoviesBySearchTerm(@PathVariable String term) {
 
         TMDBService tmdbService = new TMDBService();

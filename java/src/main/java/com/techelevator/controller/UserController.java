@@ -3,7 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.UserDao;
 import com.techelevator.dao.UsersGenresDao;
 import com.techelevator.model.UsersInfo;
-import com.techelevator.model.UsersInfoDao;
+import com.techelevator.dao.UsersInfoDao;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,14 +26,14 @@ public class UserController {
     }
 
     //methods
-    @RequestMapping(path = "/user/{id}/favorite/genres", method = RequestMethod.GET)
+    @RequestMapping(path = "/user/{id}/favorite/genres/", method = RequestMethod.GET)
     public Map<String, Boolean> getUserFavoriteGenres(@PathVariable int user_id) {
 
         return usersGenresDao.getGenresByUserId(user_id);
 
     }
 
-    @RequestMapping(path = "/user/profile/update/", method = RequestMethod.POST)
+    @RequestMapping(path = "/user/profile/create/", method = RequestMethod.POST)
     public void addUserProfileInfo(@Valid @RequestBody UsersInfo usersInfo) {
 
         usersInfo.setUser_id(userDao.getIdByUsername(usersInfo.getUsername()));
