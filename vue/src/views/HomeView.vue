@@ -32,6 +32,10 @@
 
       <div>
         <h2>Based on favorite genres</h2>
+        <div v-for="result in allTimeGreats.results" v-bind:key="result.id">
+                {{ result.title }}
+                <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+        </div>
       </div>
 
       <div>
@@ -40,7 +44,7 @@
         <div v-for="result in allTimeGreats.results" v-bind:key="result.id">
                 {{ result.title }}
                 <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
-            </div>
+        </div>
       </div>
 
       <div>
@@ -56,6 +60,7 @@
       
       <!-- {{ popular.results }} -->
       {{ $store.state.user }}
+      {{ selectFavoriteGenres() }}
       <!-- test -->
 
     </body>
@@ -99,6 +104,10 @@ export default {
 
       recommended4u : {
         results : []
+      },
+
+      genres: {
+
       }
 
     };
@@ -111,19 +120,19 @@ export default {
   },
 
   methods: {
-    // recommend() {
-    //   let userId = parseInt(this.$route.params.userId);
-    //   userInfoService
-    //   .getRecommended(userId)
-    //   .then(response => {
-    //     this.movies = response.data
-    //     })
-    //   }
+    selectFavoriteGenres(){
+      let favGenres = this.genres;
+      delete this.genres.popular;
+      delete this.genres.allTimeGreats;
+      delete this.genres.recommended4u;
+      return favGenres;
+    }
     },
   created() {
     let userId = this.$store.state.user.id;
     userInfoService.getRecommended(userId)
     .then(response => {
+      this.genres = response.data;
       this.popular.results = response.data.popular.results;
       this.allTimeGreats.results = response.data.allTimeGreats.results;
       this.recommended4u.results = response.data.recommended4u.results;
