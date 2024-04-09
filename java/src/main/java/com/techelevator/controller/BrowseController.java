@@ -84,4 +84,41 @@ public class BrowseController {
 
     }
 
+    @RequestMapping(path = "/recommended/", method = RequestMethod.GET)
+    public Map<String, MovieApiResponse> getRecommendedForAllGenres() {
+
+        Map<String, Boolean> allGenres = usersGenresDao.getGenresByUserId(1);
+        List<Integer> allGenreCodes = new ArrayList<>();
+        TMDBService tmdbService = new TMDBService();
+        double vote_average = 8.7;
+        double vote_count = 25000;
+        MovieApiResponse movieApiResponse = new MovieApiResponse();
+        MovieApiResponse recommended;
+        Map<String, MovieApiResponse> browser = new HashMap<>();
+
+        for (Map.Entry<String, Boolean> usersFavoriteGenre : allGenres.entrySet()) {
+
+            allGenreCodes.add(genresDao.getGenreIdByGenreName(usersFavoriteGenre.getKey()));
+
+        } for (Integer genre : allGenreCodes) {
+
+            recommended = tmdbService.queryForGenreRecommendations(movieApiResponse, genre, vote_average, vote_count, 0, 0);
+            browser.put(genresDao.getGenreNameById(genre), recommended);
+
+        } for (Map.Entry<String, MovieApiResponse> result : browser.entrySet()) {
+
+            for (Movie movie : result.getValue().getResults()) {
+
+                if (!movieDao.isMovieInDatabase(movie.getId())) {
+
+                    movieDao.addMovie(movie);
+
+                }
+
+            } movieDao.addGenreNameToResponse(result.getValue());
+
+        } return browser;
+
+    }
+
 }
