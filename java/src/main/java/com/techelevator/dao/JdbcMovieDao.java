@@ -1,18 +1,27 @@
 package com.techelevator.dao;
 
+import Methods.Profanity;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Movie;
+import com.techelevator.model.MovieApiResponse;
+import com.techelevator.services.TMDBService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class JdbcMovieDao implements MovieDao{
 
     private final JdbcTemplate jdbcTemplate;
+    private final TMDBService tmdbService;
 
-    public JdbcMovieDao(JdbcTemplate jdbcTemplate) {
+    public JdbcMovieDao(JdbcTemplate jdbcTemplate, TMDBService service) {
+        this.tmdbService = service;
         this.jdbcTemplate = jdbcTemplate;
     }
     @Override
@@ -60,5 +69,5 @@ public class JdbcMovieDao implements MovieDao{
         }
 
     }
-
 }
+
