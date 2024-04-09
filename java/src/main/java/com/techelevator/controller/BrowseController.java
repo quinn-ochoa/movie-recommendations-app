@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.GenresDao;
+import com.techelevator.dao.MovieDao;
 import com.techelevator.dao.UsersGenresDao;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
@@ -20,10 +21,13 @@ public class BrowseController {
     UsersGenresDao usersGenresDao;
     GenresDao genresDao;
 
+    MovieDao movieDao;
+
     //constructors
-    public BrowseController(UsersGenresDao usersGenresDao, GenresDao genresDao) {
+    public BrowseController(UsersGenresDao usersGenresDao, GenresDao genresDao, MovieDao movieDao) {
         this.usersGenresDao = usersGenresDao;
         this.genresDao = genresDao;
+        this.movieDao = movieDao;
     }
 
     //methods
@@ -47,8 +51,12 @@ public class BrowseController {
 
             }
 
-        } recommended = tmdbService.queryForRecommended4u(movieApiResponse, usersFavoriteGenreCodes, vote_average, vote_count, 0, 0);
-        browser.put("recommended4u", recommended);
+        } if (usersFavoriteGenreCodes.size() > 1) {
+
+            recommended = tmdbService.queryForRecommended4u(movieApiResponse, usersFavoriteGenreCodes, vote_average, vote_count, 0, 0);
+            browser.put("recommended4u", recommended);
+
+        }
 
         for (Integer genre : usersFavoriteGenreCodes) {
 
@@ -59,7 +67,57 @@ public class BrowseController {
         browser.put("popular", recommended);
         recommended = tmdbService.queryForAllTimeGreats(movieApiResponse ,vote_average, vote_count, 0 ,0);
         browser.put("allTimeGreats", recommended);
-        return browser;
+
+        for (Map.Entry<String, MovieApiResponse> result : browser.entrySet()) {
+
+            for (Movie movie : result.getValue().getResults()) {
+
+                if (!movieDao.isMovieInDatabase(movie.getId())) {
+
+                    movieDao.addMovie(movie);
+
+                }
+
+            } movieDao.addGenreNameToResponse(result.getValue());
+
+        } return browser;
+
+    }
+
+    @RequestMapping(path = "/recommended/", method = RequestMethod.GET)
+    public Map<String, MovieApiResponse> getRecommendedForAllGenres() {
+
+        Map<String, Boolean> allGenres = usersGenresDao.getGenresByUserId(1);
+        List<Integer> allGenreCodes = new ArrayList<>();
+        TMDBService tmdbService = new TMDBService();
+        double vote_average = 8.7;
+        double vote_count = 25000;
+        MovieApiResponse movieApiResponse = new MovieApiResponse();
+        MovieApiResponse recommended;
+        Map<String, MovieApiResponse> browser = new HashMap<>();
+
+        for (Map.Entry<String, Boolean> usersFavoriteGenre : allGenres.entrySet()) {
+
+            allGenreCodes.add(genresDao.getGenreIdByGenreName(usersFavoriteGenre.getKey()));
+
+        } for (Integer genre : allGenreCodes) {
+
+            recommended = tmdbService.queryForGenreRecommendations(movieApiResponse, genre, vote_average, vote_count, 0, 0);
+            browser.put(genresDao.getGenreNameById(genre), recommended);
+
+        } for (Map.Entry<String, MovieApiResponse> result : browser.entrySet()) {
+
+            for (Movie movie : result.getValue().getResults()) {
+
+                if (!movieDao.isMovieInDatabase(movie.getId())) {
+
+                    movieDao.addMovie(movie);
+
+                }
+
+            } movieDao.addGenreNameToResponse(result.getValue());
+
+        } return browser;
 
     }
 
