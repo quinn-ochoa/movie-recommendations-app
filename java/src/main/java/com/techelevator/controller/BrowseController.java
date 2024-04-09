@@ -47,8 +47,12 @@ public class BrowseController {
 
             }
 
-        } recommended = tmdbService.queryForRecommended4u(movieApiResponse, usersFavoriteGenreCodes, vote_average, vote_count, 0, 0);
-        browser.put("recommended4u", recommended);
+        } if (usersFavoriteGenreCodes.size() > 1) {
+
+            recommended = tmdbService.queryForRecommended4u(movieApiResponse, usersFavoriteGenreCodes, vote_average, vote_count, 0, 0);
+            browser.put("recommended4u", recommended);
+
+        }
 
         for (Integer genre : usersFavoriteGenreCodes) {
 
