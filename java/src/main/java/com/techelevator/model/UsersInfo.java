@@ -13,6 +13,8 @@ public class UsersInfo {
     Map<String, Boolean> favoriteGenres;
 
     //constructors
+    public UsersInfo() {
+    }
     public UsersInfo(int user_id, String email, String full_name, Timestamp birthday, String username, Map<String, Boolean> favoriteGenres) {
         this.user_id = user_id;
         this.email = email;
@@ -50,6 +52,22 @@ public class UsersInfo {
 
     public Map<String, Boolean> getFavoriteGenres() {
         return favoriteGenres;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
+    }
+
+    public void setBirthday(Timestamp birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setFavoriteGenres(Map<String, Boolean> favoriteGenres) {
+        this.favoriteGenres = favoriteGenres;
     }
 
 }

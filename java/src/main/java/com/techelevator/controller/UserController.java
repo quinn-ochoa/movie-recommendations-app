@@ -32,12 +32,30 @@ public class UserController {
         return usersGenresDao.getGenresByUserId(user_id);
 
     }
+//TODO work here
+    @RequestMapping(path = "/user/{user_id}/profile/", method = RequestMethod.GET)
+    public UsersInfo getUserProfileInfo(@PathVariable int user_id) {
+
+        UsersInfo usersInfo = usersInfoDao.getUserInfo(user_id);
+        usersInfo.setFavoriteGenres(usersGenresDao.getGenresByUserId(user_id));
+        return usersInfo;
+
+    }
 
     @RequestMapping(path = "/user/profile/create/", method = RequestMethod.POST)
     public void addUserProfileInfo(@Valid @RequestBody UsersInfo usersInfo) {
 
         usersInfo.setUser_id(userDao.getIdByUsername(usersInfo.getUsername()));
         usersInfoDao.addProfileInfo(usersInfo);
+        usersGenresDao.setUsersGenresAssociations(usersInfo.getUser_id(), usersInfo.getFavoriteGenres());
+
+    }
+
+    @RequestMapping(path = "/user/profile/update/", method = RequestMethod.PUT)
+    public void updateUserProfileInfo(@Valid @RequestBody UsersInfo usersInfo) {
+
+        usersInfo.setUser_id(userDao.getIdByUsername(usersInfo.getUsername()));
+        usersInfoDao.updateProfileInfo(usersInfo);
         usersGenresDao.setUsersGenresAssociations(usersInfo.getUser_id(), usersInfo.getFavoriteGenres());
 
     }
