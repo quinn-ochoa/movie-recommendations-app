@@ -1,7 +1,20 @@
 <template>
-    <h1>Select Your Favorite Genres</h1>
+  <header>
+      <img alt="Glasses logo" src="../assets/logo.png"/>
+      <div>Search Bar</div>
+      <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
+  </header>
+
+    <h1>Update Profile</h1>
     <genre-form v-bind:genre="genre" />
-  </template>
+
+  <footer>
+    <div>
+      <i class="fa-brands fa-facebook social-icon" ></i><i class="fa-brands fa-instagram social-icon"></i>
+    </div>
+  </footer>
+
+</template>
   
   <script>
   import GenreForm from '../components/GenreForm.vue';

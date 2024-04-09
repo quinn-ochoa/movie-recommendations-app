@@ -1,4 +1,5 @@
 <template>
+    
     <form v-on:submit.prevent="submitForm">
         <div class="form-input-group">
           <input type="text" id="name" v-model="userProfile.full_name" placeholder="Name" required autofocus />

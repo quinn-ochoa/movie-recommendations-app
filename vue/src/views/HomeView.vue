@@ -13,9 +13,9 @@
 
     </header>
     <body>
+      <button class="btn-add" v-on:click="$router.push({ name: 'AddGenresView' })">Edit Profile</button>
       <div>
         <h2>Based on your favorite genres</h2>
-        <button class="btn-add" v-on:click="$router.push({ name: 'AddGenresView' })">Add Genres</button>
         <div>movies with favorite genres goes here</div>
       </div>
       <div>
@@ -25,8 +25,9 @@
     </body>
 
     <footer>
- <div><i class="fa-brands fa-facebook social-icon" ></i><i class="fa-brands fa-instagram social-icon"></i></div>
-
+      <div>
+        <i class="fa-brands fa-facebook social-icon" ></i><i class="fa-brands fa-instagram social-icon"></i>
+      </div>
     </footer>
 
     
