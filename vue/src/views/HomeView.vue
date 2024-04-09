@@ -17,6 +17,9 @@
       <div>
         <h2>Based on your favorite genres</h2>
         <div>movies with favorite genres goes here</div>
+        <div>
+          <movie-section title="Recommended by your favorite genre" v-bind:movies="recommendedByGenre" />
+           </div>
       </div>
       <div>
         <h2>Suggested movies for you</h2>
@@ -35,7 +38,44 @@
 </template>
 
 <script>
+import MovieSection from '../components/MovieSection.vue';
+import userInfoService from '../services/UserInfoService';
+
 export default {
+  components: {
+    MovieSection
+  },
+
+  data() {
+    return{
+
+      movies: {          
+          id: null,
+          title: "",
+          overview:"",
+          poster_path:"",
+          vote_average: null
+
+      }
+    };
+  },   
+
+  computed: {
+    recommendedByGenre() {
+      return this.movies
+    }
+  },
+
+  methods: {
+    recommend() {
+      let userId = parseInt(this.$route.params.userId);
+      userInfoService
+      .getRecommended(userId)
+      .then(response => {
+        this.movies = response.data
+        })
+      }
+    }
 };
 </script>
 

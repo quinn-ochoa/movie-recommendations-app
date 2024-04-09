@@ -68,6 +68,28 @@ public class JdbcGenresDao implements GenresDao{
 
     }
 
+    @Override
+    public String getGenreNameById(int id) {
+
+        String sql = "SELECT name FROM genres WHERE id = ?;";
+        String name;
+
+        try{
+
+            name = jdbcTemplate.queryForObject(sql, String.class, id);
+
+        } catch (CannotGetJdbcConnectionException e){
+
+            throw new DaoException("Unable to connect to server or database", e);
+
+        } catch (DataIntegrityViolationException e){
+
+            throw new DaoException("Data integrity violation", e);
+
+        } return name;
+
+    }
+
 
     private Genres mapRowToGenres(SqlRowSet result) {
 
