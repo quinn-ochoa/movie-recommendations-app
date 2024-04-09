@@ -62,7 +62,8 @@ const routes = [
     path: '/create',
     name: 'AddGenresView',
     component: AddGenresView
-  }
+  },
+  
 
 ];
 

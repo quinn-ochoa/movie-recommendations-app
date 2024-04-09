@@ -13,18 +13,41 @@
 
     </header>
     <body>
-      <button class="btn-add" v-on:click="$router.push({ name: 'AddGenresView' })">Edit Profile</button>
+      <button 
+        class="btn-add" 
+        v-on:click="$router.push({ name: 'AddGenresView' })">
+          Edit Profile
+      </button>
+
       <div>
-        <h2>Based on your favorite genres</h2>
-        <div>movies with favorite genres goes here</div>
-        <div>
+        <h2>Based on popular demand</h2>
+            <div v-for="result in popular.results" v-bind:key="result.id">
+                {{ result.title }}
+                <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+            </div>
+        <!-- <div>
           <movie-section title="Recommended by your favorite genre" v-bind:movies="recommendedByGenre" />
-           </div>
+        </div> -->
       </div>
+
       <div>
-        <h2>Suggested movies for you</h2>
+        <h2>Based on favorite genres</h2>
       </div>
-      <!-- <p>You must be authenticated to see this</p> -->
+
+      <div>
+        <h2>All classics</h2>
+      </div>
+
+      <div>
+        <h2>Recommended for you</h2>
+      </div>
+
+      <!-- test -->
+      
+      <!-- {{ popular.results }} -->
+      <!-- {{ $store.state.user }} -->
+      <!-- test -->
+
     </body>
 
     <footer>
@@ -43,19 +66,21 @@ import userInfoService from '../services/UserInfoService';
 
 export default {
   components: {
-    MovieSection
+    // MovieSection
   },
 
   data() {
     return{
 
-      movies: {          
-          id: null,
-          title: "",
-          overview:"",
-          poster_path:"",
-          vote_average: null
-
+      // movies: {          
+      //     id: null,
+      //     title: "",
+      //     overview:"",
+      //     poster_path:"",
+      //     vote_average: null
+      // }
+      popular : {
+        results : []
       }
     };
   },   
@@ -67,15 +92,22 @@ export default {
   },
 
   methods: {
-    recommend() {
-      let userId = parseInt(this.$route.params.userId);
-      userInfoService
-      .getRecommended(userId)
-      .then(response => {
-        this.movies = response.data
-        })
-      }
-    }
+    // recommend() {
+    //   let userId = parseInt(this.$route.params.userId);
+    //   userInfoService
+    //   .getRecommended(userId)
+    //   .then(response => {
+    //     this.movies = response.data
+    //     })
+    //   }
+    },
+  created() {
+    let userId = this.$store.state.user.id;
+    userInfoService.getRecommended(userId)
+    .then(response => {
+      this.popular.results = response.data.popular.results;
+    })
+  },
 };
 </script>
 

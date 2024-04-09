@@ -15,7 +15,10 @@
 
 export default {
     name: 'movie-section',
-    props: {movie: Object}
+    props: ['title']
+        // movie: Object
+        
+    
 
 }
 </script>
