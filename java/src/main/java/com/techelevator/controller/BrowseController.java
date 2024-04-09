@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.GenresDao;
+import com.techelevator.dao.MovieDao;
 import com.techelevator.dao.UsersGenresDao;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
@@ -20,10 +21,13 @@ public class BrowseController {
     UsersGenresDao usersGenresDao;
     GenresDao genresDao;
 
+    MovieDao movieDao;
+
     //constructors
-    public BrowseController(UsersGenresDao usersGenresDao, GenresDao genresDao) {
+    public BrowseController(UsersGenresDao usersGenresDao, GenresDao genresDao, MovieDao movieDao) {
         this.usersGenresDao = usersGenresDao;
         this.genresDao = genresDao;
+        this.movieDao = movieDao;
     }
 
     //methods
@@ -63,7 +67,20 @@ public class BrowseController {
         browser.put("popular", recommended);
         recommended = tmdbService.queryForAllTimeGreats(movieApiResponse ,vote_average, vote_count, 0 ,0);
         browser.put("allTimeGreats", recommended);
-        return browser;
+
+        for (Map.Entry<String, MovieApiResponse> result : browser.entrySet()) {
+
+            for (Movie movie : result.getValue().getResults()) {
+
+                if (!movieDao.isMovieInDatabase(movie.getId())) {
+
+                    movieDao.addMovie(movie);
+
+                }
+
+            } movieDao.addGenreNameToResponse(result.getValue());
+
+        } return browser;
 
     }
 
