@@ -21,10 +21,10 @@
 
       <div>
         <h2>Based on popular demand</h2>
-            <div v-for="result in popular.results" v-bind:key="result.id">
+          <div v-for="result in popular.results" v-bind:key="result.id">
                 {{ result.title }}
                 <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
-            </div>
+          </div>
         <!-- <div>
           <movie-section title="Recommended by your favorite genre" v-bind:movies="recommendedByGenre" />
         </div> -->
@@ -32,9 +32,9 @@
 
       <div>
         <h2>Based on favorite genres</h2>
-        <div v-for="result in allTimeGreats.results" v-bind:key="result.id">
-                {{ result.title }}
-                <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+        <div v-for="result in selectFavoriteGenres()" v-bind:key="result.id">
+              {{ result.title }}
+              <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
         </div>
       </div>
 
@@ -42,25 +42,25 @@
         <h2>All classics</h2>
         <!-- <div>{{ allTimeGreats.results }}</div> -->
         <div v-for="result in allTimeGreats.results" v-bind:key="result.id">
-                {{ result.title }}
-                <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+              {{ result.title }}
+              <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
         </div>
       </div>
 
       <div>
         <h2>Recommended for you</h2>
         <div v-for="result in recommended4u.results" v-bind:key="result.id">
-                {{ result.title }}
-                <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
-            </div>
+              {{ result.title }}
+              <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+        </div>
       </div>
       
 
       <!-- test -->
       
       <!-- {{ popular.results }} -->
-      {{ $store.state.user }}
-      {{ selectFavoriteGenres() }}
+      <!-- {{ $store.state.user }} -->
+      <!-- {{ selectFavoriteGenres() }} -->
       <!-- test -->
 
     </body>
@@ -106,9 +106,7 @@ export default {
         results : []
       },
 
-      genres: {
-
-      }
+      genres: {}
 
     };
   },   
@@ -122,10 +120,16 @@ export default {
   methods: {
     selectFavoriteGenres(){
       let favGenres = this.genres;
+      let resultArray = [];
       delete this.genres.popular;
       delete this.genres.allTimeGreats;
       delete this.genres.recommended4u;
-      return favGenres;
+      for (let key in favGenres){
+        for (let item of favGenres[key].results){
+          resultArray.push(item);
+        }
+      }
+      return resultArray;
     }
     },
   created() {
