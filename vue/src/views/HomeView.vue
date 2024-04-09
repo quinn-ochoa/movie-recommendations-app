@@ -47,17 +47,15 @@ export default {
 
   data() {
     return{
-        query: null,
-        results:[],
-        filter:{
-          genre_ids:[],
+
+      movies: {          
           id: null,
           title: "",
           overview:"",
           poster_path:"",
           vote_average: null
 
-        }
+      }
     };
   },   
 
@@ -69,14 +67,11 @@ export default {
 
   methods: {
     recommend() {
-      let userId = parseInt(this.$route.params.id);
+      let userId = parseInt(this.$route.params.userId);
       userInfoService
       .getRecommended(userId)
       .then(response => {
-        this.movies = response.data.results;
-          // console.log(this.movies);
-          this.results = Object.values(this.movies);
-          console.log(this.results);
+        this.movies = response.data
         })
       }
     }
