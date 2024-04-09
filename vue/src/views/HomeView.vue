@@ -36,16 +36,26 @@
 
       <div>
         <h2>All classics</h2>
+        <!-- <div>{{ allTimeGreats.results }}</div> -->
+        <div v-for="result in allTimeGreats.results" v-bind:key="result.id">
+                {{ result.title }}
+                <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+            </div>
       </div>
 
       <div>
         <h2>Recommended for you</h2>
+        <div v-for="result in recommended4u.results" v-bind:key="result.id">
+                {{ result.title }}
+                <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+            </div>
       </div>
+      
 
       <!-- test -->
       
       <!-- {{ popular.results }} -->
-      <!-- {{ $store.state.user }} -->
+      {{ $store.state.user }}
       <!-- test -->
 
     </body>
@@ -81,7 +91,16 @@ export default {
       // }
       popular : {
         results : []
+      },
+
+      allTimeGreats : {
+        results : []
+      },
+
+      recommended4u : {
+        results : []
       }
+
     };
   },   
 
@@ -106,6 +125,8 @@ export default {
     userInfoService.getRecommended(userId)
     .then(response => {
       this.popular.results = response.data.popular.results;
+      this.allTimeGreats.results = response.data.allTimeGreats.results;
+      this.recommended4u.results = response.data.recommended4u.results;
     })
   },
 };
