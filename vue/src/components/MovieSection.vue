@@ -1,5 +1,5 @@
 <template>
-    <h1>Catagory Of Movie Section</h1>
+    <h1>Category Of Movie Section</h1>
     <div class = "movies">
         <div class="movie" v-for="movie in movies" v-bind:key="movie.id">
          <!-- v-on:click=""viewMovieDetails(movie) -->
@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import MovieCard from '../components/MovieCard.vue';
-
 
 export default {
-    components: 
+    name: 'movie-section',
+    props: {movie: Object}
+
 }
 </script>

@@ -17,6 +17,9 @@
         <h2>Based on your favorite genres</h2>
         <button class="btn-add" v-on:click="$router.push({ name: 'AddGenresView' })">Add Genres</button>
         <div>movies with favorite genres goes here</div>
+        <div>
+          <movie-section title="Recommended by your favorite genre" v-bind:movies="recommendedByGenre" />
+           </div>
       </div>
       <div>
         <h2>Suggested movies for you</h2>
@@ -34,7 +37,49 @@
 </template>
 
 <script>
+import MovieSection from '../components/MovieSection.vue';
+import userInfoService from '../services/UserInfoService';
+
 export default {
+  components: {
+    MovieSection
+  },
+
+  data() {
+    return{
+        query: null,
+        results:[],
+        filter:{
+          genre_ids:[],
+          id: null,
+          title: "",
+          overview:"",
+          poster_path:"",
+          vote_average: null
+
+        }
+    };
+  },   
+
+  computed: {
+    recommendedByGenre() {
+      return this.movies
+    }
+  },
+
+  methods: {
+    recommend() {
+      let userId = parseInt(this.$route.params.id);
+      userInfoService
+      .getRecommended(userId)
+      .then(response => {
+        this.movies = response.data.results;
+          // console.log(this.movies);
+          this.results = Object.values(this.movies);
+          console.log(this.results);
+        })
+      }
+    }
 };
 </script>
 
