@@ -26,7 +26,7 @@ public class UserController {
     }
 
     //methods
-    @RequestMapping(path = "/user/{id}/favorite/genres/", method = RequestMethod.GET)
+    @RequestMapping(path = "/user/{user_id}/favorite/genres/", method = RequestMethod.GET)
     public Map<String, Boolean> getUserFavoriteGenres(@PathVariable int user_id) {
 
         return usersGenresDao.getGenresByUserId(user_id);

@@ -70,6 +70,8 @@ public class TMDBService {
 
                 savedGenre = genres.get(i);
                 genres.remove(i);
+                genresAsApiInput = "";
+                genresAsApiInput = createGenresAsApiInput(genresAsApiInput, genres);
 
                 if (currentLayer == neededLayers) {
 
