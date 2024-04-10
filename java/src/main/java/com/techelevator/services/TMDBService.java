@@ -1,14 +1,13 @@
 package com.techelevator.services;
 
-import com.techelevator.exception.DaoException;
+import com.techelevator.dao.MovieDao;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
-import org.springframework.jdbc.CannotGetJdbcConnectionException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -17,71 +16,328 @@ import java.util.List;
 @Component
 public class TMDBService {
     //properties
-    private final String API_BASE_URL = "https://api.themoviedb.org/3/search/movie?query=";
+    private final String API_BASE_URL = "https://api.themoviedb.org/3";
+    private final String SEARCH = "/search/movie?query=";
+    private final String DISCOVER = "/discover/movie?include_adult=false&include_video=false&language=en-US&page=";
+    private int page = 1;
     private RestTemplate restTemplate = new RestTemplate();
-    private final String bearerToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZGU3MzhlZTFmNjUzNGQ3MDFlYjBlZDcwYjBhMDdmNCIsInN1YiI6IjY1ZGJlMjMxZWQyYWMyMDE4NzQwZGQyNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.SrPF0blfo7MklOWQqkeSN8WnfNLQgyUS8r0TtSOdAC4";
+    private final String BEARER_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZGU3MzhlZTFmNjUzNGQ3MDFlYjBlZDcwYjBhMDdmNCIsInN1YiI6IjY1ZGJlMjMxZWQyYWMyMDE4NzQwZGQyNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.SrPF0blfo7MklOWQqkeSN8WnfNLQgyUS8r0TtSOdAC4";
+    MovieDao movieDao;
+
+    //constructors
+    public TMDBService(MovieDao movieDao) {
+        this.movieDao = movieDao;
+    }
 
     //methods
     public MovieApiResponse getMoviesByTitle(String searchTerm) {
 
+
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + bearerToken);
+        headers.set("Authorization", "Bearer " + BEARER_TOKEN);
         HttpEntity<MovieApiResponse> entity = new HttpEntity<>(headers);
         MovieApiResponse movieApiResponse;
         String formattedSearchTerm = searchTerm.replace(" ", "%20");
 
         try {
 
-            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + formattedSearchTerm + "&include_adult=false&page=1", HttpMethod.GET, entity, MovieApiResponse.class);
+            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + SEARCH + formattedSearchTerm + "&include_adult=false&page=" + page, HttpMethod.GET, entity, MovieApiResponse.class);
+            movieApiResponse = response.getBody();
+           // movieApiResponse = movieDao.throwOutBadMovies(movieApiResponse);
+            //TODO start here
+        } catch (RestClientException e) {
+
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
+
+        } if (movieApiResponse == null) {
+
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No movies found for the given search term.");
+
+        } return movieApiResponse;
+
+    }
+
+    public MovieApiResponse queryForRecommended4u(MovieApiResponse recommended,List<Integer> genres, double vote_average, double vote_count, int neededLayers, int currentLayer) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + BEARER_TOKEN);
+        HttpEntity<MovieApiResponse> entity = new HttpEntity<>(headers);
+        String genresAsApiInput = "";
+        genresAsApiInput = createGenresAsApiInput(genresAsApiInput, genres);
+        MovieApiResponse layeredResults;
+        double voteAverageAdjustmentRatePerLayer = 0.95;
+        double voteCountAdjustmentRatePerLayer = 0.9;
+        Integer savedGenre;
+
+        if (currentLayer < neededLayers) {
+
+            currentLayer++;
+            vote_average = vote_average * voteAverageAdjustmentRatePerLayer;
+            vote_count = vote_count * voteCountAdjustmentRatePerLayer;
+
+            for (int i = 0; i < genres.size(); i++) {
+
+                savedGenre = genres.get(i);
+                genres.remove(i);
+                genresAsApiInput = "";
+                genresAsApiInput = createGenresAsApiInput(genresAsApiInput, genres);
+
+                if (currentLayer == neededLayers) {
+
+                    try {
+
+                        ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genresAsApiInput, HttpMethod.GET, entity, MovieApiResponse.class);
+                        layeredResults = response.getBody();
+
+                        for (Movie movie : layeredResults.getResults()) {
+
+                            if (!recommended.getResults().contains(movie)) {
+
+                                recommended.getResults().add(movie);
+
+                                if (recommended.getResults().size() >= 20) {
+
+                                    break;
+
+                                }
+
+                            }
+
+                        }
+
+                    } catch (RestClientException e) {
+
+                        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
+
+                    }
+
+                } else {
+
+                    recommended = queryForRecommended4u(recommended, genres, vote_average, vote_count, neededLayers, currentLayer);
+
+                } genres.add(i, savedGenre);
+
+            }
+
+        } else {
+
+            try {
+
+                ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genresAsApiInput, HttpMethod.GET, entity, MovieApiResponse.class);
+                recommended = response.getBody();
+
+            } catch (RestClientException e) {
+
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
+
+            } while (recommended.getResults().size() < 20) {
+
+                neededLayers++;
+                recommended = queryForRecommended4u(recommended, genres, vote_average, vote_count, neededLayers, currentLayer);
+
+            }
+
+        } return recommended;
+
+    }
+
+    public Movie getMovieById(int id) {
+        for (MovieApiResponse movieApiResponse) {
+            if (id == movies.getId()) {
+
+                return movie;
+            }
+        }
+        return null;
+    }
+
+    private String createGenresAsApiInput(String genresAsApiInput, List<Integer> genres) {
+
+        if (genres.size() > 0) {
+
+            for (Integer genre : genres) {
+
+                if (genresAsApiInput == "") {
+
+                    genresAsApiInput += genre;
+
+                } else {
+
+                    genresAsApiInput += "%2C" + genre;
+
+                }
+
+            }
+
+        } return genresAsApiInput;
+
+    }
+
+    public MovieApiResponse queryForGenreRecommendations(MovieApiResponse recommended, Integer genre, double vote_average, double vote_count, int neededLayers, int currentLayer) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + BEARER_TOKEN);
+        HttpEntity<MovieApiResponse> entity = new HttpEntity<>(headers);
+        MovieApiResponse layeredResults;
+        double voteAverageAdjustmentRatePerLayer = 0.95;
+        double voteCountAdjustmentRatePerLayer = 0.9;
+
+        if (currentLayer < neededLayers) {
+
+            currentLayer++;
+
+            vote_average = vote_average * voteAverageAdjustmentRatePerLayer;
+            vote_count = vote_count * voteCountAdjustmentRatePerLayer;
+
+            if (currentLayer == neededLayers) {
+
+                try {
+
+                    ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genre, HttpMethod.GET, entity, MovieApiResponse.class);
+                    layeredResults = response.getBody();
+
+                    for (Movie movie : layeredResults.getResults()) {
+
+                        if (!recommended.getResults().contains(movie)) {
+
+                            recommended.getResults().add(movie);
+
+                            if (recommended.getResults().size() >= 20) {
+
+                                break;
+
+                            }
+
+                        }
+
+                    }
+
+                } catch (RestClientException e) {
+
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
+
+                }
+
+            } else {
+
+                recommended = queryForGenreRecommendations(recommended, genre, vote_average, vote_count, neededLayers, currentLayer);
+
+            }
+
+        } else {
+
+            try {
+
+                ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genre, HttpMethod.GET, entity, MovieApiResponse.class);
+                recommended = response.getBody();
+
+            } catch (RestClientException e) {
+
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
+
+            } while (recommended.getResults().size() < 20) {
+
+                neededLayers++;
+                recommended = queryForGenreRecommendations(recommended, genre, vote_average, vote_count, neededLayers, currentLayer);
+
+            }
+
+        } return recommended;
+
+    }
+
+    public MovieApiResponse queryForPopular() {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + BEARER_TOKEN);
+        HttpEntity<MovieApiResponse> entity = new HttpEntity<>(headers);
+        MovieApiResponse movieApiResponse;
+
+
+        try {
+
+            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc", HttpMethod.GET, entity, MovieApiResponse.class);
             movieApiResponse = response.getBody();
 
         } catch (RestClientException e) {
 
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
 
-        }
-        if (movieApiResponse == null) {
-
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No movies found for the given search term.");
-
-        }
-        //TODO Remember to uncomment
-        //movieApiResponse = addGenreNameToResponse(movieApiResponse);
-
-        return movieApiResponse;
+        } return movieApiResponse;
 
     }
 
-    private MovieApiResponse addGenreNameToResponse(MovieApiResponse movieApiResponse) {
-        //TODO Start Here
-        String sql = "SELECT name FROM genres WHERE id = ?;";
-        String currentSelectedGenreName;
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+    public MovieApiResponse queryForAllTimeGreats(MovieApiResponse recommended ,double vote_average, double vote_count, int neededLayers, int currentLayer) {
 
-        for (Movie movie : movieApiResponse.getResults()) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + BEARER_TOKEN);
+        HttpEntity<MovieApiResponse> entity = new HttpEntity<>(headers);
+        MovieApiResponse layeredResults;
+        double voteAverageAdjustmentRatePerLayer = 0.95;
+        double voteCountAdjustmentRatePerLayer = 0.9;
 
-            for (Integer genre_id : movie.getGenre_ids()) {
+        if (currentLayer < neededLayers) {
+
+            currentLayer++;
+
+            vote_average = vote_average * voteAverageAdjustmentRatePerLayer;
+            vote_count = vote_count * voteCountAdjustmentRatePerLayer;
+
+            if (currentLayer == neededLayers) {
 
                 try {
 
-                    currentSelectedGenreName = jdbcTemplate.queryForObject(sql, String.class, genre_id);
-                    movie.getGenre_names().add(currentSelectedGenreName);
+                    ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count, HttpMethod.GET, entity, MovieApiResponse.class);
+                    layeredResults = response.getBody();
 
-                } catch (CannotGetJdbcConnectionException e) {
+                    for (Movie movie : layeredResults.getResults()) {
 
-                    throw new DaoException("Unable to connect to server or database", e);
+                        if (!recommended.getResults().contains(movie)) {
 
-                } catch (DataIntegrityViolationException e) {
+                            recommended.getResults().add(movie);
 
-                    throw new DaoException("Data integrity violation", e);
+                            if (recommended.getResults().size() >= 20) {
+
+                                break;
+
+                            }
+
+                        }
+
+                    }
+
+                } catch (RestClientException e) {
+
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
 
                 }
 
+            } else {
+
+                recommended = queryForAllTimeGreats(recommended, vote_average, vote_count, neededLayers, currentLayer);
+
             }
 
-        }
-        return null;
+        } else {
+
+            try {
+
+                ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count, HttpMethod.GET, entity, MovieApiResponse.class);
+                recommended = response.getBody();
+
+            } catch (RestClientException e) {
+
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
+
+            } while (recommended.getResults().size() < 20) {
+
+                neededLayers++;
+                recommended = queryForAllTimeGreats(recommended, vote_average, vote_count, neededLayers, currentLayer);
+
+            }
+
+        } return recommended;
 
     }
-}
 
+}

@@ -2,6 +2,8 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Movie;
+import com.techelevator.model.MovieApiResponse;
+import com.techelevator.services.ProfanityFilterService;
 import com.techelevator.services.TMDBService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -12,15 +14,14 @@ import org.springframework.stereotype.Component;
 public class JdbcMovieDao implements MovieDao{
 
     private final JdbcTemplate jdbcTemplate;
-    private final TMDBService tmdbService;
 
-    public JdbcMovieDao(JdbcTemplate jdbcTemplate, TMDBService service) {
-        this.tmdbService = service;
+    public JdbcMovieDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
     @Override
     public boolean isMovieInDatabase(int movieId){
-        //TODO needs tested once database is up to date
+
         String sql = "SELECT EXISTS (SELECT 1 FROM movies WHERE id = ? LIMIT 1);";
         boolean movieExists;
 
@@ -42,7 +43,7 @@ public class JdbcMovieDao implements MovieDao{
 
     @Override
     public void addMovie(Movie movie) {
-        //TODO needs tested once database is up to date
+
         JdbcMovieGenreDao jdbcMovieGenreDao = new JdbcMovieGenreDao(jdbcTemplate);
         String sql = "INSERT INTO movies (id, title, overview, poster_path, vote_average)" +
                 " VALUES (?,?,?,?,?);";
@@ -63,5 +64,46 @@ public class JdbcMovieDao implements MovieDao{
         }
 
     }
+
+    @Override
+    public MovieApiResponse addGenreNameToResponse(MovieApiResponse movieApiResponse) {
+
+        String sql = "SELECT name FROM genres WHERE id = ?;";
+        String currentSelectedGenreName;
+
+        for (Movie movie : movieApiResponse.getResults()) {
+
+            for (Integer genre_id : movie.getGenre_ids()) {
+
+                try{
+
+                    currentSelectedGenreName = jdbcTemplate.queryForObject(sql, String.class, genre_id);
+                    movie.getGenre_names().add(currentSelectedGenreName);
+
+                } catch (CannotGetJdbcConnectionException e){
+
+                    throw new DaoException("Unable to connect to server or database", e);
+
+                } catch (DataIntegrityViolationException e){
+
+                    throw new DaoException("Data integrity violation", e);
+
+                }
+
+            }
+
+        } return movieApiResponse;
+
+    }
+
+    @Override
+    public MovieApiResponse throwOutBadMovies(MovieApiResponse movieApiResponse) {
+
+        ProfanityFilterService profanityFilterService = new ProfanityFilterService();
+        movieApiResponse = profanityFilterService.checkForProfaneTitle(movieApiResponse);
+        return movieApiResponse;
+
+    }
+
 }
 

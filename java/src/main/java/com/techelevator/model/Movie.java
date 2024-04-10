@@ -10,8 +10,8 @@ public class Movie {
 
     //properties
     List<Integer> genre_ids;
-    List<String> genre_names;
-    int id;
+    List<String> genre_names = new ArrayList<>();
+    Integer id;
     String title;
     String overview;
     String poster_path;
@@ -20,7 +20,7 @@ public class Movie {
     //constructors
     public Movie() {
     }
-    public Movie(List<Integer> genre_ids, List<String> genre_names, int id, String title, String overview, String poster_path, BigDecimal vote_average) {
+    public Movie(List<Integer> genre_ids, List<String> genre_names, Integer id, String title, String overview, String poster_path, BigDecimal vote_average) {
        this.genre_ids = genre_ids;
        this.genre_names = genre_names;
        this.id = id;
@@ -61,6 +61,28 @@ public class Movie {
 
     public List<String> getGenre_names() {
         return genre_names;
+    }
+
+    //methods
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if(!(o instanceof Movie)) return false;
+        Movie movie = (Movie) o;
+        return id.equals(movie.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + genre_ids.hashCode();
+        result = 31 * result + genre_names.hashCode();
+        result = 31 * result + id.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + overview.hashCode();
+        result = 31 * result + poster_path.hashCode();
+        result = 31 * result + vote_average.hashCode();
+        return result;
     }
 
 }
