@@ -38,4 +38,12 @@ public class SearchController {
 
     }
 
+    @RequestMapping(path = "/movie/{movie_id}/", method = RequestMethod.GET)
+    public Movie getMovieByMovieId(@PathVariable int movie_id) {
+
+        Movie movie = movieDao.getMovieById(movie_id);
+        return movie;
+        //TODO start here
+    }
+
 }

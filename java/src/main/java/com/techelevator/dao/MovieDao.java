@@ -13,4 +13,6 @@ public interface MovieDao {
 
     MovieApiResponse throwOutBadMovies(MovieApiResponse movieApiResponse);
 
+    Movie getMovieById(int movie_id);
+
 }

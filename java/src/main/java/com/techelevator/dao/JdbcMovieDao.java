@@ -106,5 +106,12 @@ public class JdbcMovieDao implements MovieDao{
 
     }
 
+    @Override
+    public Movie getMovieById(int movie_id) {
+
+        String sql = "SELECT * FROM movies WHERE id = ?:";
+        return null;
+    }
+
 }
 
