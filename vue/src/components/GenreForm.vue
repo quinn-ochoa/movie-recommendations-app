@@ -167,7 +167,7 @@ export default{
     },
     methods:{
         submitForm(){
-            if(this.userProfile.full_name.length === 0){
+            // if(this.userProfile.full_name.length == 0){
                 userInfoService
                 .addUserInfo(this.userProfile)
                 .then(response =>{
@@ -181,20 +181,20 @@ export default{
                     // this.$router.push({name: 'HomeView'})
                     }
                 })
-            } else {
-                userInfoService
-                .updateUserInfo(this.userProfile)
-                .then(response => {
-                    if(response.status === 201){
-                        this.$store.commit(
-                            'SET_NOTIFICATION', {
-                            message:'Updated user info',
-                            type:'success'
-                            }
-                        );
-                    }
-                })
-            }
+            // } else {
+            //     userInfoService
+            //     .updateUserInfo(this.userProfile)
+            //     .then(response => {
+            //         if(response.status === 200){
+            //             this.$store.commit(
+            //                 'SET_NOTIFICATION', {
+            //                 message:'Updated user info',
+            //                 type:'success'
+            //                 }
+            //             );
+            //         }
+            //     })
+            // }
             
         },
         cancelForm() {
