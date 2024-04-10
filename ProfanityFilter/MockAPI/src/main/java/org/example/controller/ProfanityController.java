@@ -2,11 +2,9 @@ package org.example.controller;
 
 import org.example.models.Movie;
 import org.example.models.MovieApiResponse;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -18,8 +16,8 @@ public class ProfanityController {
     
     private MovieApiResponse movieApiResponse;
 
-    @RequestMapping(path = "/movieApiResponse", method = RequestMethod.GET)
-    public MovieApiResponse addCleanTitles(MovieApiResponse movieApiResponse) {
+    @RequestMapping(path = "/movieApiResponse/", method = RequestMethod.GET)
+    public MovieApiResponse addCleanTitles(@RequestBody MovieApiResponse movieApiResponse) {
         movieApiResponse.setResults(checkForProfanity(movieApiResponse.getResults()));
         return movieApiResponse;
     }

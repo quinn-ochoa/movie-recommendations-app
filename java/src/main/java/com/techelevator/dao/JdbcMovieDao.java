@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
+import com.techelevator.services.ProfanityFilterService;
 import com.techelevator.services.TMDBService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -13,12 +14,11 @@ import org.springframework.stereotype.Component;
 public class JdbcMovieDao implements MovieDao{
 
     private final JdbcTemplate jdbcTemplate;
-    private final TMDBService tmdbService;
 
-    public JdbcMovieDao(JdbcTemplate jdbcTemplate, TMDBService service) {
-        this.tmdbService = service;
+    public JdbcMovieDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
     @Override
     public boolean isMovieInDatabase(int movieId){
 
@@ -93,6 +93,15 @@ public class JdbcMovieDao implements MovieDao{
             }
 
         } return movieApiResponse;
+
+    }
+
+    @Override
+    public MovieApiResponse throwOutBadMovies(MovieApiResponse movieApiResponse) {
+
+        ProfanityFilterService profanityFilterService = new ProfanityFilterService();
+        movieApiResponse = profanityFilterService.checkForProfaneTitle(movieApiResponse);
+        return movieApiResponse;
 
     }
 

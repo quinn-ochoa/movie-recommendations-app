@@ -11,4 +11,6 @@ public interface MovieDao {
 
     MovieApiResponse addGenreNameToResponse(MovieApiResponse movieApiResponse);
 
+    MovieApiResponse throwOutBadMovies(MovieApiResponse movieApiResponse);
+
 }

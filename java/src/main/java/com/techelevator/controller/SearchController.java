@@ -21,7 +21,7 @@ public class SearchController {
     @RequestMapping(path = "/search/{term}/", method = RequestMethod.GET)
     public MovieApiResponse getMoviesBySearchTerm(@PathVariable String term) {
 
-        TMDBService tmdbService = new TMDBService();
+        TMDBService tmdbService = new TMDBService(movieDao);
         MovieApiResponse movieApiResponse = tmdbService.getMoviesByTitle(term);
 
         for (Movie movie: movieApiResponse.getResults()) {

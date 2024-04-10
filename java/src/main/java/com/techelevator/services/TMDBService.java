@@ -1,5 +1,6 @@
 package com.techelevator.services;
 
+import com.techelevator.dao.MovieDao;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
 import org.springframework.http.*;
@@ -19,9 +20,12 @@ public class TMDBService {
     private int page = 1;
     private RestTemplate restTemplate = new RestTemplate();
     private final String BEARER_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZGU3MzhlZTFmNjUzNGQ3MDFlYjBlZDcwYjBhMDdmNCIsInN1YiI6IjY1ZGJlMjMxZWQyYWMyMDE4NzQwZGQyNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.SrPF0blfo7MklOWQqkeSN8WnfNLQgyUS8r0TtSOdAC4";
-
+    MovieDao movieDao;
 
     //constructors
+    public TMDBService(MovieDao movieDao) {
+        this.movieDao = movieDao;
+    }
 
     //methods
     public MovieApiResponse getMoviesByTitle(String searchTerm) {
@@ -37,6 +41,7 @@ public class TMDBService {
 
             ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + SEARCH + formattedSearchTerm + "&include_adult=false&page=" + page, HttpMethod.GET, entity, MovieApiResponse.class);
             movieApiResponse = response.getBody();
+           // movieApiResponse = movieDao.throwOutBadMovies(movieApiResponse);
             //TODO start here
         } catch (RestClientException e) {
 
