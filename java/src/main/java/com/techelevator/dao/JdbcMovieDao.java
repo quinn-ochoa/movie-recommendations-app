@@ -64,7 +64,7 @@ public class JdbcMovieDao implements MovieDao{
 
     }
     public MovieApiResponse addGenreNameToResponse(MovieApiResponse movieApiResponse) {
-        //TODO Start Here
+
         String sql = "SELECT name FROM genres WHERE id = ?;";
         String currentSelectedGenreName;
 

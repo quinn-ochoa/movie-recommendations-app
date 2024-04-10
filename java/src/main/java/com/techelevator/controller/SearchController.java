@@ -1,11 +1,9 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.JdbcMovieDao;
 import com.techelevator.dao.MovieDao;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
 import com.techelevator.services.TMDBService;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
