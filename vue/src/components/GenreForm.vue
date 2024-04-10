@@ -178,7 +178,7 @@ export default{
                             type:'success'
                             }
                         );
-                    this.$router.push({name: 'HomeView'})
+                    // this.$router.push({name: 'HomeView'})
                     }
                 })
             } else {
