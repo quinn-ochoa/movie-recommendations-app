@@ -1,6 +1,6 @@
-<template>
+<!-- <template>
     <movie-detail-card v-bind:key="movie.id"
-</template>
+</template> -->
 
 <script>
     import MovieDetailCard from '../components/MovieDetailCard.vue';

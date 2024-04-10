@@ -55,9 +55,9 @@ const routes = [
     path: "/landing",
     name: "landing",
     component: LandingView,
-    // meta: {
-    //   requiresAuth: false
-    // },
+    meta: {
+      requiresAuth: false
+    },
   },
   {
     path: '/create',
@@ -89,7 +89,7 @@ router.beforeEach((to) => {
 
   // If it does and they are not logged in, send the user to "/login"
   if (requiresAuth && store.state.token === '') {
-    return {name: "login"};
+    return {name: "landing"};
   }
   // Otherwise, do nothing and they'll go to their next destination
 });
