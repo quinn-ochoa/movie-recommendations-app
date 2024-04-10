@@ -65,6 +65,7 @@ public class JdbcMovieDao implements MovieDao{
 
     }
 
+    @Override
     public MovieApiResponse addGenreNameToResponse(MovieApiResponse movieApiResponse) {
 
         String sql = "SELECT name FROM genres WHERE id = ?;";
