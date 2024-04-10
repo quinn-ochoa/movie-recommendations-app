@@ -21,7 +21,7 @@
 
       <div>
         <h2>Based on popular demand</h2>
-          <div v-for="result in popular.results" v-bind:key="result.id">
+          <div class="display-card" v-for="result in popular.results" v-bind:key="result.id">
                 {{ result.title }}
                 <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
           </div>
@@ -164,6 +164,10 @@ footer {
   height: 100px;
 }
 
+.display-card{
+  
+}
+
 h1 {
   font-size: medium;
   margin-right: 10px;
@@ -180,6 +184,7 @@ h2 {
   margin-top: 40px;
   margin-right: 20px;
 }
+
 
 
 
