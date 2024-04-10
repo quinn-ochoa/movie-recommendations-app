@@ -31,8 +31,8 @@
         </div> -->
       </div>
 
-      <h2 v-if="selectFavoriteGenres() > 0">Based on favorite genres</h2>
-      <div id="favorite-genres-container" v-if="selectFavoriteGenres() > 0">
+      <h2 v-if="selectFavoriteGenres() != 0">Based on favorite genres</h2>
+      <div id="favorite-genres-container" v-if="selectFavoriteGenres() != 0">
         
         <div class="display-card" v-for="result in selectFavoriteGenres()" v-bind:key="result.id">
           <div class="title">{{ result.title }}</div>
@@ -50,8 +50,8 @@
         </div>
       </div>
 
-      <h2>Recommended for you</h2>
-      <div id="recommended-container">
+      <h2 v-if="recommended4u.results != 0" >Recommended for you</h2>
+      <div id="recommended-container" v-if="recommended4u.results != 0">
         
         <div class="display-card" v-for="result in recommended4u.results" v-bind:key="result.id">
           <div class="title">{{ result.title }}</div>
