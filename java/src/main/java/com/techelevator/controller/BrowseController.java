@@ -20,7 +20,6 @@ public class BrowseController {
     //properties
     UsersGenresDao usersGenresDao;
     GenresDao genresDao;
-
     MovieDao movieDao;
 
     //constructors
@@ -36,7 +35,7 @@ public class BrowseController {
 
         Map<String, Boolean> usersFavoriteGenres = usersGenresDao.getGenresByUserId(id);
         List<Integer> usersFavoriteGenreCodes = new ArrayList<>();
-        TMDBService tmdbService = new TMDBService();
+        TMDBService tmdbService = new TMDBService(movieDao);
         double vote_average = 8.7;
         double vote_count = 25000;
         MovieApiResponse movieApiResponse = new MovieApiResponse();
@@ -89,7 +88,7 @@ public class BrowseController {
 
         Map<String, Boolean> allGenres = usersGenresDao.getGenresByUserId(1);
         List<Integer> allGenreCodes = new ArrayList<>();
-        TMDBService tmdbService = new TMDBService();
+        TMDBService tmdbService = new TMDBService(movieDao);
         double vote_average = 8.7;
         double vote_count = 25000;
         MovieApiResponse movieApiResponse = new MovieApiResponse();

@@ -87,6 +87,7 @@ public class JdbcUsersInfoDao implements UsersInfoDao {
             throw new DaoException("Unable to connect to server or database", e);
 
         } return usersInfo;
+
     }
 
     private UsersInfo mapRowToUser(SqlRowSet results) {

@@ -3,12 +3,12 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
+import com.techelevator.services.ProfanityFilterService;
+import com.techelevator.services.TMDBService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class JdbcMovieDao implements MovieDao{
@@ -18,6 +18,7 @@ public class JdbcMovieDao implements MovieDao{
     public JdbcMovieDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
     @Override
     public boolean isMovieInDatabase(int movieId){
 
@@ -63,8 +64,10 @@ public class JdbcMovieDao implements MovieDao{
         }
 
     }
+
+    @Override
     public MovieApiResponse addGenreNameToResponse(MovieApiResponse movieApiResponse) {
-        //TODO Start Here
+
         String sql = "SELECT name FROM genres WHERE id = ?;";
         String currentSelectedGenreName;
 
@@ -93,4 +96,15 @@ public class JdbcMovieDao implements MovieDao{
 
     }
 
+    @Override
+    public MovieApiResponse throwOutBadMovies(MovieApiResponse movieApiResponse) {
+
+        ProfanityFilterService profanityFilterService = new ProfanityFilterService();
+        MovieApiResponse filtered = profanityFilterService.checkForProfaneTitle(movieApiResponse);
+        filtered.setTotal_pages(movieApiResponse.getTotal_pages());
+        return filtered;
+
+    }
+
 }
+
