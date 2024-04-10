@@ -134,7 +134,9 @@ export default {
         }
       }
       return resultArray;
-    }
+    },
+
+    
     },
   created() {
     let userId = this.$store.state.user.id;

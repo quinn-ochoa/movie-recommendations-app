@@ -110,6 +110,7 @@
             <p>{{ userProfile }}</p>
         <br/>
     </form>
+
 </template>
 
 <script>
@@ -124,13 +125,14 @@ export default{
 
     data(){
         return {
+            showForm: false,
             userProfile:{
                 email:"",
                 full_name:"",
                 username: this.$store.state.user.username,
                 birthday:"",
                 favoriteGenres: {
-                    Action: true,
+                    Action: false,
                     Adventure: false,
                     Horror: false,
                     Romance: false,
@@ -156,6 +158,7 @@ export default{
     },
     methods:{
         submitForm(){
+            if(this.userProfile.full_name)
             userInfoService
             .addUserInfo(this.userProfile)
             .then(response =>{
@@ -170,7 +173,11 @@ export default{
                 this.$router.push({name: 'HomeView'})
                 }
             })
-        }
+        },
+        cancelForm() {
+            // Go back to previous page
+            this.$router.back();
+        },
     }
 }
 

@@ -94,7 +94,7 @@
       //   })
       // },
       async getMovies(){
-        await axios.get(`http://localhost:9000/search/${this.query}`)
+        await axios.get(`http://localhost:9000/search/${this.query}/`)
         .then((response) => {
           this.movies = response.data.results;
           // console.log(this.movies);
