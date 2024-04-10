@@ -32,7 +32,7 @@ public class UserController {
         return usersGenresDao.getGenresByUserId(user_id);
 
     }
-//TODO work here
+
     @RequestMapping(path = "/user/{user_id}/profile/", method = RequestMethod.GET)
     public UsersInfo getUserProfileInfo(@PathVariable int user_id) {
 
