@@ -8,6 +8,10 @@ export default {
         return axios.get(`/search/${searchStr}`)
     },
 
+    getMovie(movieId) {
+        return axios.get(`/movies/${movieId}`)
+      }
+
     //POST FAV GENRES
 
     // addGenres(genres){

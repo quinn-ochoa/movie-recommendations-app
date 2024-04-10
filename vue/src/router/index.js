@@ -8,6 +8,7 @@ import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import LandingView from '../views/LandingView.vue';
 import AddGenresView from '../views/AddGenresView.vue';
+import MovieDetailView from '../views/MovieDetailView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -62,6 +63,11 @@ const routes = [
     path: '/create',
     name: 'AddGenresView',
     component: AddGenresView
+  },
+  {
+    path: '/:movieId',
+    name: 'MovieDetailView',
+    component: MovieDetailView
   },
   
 
