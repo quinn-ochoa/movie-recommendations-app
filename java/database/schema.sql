@@ -24,6 +24,13 @@ CREATE TABLE genres (
 	CONSTRAINT UQ_id UNIQUE (id)
 );
 
+CREATE TABLE certifications (
+	certification_id INT,
+    certification VARCHAR(30),
+	meaning TEXT,
+	CONSTRAINT PK_certification_id PRIMARY KEY (certification_id)
+);
+
 CREATE TABLE users_info (
 	user_id SERIAL,
 	email varchar(50),
@@ -47,6 +54,14 @@ CREATE TABLE users_genres (
     CONSTRAINT PK_users_genres PRIMARY KEY (user_id, genre_id),
     CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
     CONSTRAINT FK_genre_id FOREIGN KEY (genre_id) REFERENCES genres(id)
+);
+
+CREATE TABLE movies_certifications (
+    certification_id INT,
+	movie_id INT,
+    CONSTRAINT PK_movies_certifications PRIMARY KEY (certification_id, movie_id),
+    CONSTRAINT FK_movie_id FOREIGN KEY (movie_id) REFERENCES movies(id),
+    CONSTRAINT FK_certification_id FOREIGN KEY (certification_id) REFERENCES certifications(certification_id)
 );
 
 COMMIT TRANSACTION;
