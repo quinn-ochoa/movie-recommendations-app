@@ -23,7 +23,7 @@ public class ProfanityFilterService {
 
         try {
 
-            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + "movieApiResponse/", HttpMethod.GET, entity, MovieApiResponse.class);
+            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + "movieApiResponse/", HttpMethod.POST, entity, MovieApiResponse.class);
             movieApiResponse = response.getBody();
 
         } catch (RestClientException e) {

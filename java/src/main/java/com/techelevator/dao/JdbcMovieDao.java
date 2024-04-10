@@ -100,8 +100,9 @@ public class JdbcMovieDao implements MovieDao{
     public MovieApiResponse throwOutBadMovies(MovieApiResponse movieApiResponse) {
 
         ProfanityFilterService profanityFilterService = new ProfanityFilterService();
-        movieApiResponse = profanityFilterService.checkForProfaneTitle(movieApiResponse);
-        return movieApiResponse;
+        MovieApiResponse filtered = profanityFilterService.checkForProfaneTitle(movieApiResponse);
+        filtered.setTotal_pages(movieApiResponse.getTotal_pages());
+        return filtered;
 
     }
 
