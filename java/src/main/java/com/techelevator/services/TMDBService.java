@@ -39,7 +39,8 @@ public class TMDBService {
 
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
 
-        } if (movieApiResponse == null) {
+        }
+        if (movieApiResponse == null) {
 
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No movies found for the given search term.");
 
@@ -61,16 +62,16 @@ public class TMDBService {
 
             for (Integer genre_id : movie.getGenre_ids()) {
 
-                try{
+                try {
 
                     currentSelectedGenreName = jdbcTemplate.queryForObject(sql, String.class, genre_id);
                     movie.getGenre_names().add(currentSelectedGenreName);
 
-                } catch (CannotGetJdbcConnectionException e){
+                } catch (CannotGetJdbcConnectionException e) {
 
                     throw new DaoException("Unable to connect to server or database", e);
 
-                } catch (DataIntegrityViolationException e){
+                } catch (DataIntegrityViolationException e) {
 
                     throw new DaoException("Data integrity violation", e);
 
@@ -78,8 +79,9 @@ public class TMDBService {
 
             }
 
-        } return null;
+        }
+        return null;
 
     }
-
 }
+
