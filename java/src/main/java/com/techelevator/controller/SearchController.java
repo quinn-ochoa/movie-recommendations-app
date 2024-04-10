@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.MovieDao;
+import com.techelevator.dao.MovieGenreDao;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
 import com.techelevator.services.TMDBService;
@@ -11,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class SearchController {
     //properties
     MovieDao movieDao;
+    MovieGenreDao movieGenreDao;
 
     //constructors
-    public SearchController(MovieDao movieDao) {
+    public SearchController(MovieDao movieDao, MovieGenreDao movieGenreDao) {
         this.movieDao = movieDao;
+        this.movieGenreDao = movieGenreDao;
     }
 
     //methods
@@ -42,8 +45,11 @@ public class SearchController {
     public Movie getMovieByMovieId(@PathVariable int movie_id) {
 
         Movie movie = movieDao.getMovieById(movie_id);
+        movie.setGenre_ids(movieGenreDao.getGenreIdsByMovieId(movie_id));
+        movie = movieDao.addGenreNameToMovie(movie);
+        movie.setId(movie_id);
         return movie;
-        //TODO start here
+
     }
 
 }

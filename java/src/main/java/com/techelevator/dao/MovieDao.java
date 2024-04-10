@@ -15,4 +15,6 @@ public interface MovieDao {
 
     Movie getMovieById(int movie_id);
 
+    Movie addGenreNameToMovie(Movie movie);
+
 }

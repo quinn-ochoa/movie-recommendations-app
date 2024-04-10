@@ -7,4 +7,6 @@ public interface MovieGenreDao {
 
     void updateMovieGenreAssociation(List<Integer> genreIds, int movieId);
 
+    List<Integer> getGenreIdsByMovieId(int movie_id);
+
 }
