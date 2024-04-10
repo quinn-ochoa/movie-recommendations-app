@@ -11,5 +11,5 @@ public interface MovieDao {
     boolean isMovieInDatabase(int movieId);
 
     void addMovie(Movie movie);
-    
+
 }
