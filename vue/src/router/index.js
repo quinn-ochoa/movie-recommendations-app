@@ -6,6 +6,9 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
+import LandingView from '../views/LandingView.vue';
+import AddGenresView from '../views/AddGenresView.vue';
+import MovieDetailView from '../views/MovieDetailView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -46,8 +49,28 @@ const routes = [
     component: RegisterView,
     meta: {
       requiresAuth: false
-    }
-  }
+    },
+  },
+  {
+    path: "/landing",
+    name: "landing",
+    component: LandingView,
+    meta: {
+      requiresAuth: false
+    },
+  },
+  {
+    path: '/create',
+    name: 'AddGenresView',
+    component: AddGenresView
+  },
+  {
+    path: '/movie/:movieId',
+    name: 'MovieDetailView',
+    component: MovieDetailView
+  },
+  
+
 ];
 
 // Create the router
@@ -66,7 +89,7 @@ router.beforeEach((to) => {
 
   // If it does and they are not logged in, send the user to "/login"
   if (requiresAuth && store.state.token === '') {
-    return {name: "login"};
+    return {name: "landing"};
   }
   // Otherwise, do nothing and they'll go to their next destination
 });

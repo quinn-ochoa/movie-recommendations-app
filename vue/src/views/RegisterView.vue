@@ -1,31 +1,53 @@
 <template>
   <div id="register" class="text-center">
-    <form v-on:submit.prevent="register">
-      <h1>Create Account</h1>
-      <div role="alert" v-if="registrationErrors">
-        {{ registrationErrorMsg }}
-      </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <div class="form-input-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
-      </div>
-      <button type="submit">Create Account</button>
-      <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
+      <img alt="Glasses logo" src="../assets/logo.png">
+      <h1>WeWatchWhat</h1>
+      <h2>Create an account</h2>
+      <form v-on:submit.prevent="register">
+        <div role="alert" v-if="registrationErrors">
+          {{ registrationErrorMsg }}
+        </div>
+        <section id="all-entries">
+        <section id="left-entries">
+        <div class="form-input-group">
+          <!-- <label for="username">Username</label> -->
+          <input type="text" id="username" v-model="user.username" placeholder="Username" required autofocus />
+        </div>
+        <div class="form-input-group">
+          <!-- <label for="password">Password</label> -->
+          <input type="password" id="password" v-model="user.password" placeholder="Password"  required />
+        </div>
+        <div class="form-input-group">
+          <!-- <label for="confirmPassword">Confirm Password</label> -->
+          <input type="password" id="confirm-password" v-model="user.confirmPassword" placeholder="Confirm Password" required />
+        </div>
+        </section>
+        <!-- <section id="right-entries">
+          <div class="form-input-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" v-model="user.name" placeholder="Name" required autofocus />
+        </div>
+        <div class="form-input-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" v-model="user.email" placeholder="Email" required autofocus />
+        </div>
+        <div class="form-input-group">
+          <label for="birthday">Birthday</label>
+          <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" placeholder="Birthday" v-model="user.birthday" required autofocus />
+        </div>
+      </section> -->
+        
+      </section>
+      <section id="buttons-section">
+        <button type="submit">Sign up</button>
+        <button type="cancel">Cancel</button>
+        <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
+      </section>
     </form>
   </div>
 </template>
-
 <script>
 import authService from '../services/AuthService';
-
 export default {
   data() {
     return {
@@ -71,12 +93,91 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .form-input-group {
   margin-bottom: 1rem;
 }
 label {
   margin-right: 0.5rem;
+}
+h1 {
+  text-align: center;
+}
+h2 {
+  text-align: center;
+  font-size: medium;
+  margin-bottom: 20px;
+}
+#register {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FFF3BF;
+}
+#left-entries {
+
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  gap: 15px;
+}
+/* #right-entries {
+  display: flex;
+  flex-direction: column;
+} */
+
+#left-entries :first-child{
+  border-radius:10px;
+  border: none;
+  height: 40px;
+  text-align: center;
+}
+
+#all-entries {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+#buttons-section {
+  text-align: center;
+}
+button {
+  background-color: #012F6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+}
+fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  width: 40%;
+  justify-content: space-around;
+}
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100px;
+}
+#register :first-child:img {
+text-align: center;
+}
+
+
+.form-input-group{
+  text-align: center;
+}
+
+#left-entries{
+  text-align: center;
+}
+ input[type="checkbox"] {
+  margin-right: 5px;
 }
 </style>

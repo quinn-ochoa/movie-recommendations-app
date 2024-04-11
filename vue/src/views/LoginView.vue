@@ -1,26 +1,30 @@
 <template>
-  <div id="login">
-    <form v-on:submit.prevent="login">
-      <h1 >Please Sign In</h1>
-      <div role="alert" v-if="invalidCredentials">
-        Invalid username and password!
+  <div class="container">
+      <div id="login">
+        <form v-on:submit.prevent="login">
+          <img alt="Glasses logo" src="../assets/logo.png">  
+          <h1>WeWatchWhat</h1>
+            <div role="alert" v-if="invalidCredentials">
+              Invalid username and password!
+            </div>
+            <div role="alert" v-if="this.$route.query.registration">
+              Thank you for registering, please sign in.
+            </div>
+            <div class="form-input-group">
+              <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
+            </div>
+            <div class="form-input-group">
+              <input type="password" id="password" placeholder="Password" v-model="user.password" required />
+            </div>
+            <button type="submit">Sign in</button>
+            <button type="cancel">Cancel</button>
+            <p>
+            <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
+         
+        </form>
       </div>
-      <div role="alert" v-if="this.$route.query.registration">
-        Thank you for registering, please sign in.
-      </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <button type="submit">Sign in</button>
-      <p>
-      <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
-    </form>
   </div>
+
 </template>
 
 <script>
@@ -61,10 +65,42 @@ export default {
 </script>
 
 <style scoped>
+
+.container{
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#login{
+  width: 400px;
+  height: 400px;
+  padding: 10px;
+  background-color: #FECE00;
+  /* position: absolute;
+  top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(30%, 30%); */
+    /* padding: 10px; */
+  text-align: center;
+}
 .form-input-group {
   margin-bottom: 1rem;
 }
 label {
   margin-right: 0.5rem;
 }
+
+button {
+  background-color: #012f6d;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+
+}
+
 </style>
