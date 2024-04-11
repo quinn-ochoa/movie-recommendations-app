@@ -14,6 +14,7 @@ CREATE TABLE movies (
 	overview TEXT,
 	poster_path VARCHAR(200),
 	vote_average DECIMAL (5,3),
+	do_not_show boolean,
 	CONSTRAINT PK_movie_id PRIMARY KEY (id)
 );
 

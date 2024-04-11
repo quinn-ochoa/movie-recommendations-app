@@ -63,6 +63,30 @@ public class Movie {
         return genre_names;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
+    }
+
+    public void setVote_average(BigDecimal vote_average) {
+        this.vote_average = vote_average;
+    }
+
+    public void setGenre_ids(List<Integer> genre_ids) {
+        this.genre_ids = genre_ids;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     //methods
     @Override
     public boolean equals(Object o) {

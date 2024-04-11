@@ -98,4 +98,5 @@ public class JdbcGenresDao implements GenresDao{
         genres.setName(result.getString("name"));
         return genres;
     }
+
 }
