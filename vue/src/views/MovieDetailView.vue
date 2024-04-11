@@ -6,7 +6,7 @@
     import MovieDetailCard from '../components/MovieDetailCard.vue';
 </script>
 
-export default {
+<!-- export default {
     components: {
         MovieDetailCard
     },
@@ -21,4 +21,4 @@ export default {
             }
         }
     }
-}
+} -->

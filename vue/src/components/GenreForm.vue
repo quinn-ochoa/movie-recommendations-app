@@ -1,6 +1,6 @@
 <template>
     
-    <form v-on:submit.prevent="submitForm" v-if="showForm === true" >
+    <form v-on:submit.prevent="submitForm" >
         <div class="form-input-group">
           <input type="text" id="name" v-model="userProfile.full_name" placeholder="Name" required autofocus />
         </div>
@@ -98,28 +98,12 @@
             </section>
 
             <div class="actions">
-            <button class="btn-submit" type="submit" v-on:click="showForm = false">Submit</button>
+            <button class="btn-submit" type="submit" >Submit</button>
             <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
             </div>
         </fieldset>
     </form>
 
-    <div>
-            <!-- <p>OUTPUT</p>
-            <p>{{ userProfile }}</p> -->
-            <h3>{{ userProfile.username }}</h3>    
-            <h3>{{ userProfile.full_name }}</h3>
-            <p>{{ userProfile.email }}</p>
-            <p>{{ userProfile.favoriteGenres }}</p>
-            <button 
-            class="btn-add" 
-            v-if="showForm === false"
-            v-on:click.prevent="showForm = true"
-            >
-                Edit Profile
-            </button>
-
-    </div>
 </template>
 
 <script>
@@ -167,35 +151,21 @@ export default{
     },
     methods:{
         submitForm(){
-            // if(this.userProfile.full_name.length == 0){
-                userInfoService
-                .addUserInfo(this.userProfile)
-                .then(response =>{
-                    if(response.status === 201){
-                        this.$store.commit(
-                            'SET_NOTIFICATION', {
-                            message:'Added new user info',
-                            type:'success'
-                            }
-                        );
-                    // this.$router.push({name: 'HomeView'})
-                    }
-                })
-            // } else {
-            //     userInfoService
-            //     .updateUserInfo(this.userProfile)
-            //     .then(response => {
-            //         if(response.status === 200){
-            //             this.$store.commit(
-            //                 'SET_NOTIFICATION', {
-            //                 message:'Updated user info',
-            //                 type:'success'
-            //                 }
-            //             );
-            //         }
-            //     })
-            // }
-            
+            // if(this.userProfile.full_name)
+            userInfoService
+            .addUserInfo(this.userProfile)
+            .then(response =>{
+                if(response.status === 201){
+                
+                    this.$store.commit(
+                        'SET_NOTIFICATION', {
+                        message:'Added new user info',
+                        type:'success'
+                        }
+                );
+                this.$router.push({name: 'HomeView'})
+                }
+            })
         },
         cancelForm() {
             // Go back to previous page

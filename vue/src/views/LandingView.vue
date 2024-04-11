@@ -8,18 +8,6 @@
         alt="Movie Poster Collage"
       />
 
-      <!-- test -->
-
-      <!-- <div 
-        class="movie-container" 
-        v-for="movie in movies" 
-        v-bind:key="movie.id" 
-        v-bind:movie="movie"
-      > 
-      <div class="poster">
-            <img  :src ="'https://image.tmdb.org/t/p/original' + movie.poster_path"/>
-        </div>     
-    </div> -->
       <movie-card 
         class="movie-container" 
         v-for="movie in movies" 
@@ -28,7 +16,7 @@
       > 
               
       </movie-card>
-      <!-- test -->
+
     </div>
   
     <div class="home">
