@@ -1,7 +1,8 @@
 <!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
+
   <div class="container">
-    <div class="image">
+   <div class="image">
       <img 
         v-if="movies.length == 0" 
         src="../../src/assets/movie_collage.jpg" 
@@ -19,6 +20,7 @@
       </movie-card>
       <!-- test -->
     </div>
+
   
     <div class="home">
         <div class="content">
@@ -33,18 +35,19 @@
             <br/>
             
             <button type="sign-in">
-              <router-link v-bind:to="{ name: 'login' }">
+              <router-link class="router-button" v-bind:to="{ name: 'login' }">
                 Sign in
               </router-link>
             </button>&nbsp;
 
             <button type="create-account">
-              <router-link v-bind:to="{ name: 'register' }">
+              <router-link class="router-button" v-bind:to="{ name: 'register' }">
                 Create Account
               </router-link>
             </button>
         </div>
     </div>
+
   </div>
 </template>
   
@@ -161,5 +164,11 @@
     cursor: pointer;
     border-radius: 10px;
   }
+
+  .router-button {
+    color: white;
+    text-decoration: inherit;
+  }
+
   
   </style>

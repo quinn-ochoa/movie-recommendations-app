@@ -106,20 +106,31 @@ h1 {
 h2 {
   text-align: center;
   font-size: medium;
+  margin-bottom: 20px;
 }
 #register {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #FFF3BF;
 }
 #left-entries {
+
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  margin: auto;
+  gap: 15px;
 }
 /* #right-entries {
   display: flex;
   flex-direction: column;
 } */
+
+#left-entries :first-child{
+  border-radius:10px;
+  border: none;
+  height: 40px;
+  text-align: center;
+}
+
 #all-entries {
   display: flex;
   flex-direction: column;
@@ -157,10 +168,13 @@ img {
 #register :first-child:img {
 text-align: center;
 }
-#left-entries :first-child{
-  border-radius:10px;
-  border: none;
-  height: 40px;
+
+
+.form-input-group{
+  text-align: center;
+}
+
+#left-entries{
   text-align: center;
 }
  input[type="checkbox"] {

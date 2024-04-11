@@ -65,7 +65,7 @@ const routes = [
     component: AddGenresView
   },
   {
-    path: '/:movieId',
+    path: '/movie/:movieId',
     name: 'MovieDetailView',
     component: MovieDetailView
   },

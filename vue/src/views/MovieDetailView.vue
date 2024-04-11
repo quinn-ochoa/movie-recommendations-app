@@ -4,21 +4,28 @@
 
 <script>
     import MovieDetailCard from '../components/MovieDetailCard.vue';
-</script>
+    import movieService from '../services/MovieService.js';
 
 export default {
     components: {
         MovieDetailCard
     },
-
     data() {
         return {
-            return {
-                title: '',
-                genre_names: '',
-                overview: '',
-                vote_average
-            }
+            movie: {}
+        }
+    },
+    methods: {
+        getMovie(movieId) {
+            movieService.getMovie(movieId)
+            .then( response => {
+                this.movie = response.data;
+            })
+        },
+        created() {
+            this.getMovie(this.$route.params.movieId)
         }
     }
 }
+</script>
+

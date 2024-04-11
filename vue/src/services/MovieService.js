@@ -9,7 +9,7 @@ export default {
     },
 
     getMovie(movieId) {
-        return axios.get(`/movies/${movieId}`)
+        return axios.get(`/movie/${movieId}/`)
       }
 
     //POST FAV GENRES

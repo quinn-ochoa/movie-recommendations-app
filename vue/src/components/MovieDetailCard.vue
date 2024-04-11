@@ -19,6 +19,7 @@
             movie: Object
         }
     }
+  
 </script>
 
 <style>
