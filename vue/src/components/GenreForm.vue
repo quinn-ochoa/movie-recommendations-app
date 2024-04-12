@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import userInfoService from '../services/UserInfoService'
+import userInfoService from '../services/UserInfoService';
 
 export default{
 
@@ -116,6 +116,7 @@ export default{
             showForm: false,
             
             userProfile:{
+
                 email:"",
                 full_name:"",
                 username: this.$store.state.user.username,
@@ -149,11 +150,13 @@ export default{
         submitForm(){
             userInfoService
             .addUserInfo(this.userProfile)
-            .then(response => {
-                if (response.status === 201) {
-                    this.$router.push({name:'home'});
-                }
-            })
+            .then(this.$router.push({name:'home'}))
+            // .then(
+            //     response => {
+            //     if (response.status === 201) {
+            //         this.$router.push({name:'home'});
+            //     }}
+            //     )
         },
         cancelForm() {
             // Go back to previous page
