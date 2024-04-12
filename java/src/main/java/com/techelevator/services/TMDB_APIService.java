@@ -1,8 +1,7 @@
 package com.techelevator.services;
 
 import com.techelevator.dao.MovieDao;
-import com.techelevator.model.Movie;
-import com.techelevator.model.MovieApiResponse;
+import com.techelevator.model.*;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
@@ -12,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Component
-public class TMDBService {
+public class TMDB_APIService {
     //properties
     private final String API_BASE_URL = "https://api.themoviedb.org/3";
     private final String SEARCH = "/search/movie?query=";
@@ -22,47 +21,20 @@ public class TMDBService {
     MovieDao movieDao;
 
     //constructors
-    public TMDBService(MovieDao movieDao) {
-        this.movieDao = movieDao;
-    }
 
     //methods
-    public MovieApiResponse getMoviesByTitle(String searchTerm) {
+    public MovieApiResponse getMoviesByTitle(String searchTerm, int page) {
 
-        int page = 1;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + BEARER_TOKEN);
         HttpEntity<MovieApiResponse> entity = new HttpEntity<>(headers);
-        MovieApiResponse movieApiResponse = new MovieApiResponse();
-        MovieApiResponse apiQueryResults = new MovieApiResponse();
+        MovieApiResponse movieApiResponse;
         String formattedSearchTerm = searchTerm.replace(" ", "%20");
 
         try {
 
-            while (page == 1 || page <= apiQueryResults.getTotal_pages()) {
-
-                ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + SEARCH + formattedSearchTerm + "&include_adult=false&page=" + page, HttpMethod.GET, entity, MovieApiResponse.class);
-                apiQueryResults = response.getBody();
-                apiQueryResults = movieDao.throwOutBadMovies(apiQueryResults);
-                page++;
-
-                for (Movie movie : apiQueryResults.getResults()) {
-
-                    movieApiResponse.getResults().add(movie);
-
-                    if (movieApiResponse.getResults().size() >= 20) {
-
-                        break;
-
-                    }
-
-                } if (movieApiResponse.getResults().size() >= 20) {
-
-                    break;
-
-                }
-
-            }
+            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + SEARCH + formattedSearchTerm + "&include_adult=false&page=" + page, HttpMethod.GET, entity, MovieApiResponse.class);
+            movieApiResponse = response.getBody();
 
         } catch (RestClientException e) {
 
@@ -111,21 +83,21 @@ public class TMDBService {
 
                             ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genresAsApiInput, HttpMethod.GET, entity, MovieApiResponse.class);
                             apiQueryResults = response.getBody();
-                            apiQueryResults = movieDao.throwOutBadMovies((apiQueryResults));
+                            //apiQueryResults = movieDao.throwOutBadMovies((apiQueryResults));
                             page++;
 
                             for (Movie movie : apiQueryResults.getResults()) {
 
                                 layeredResults.getResults().add(movie);
 
-                                if (layeredResults.getResults().size() >= 20) {
+                                if (layeredResults.getResults().size() >= 50) {
 
                                     break;
 
                                 }
 
                             }
-                            if (layeredResults.getResults().size() >= 20) {
+                            if (layeredResults.getResults().size() >= 50) {
 
                                 break;
 
@@ -139,7 +111,7 @@ public class TMDBService {
 
                                 recommended.getResults().add(movie);
 
-                                if (recommended.getResults().size() >= 20) {
+                                if (recommended.getResults().size() >= 50) {
 
                                     break;
 
@@ -174,7 +146,7 @@ public class TMDBService {
 
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
 
-            } while (recommended.getResults().size() < 20) {
+            } while (recommended.getResults().size() < 50) {
 
                 neededLayers++;
                 recommended = queryForRecommended4u(recommended, genres, vote_average, vote_count, neededLayers, currentLayer);
@@ -233,20 +205,20 @@ public class TMDBService {
 
                         ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genre, HttpMethod.GET, entity, MovieApiResponse.class);
                         apiQueryResults = response.getBody();
-                        apiQueryResults = movieDao.throwOutBadMovies(apiQueryResults);
+                        //apiQueryResults = movieDao.throwOutBadMovies(apiQueryResults);
                         page++;
 
                         for (Movie movie : apiQueryResults.getResults()) {
 
                             layeredResults.getResults().add(movie);
 
-                            if (layeredResults.getResults().size() >= 20) {
+                            if (layeredResults.getResults().size() >= 50) {
 
                                 break;
 
                             }
 
-                        } if (layeredResults.getResults().size() >= 20) {
+                        } if (layeredResults.getResults().size() >= 50) {
 
                             break;
 
@@ -260,7 +232,7 @@ public class TMDBService {
 
                             recommended.getResults().add(movie);
 
-                            if (recommended.getResults().size() >= 20) {
+                            if (recommended.getResults().size() >= 50) {
 
                                 break;
 
@@ -397,6 +369,43 @@ public class TMDBService {
             }
 
         } return recommended;
+
+    }
+
+    public int queryForCertificationById(int movie_id) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + BEARER_TOKEN);
+        HttpEntity<ReleaseDatesApiResponse> entity = new HttpEntity<>(headers);
+        ReleaseDatesApiResponse releaseDatesApiResponse;
+
+        try {
+
+            ResponseEntity<ReleaseDatesApiResponse> response = restTemplate.exchange(API_BASE_URL + "/movie/" + movie_id + "/release_dates", HttpMethod.GET, entity, ReleaseDatesApiResponse.class);
+            releaseDatesApiResponse = response.getBody();
+
+        }  catch (RestClientException e) {
+
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
+
+        }
+        for (CountryReleaseDates country : releaseDatesApiResponse.getResults()) {
+
+            if(country.getIso_3166_1().equalsIgnoreCase("US")) {
+
+                for (ReleaseDates releaseDate : country.getRelease_dates()) {
+
+                    if (releaseDate.getType() != null && (releaseDate.getType() <= 5)) {
+
+                        return releaseDate.getType();
+
+                    }
+
+                }
+
+            }
+
+        } return 0;
 
     }
 

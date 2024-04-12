@@ -20,8 +20,7 @@ public class JdbcMovieGenreDao implements MovieGenreDao{
     @Override
     public void updateMovieGenreAssociation(List<Integer> genreIds, int movieId) {
 
-        String sql = "INSERT INTO movies_genres (movie_id, genre_id)" +
-                " VALUES (?,?);";
+        String sql = "INSERT INTO movies_genres (movie_id, genre_id) VALUES (?,?);";
 
         for (Integer genreId: genreIds) {
 

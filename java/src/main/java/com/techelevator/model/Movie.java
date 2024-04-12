@@ -16,11 +16,13 @@ public class Movie {
     String overview;
     String poster_path;
     BigDecimal vote_average;
+    int certification_id;
+    boolean badName = false;
 
     //constructors
     public Movie() {
     }
-    public Movie(List<Integer> genre_ids, List<String> genre_names, Integer id, String title, String overview, String poster_path, BigDecimal vote_average) {
+    public Movie(List<Integer> genre_ids, List<String> genre_names, Integer id, String title, String overview, String poster_path, BigDecimal vote_average, int certification_id, boolean badName) {
        this.genre_ids = genre_ids;
        this.genre_names = genre_names;
        this.id = id;
@@ -28,6 +30,8 @@ public class Movie {
        this.overview = overview;
        this.poster_path = poster_path;
        this.vote_average = vote_average;
+       this.certification_id = certification_id;
+       this.badName = badName;
     }
 
     //getters & setter
@@ -85,6 +89,22 @@ public class Movie {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setCertification_id(int certification_id) {
+        this.certification_id = certification_id;
+    }
+
+    public int getCertification_id() {
+        return certification_id;
+    }
+
+    public void setBadName(boolean badName) {
+        this.badName = badName;
+    }
+
+    public boolean isBadName() {
+        return badName;
     }
 
     //methods
