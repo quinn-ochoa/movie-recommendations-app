@@ -149,7 +149,7 @@ export default{
         submitForm(){
             userInfoService
             .addUserInfo(this.userProfile)
-            .then(response => {
+            .then((response) => {
                 if (response.status === 201) {
                     this.$router.push({name:'home'});
                 }
