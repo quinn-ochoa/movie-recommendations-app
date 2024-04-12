@@ -127,7 +127,8 @@
       "image home";
     height: 100vh;
     max-height: 100vh;
-    margin: 0px -10px;
+
+    /* margin: 0px -10px; */
     /* justify-items: center; */
   }
   .image{

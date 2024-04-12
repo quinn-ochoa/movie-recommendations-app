@@ -30,8 +30,8 @@
 <style>
  .movie-card{
     position: relative;
-    height: 200px;
-    width: auto;
+    /* height: 200px;
+    width: auto; */
     /* width: 152px;
     height: 250px;
     margin-bottom: 5px;
@@ -41,8 +41,8 @@
 
   .movie-card img{
     display: block;
-  height: 200px;
-  width: auto;
+  /* height: 200px;
+  width: auto; */
     /* height: 100%;
     width: 100%;
     object-fit: fill;
@@ -65,8 +65,8 @@
   justify-content: center;
   opacity: 0;
   transition: opacity 0.25s;
-  margin-left: 5px;
-  margin-top: 23px;
+  /* margin-left: 5px; */
+  /* margin-top: 23px; */
   font-weight: bold;
   
 }

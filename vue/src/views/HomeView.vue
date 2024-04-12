@@ -263,7 +263,7 @@ export default {
       position: relative;
 
       /* change width */
-      height: 200px;
+      height: 250px;
       width: auto;
       /* width: 400px; */
       
@@ -271,7 +271,7 @@ export default {
 
     .movie-poster{
       display: block;
-      height: 200px;
+      height: 240px;
       width: auto;
       /* width: 100%; */
 
