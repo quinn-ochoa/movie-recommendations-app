@@ -5,12 +5,13 @@
       <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
   </header>
 
-    <h1>Create Profile</h1>
-    <update-genre-form/>
+    <h1>Update Profile</h1>
+    <update-genre-form v-bind:user-profile="userProfile"/>
     <!-- <genre-form v-bind:genre="genre" /> -->
 
     {{ $store.state.user }}
-    {{ $store.state.user.userProfile }}
+    <!-- {{ $store.state.user.userProfile }} -->
+    <!-- {{ $store.state.user.userProfile.favoriteGenres }} -->
   <footer>
     <div>
       <i class="fa-brands fa-facebook social-icon" ></i>

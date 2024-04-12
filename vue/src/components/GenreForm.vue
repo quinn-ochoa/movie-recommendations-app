@@ -1,6 +1,7 @@
 <template>
     
-    <form v-on:submit.prevent="submitForm" >
+    <form v-on:submit.prevent="submitForm">
+        <!-- ="submitForm()"  -->
         <div class="form-input-group">
           <input type="text" id="name" v-model="userProfile.full_name" placeholder="Name" required autofocus />
         </div>
@@ -98,8 +99,8 @@
             </section>
 
             <div class="actions">
-                <button class="btn-submit" type="submit" >Submit</button>
-                <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
+                <button class="btn-submit" type="submit" v-on:click.prevent="submitForm()">Submit</button>
+                <button class="btn-cancel" type="button" v-on:click.prevent="cancelForm()">Cancel</button>
             </div>
         </fieldset>
     </form>
@@ -116,6 +117,7 @@ export default{
             showForm: false,
             
             userProfile:{
+                user_id: this.$store.state.user.id,
                 email:"",
                 full_name:"",
                 username: this.$store.state.user.username,
@@ -154,6 +156,9 @@ export default{
                     this.$router.push({name:'home'});
                 }
             })
+            .catch(error => {
+                console.error(error);
+            });
         },
         cancelForm() {
             // Go back to previous page
