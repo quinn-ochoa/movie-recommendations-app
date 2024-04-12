@@ -4,7 +4,9 @@ import com.techelevator.dao.MovieDao;
 import com.techelevator.model.*;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -155,6 +157,16 @@ public class TMDB_APIService {
 
         } return recommended;
 
+    }
+
+    public Movie getMovieById(int id) {
+        for (MovieApiResponse movieApiResponse) {
+            if (id == movies.getId()) {
+
+                return movie;
+            }
+        }
+        return null;
     }
 
     private String createGenresAsApiInput(String genresAsApiInput, List<Integer> genres) {
@@ -369,6 +381,7 @@ public class TMDB_APIService {
             }
 
         } return recommended;
+<<<<<<< HEAD:java/src/main/java/com/techelevator/services/TMDB_APIService.java
 
     }
 
@@ -406,6 +419,8 @@ public class TMDB_APIService {
             }
 
         } return 0;
+=======
+>>>>>>> 6e6c8149c836380e2e2e6ba1e837dba6117da87a:java/src/main/java/com/techelevator/services/TMDBService.java
 
     }
 

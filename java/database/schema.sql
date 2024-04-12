@@ -37,6 +37,7 @@ CREATE TABLE users_info (
 	email varchar(50),
 	full_name varchar(200),
 	birthday DATE NOT NULL,
+	nc17_requested boolean,
 	CONSTRAINT PK_user_id PRIMARY KEY (user_id),
 	CONSTRAINT FK_user_info FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
