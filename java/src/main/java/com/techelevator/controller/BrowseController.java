@@ -77,7 +77,7 @@ public class BrowseController {
              movieDao.addGenreNameToResponse(result.getValue());
 
         } return browser;
-        
+
     }
 
     private MovieApiResponse filterAndTrim(MovieApiResponse recommended) {
@@ -100,7 +100,7 @@ public class BrowseController {
 
             }
 
-            if (movie.getCertification_id() > 0) {
+            if (movie.getCertification_id() > 0 && movie.getCertification_id() < 5 && movie.getPoster_path() != null) {
 
                 goodResults.getResults().add(movie);
 

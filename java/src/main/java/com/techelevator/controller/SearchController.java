@@ -52,7 +52,7 @@ public class SearchController {
 
                 }
 
-                if (movie.getCertification_id() > 0) {
+                if (movie.getCertification_id() > 0 && movie.getCertification_id() < 5 && movie.getPoster_path() != null) {
 
                     goodResults.getResults().add(movie);
 

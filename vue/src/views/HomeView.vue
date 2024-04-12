@@ -19,39 +19,46 @@
           Edit Profile
       </button>
 
-      <div>
-        <h2>Based on popular demand</h2>
-          <div v-for="result in popular.results" v-bind:key="result.id">
-                {{ result.title }}
-                <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+      <h2>Based on popular demand</h2>
+      <div id="popular-container">
+        
+          <div class="display-card" v-for="result in popular.results" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
+            <!-- <router-link v-bind:to="{name: 'MovieDetailView', params: {movieId: result.id}}" class="title" >{{ result.title }}</router-link> -->
+
+            <div class="title">{{ result.title }}</div>
+                
+                <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path" />
           </div>
-        <!-- <div>
+        <div>
           <movie-section title="Recommended by your favorite genre" v-bind:movies="recommendedByGenre" />
-        </div> -->
-      </div>
-
-      <div>
-        <h2>Based on favorite genres</h2>
-        <div v-for="result in selectFavoriteGenres()" v-bind:key="result.id">
-              {{ result.title }}
-              <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
         </div>
       </div>
 
-      <div>
-        <h2>All classics</h2>
+      <h2 v-if="selectFavoriteGenres() != 0">Based on favorite genres</h2>
+      <div id="favorite-genres-container" v-if="selectFavoriteGenres() != 0">
+        
+        <div class="display-card" v-for="result in selectFavoriteGenres()" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
+          <div class="title">{{ result.title }}</div>
+              <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+        </div>
+      </div>
+
+      <h2>All classics</h2>
+      <div id="all-time-greats-container">
+        
         <!-- <div>{{ allTimeGreats.results }}</div> -->
-        <div v-for="result in allTimeGreats.results" v-bind:key="result.id">
-              {{ result.title }}
-              <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+        <div class="display-card" v-for="result in allTimeGreats.results" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
+          <div class="title"> {{ result.title }}</div>
+              <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
         </div>
       </div>
 
-      <div>
-        <h2>Recommended for you</h2>
-        <div v-for="result in recommended4u.results" v-bind:key="result.id">
-              {{ result.title }}
-              <img  :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+      <h2 v-if="recommended4u.results != 0" >Recommended for you</h2>
+      <div id="recommended-container" v-if="recommended4u.results != 0">
+        
+        <div class="display-card" v-for="result in recommended4u.results" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
+          <div class="title">{{ result.title }}</div>
+              <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
         </div>
       </div>
       
@@ -78,6 +85,7 @@
 <script>
 import MovieSection from '../components/MovieSection.vue';
 import userInfoService from '../services/UserInfoService';
+
 
 export default {
   components: {
@@ -130,7 +138,9 @@ export default {
         }
       }
       return resultArray;
-    }
+    },
+
+    
     },
   created() {
     let userId = this.$store.state.user.id;
@@ -159,7 +169,7 @@ header {
 }
 
 footer {
-  background-color: #FFF3BF;
+  background-color: lightgrey;
   text-align: center;
   height: 100px;
 }
@@ -181,9 +191,85 @@ h2 {
   margin-right: 20px;
 }
 
+#popular-container, #favorite-genres-container,
+#all-time-greats-container, #recommended-container {
+  display: flex;
+  overflow: auto;
+  border-top: solid;
+  padding-top: 10px;
+}
 
 
 
+h2 {
+
+  padding: 0px;
+  margin-bottom: 5px;
+  height: 20px;
+  
+
+}
+
+button {
+    background-color: #012f6d;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+
+
+.display-card{
+  position: relative;
+
+  /* change width */
+  height: 200px;
+  width: auto;
+  /* width: 400px; */
+  
+}
+
+.movie-poster{
+  display: block;
+  height: 200px;
+  width: auto;
+  /* width: 100%; */
+
+}
+
+.title {
+  text-align: center;
+  /* transition: 0.8s; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(225, 225, 225, 0.8);
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s;
+  margin-left: 5px;
+  font-weight: bold;
+  
+}
+
+.title:hover {
+  opacity: 1;
+}
+
+
+/* img:hover {
+  opacity: 0.20;
+  z-index: 0;
+} */
 
 
 </style>

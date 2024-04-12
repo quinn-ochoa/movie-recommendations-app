@@ -1,7 +1,8 @@
 <!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
+
   <div class="container">
-    <div class="image">
+   <div class="image">
       <img 
         v-if="movies.length == 0" 
         src="../../src/assets/movie_collage.jpg" 
@@ -19,10 +20,14 @@
       </movie-card>
       <!-- test -->
     </div>
+
   
     <div class="home">
         <div class="content">
-            <img alt="Glasses logo" src="../assets/logo.png">
+            <!-- <img alt="Glasses logo" src="../assets/logo.png">
+            <img alt="Glasses logo" src="../assets/light-glasses.png"> -->
+            <!-- <img alt="Reel logo" src="../assets/reel.png"> -->
+            <img alt="Grey reel logo" src="../assets/grey-reel.png">
             <h1>WeWatchWhat</h1>
             <p>Discover Your Next Favorite Film: Your Personalized Movie Journey Begins Here!</p>
           
@@ -33,18 +38,19 @@
             <br/>
             
             <button type="sign-in">
-              <router-link v-bind:to="{ name: 'login' }">
+              <router-link class="router-button" v-bind:to="{ name: 'login' }">
                 Sign in
               </router-link>
             </button>&nbsp;
 
             <button type="create-account">
-              <router-link v-bind:to="{ name: 'register' }">
+              <router-link class="router-button" v-bind:to="{ name: 'register' }">
                 Create Account
               </router-link>
             </button>
         </div>
     </div>
+
   </div>
 </template>
   
@@ -94,7 +100,7 @@
       //   })
       // },
       async getMovies(){
-        await axios.get(`http://localhost:9000/search/${this.query}`)
+        await axios.get(`http://localhost:9000/search/${this.query}/`)
         .then((response) => {
           this.movies = response.data.results;
           // console.log(this.movies);
@@ -161,5 +167,16 @@
     cursor: pointer;
     border-radius: 10px;
   }
+
+  .router-button {
+    color: white;
+    text-decoration: inherit;
+  }
+
+  .content > img {
+    height: 150px;
+
+  }
+
   
   </style>
