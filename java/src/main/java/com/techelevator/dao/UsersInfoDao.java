@@ -9,4 +9,6 @@ public interface UsersInfoDao {
     void updateProfileInfo(UsersInfo usersInfo);
 
     UsersInfo getUserInfo(int user_id);
+
+    int getAppropriateCetification(int userId);
 }

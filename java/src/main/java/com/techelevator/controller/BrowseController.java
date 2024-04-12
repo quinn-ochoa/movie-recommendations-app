@@ -21,15 +21,17 @@ public class BrowseController {
     MovieDao movieDao;
     MovieGenreDao movieGenreDao;
     MovieCertificationDao movieCertificationDao;
+    UsersInfoDao usersInfoDao;
 
 
     //constructors
-    public BrowseController(UsersGenresDao usersGenresDao, GenresDao genresDao, MovieDao movieDao, MovieGenreDao movieGenreDao, MovieCertificationDao movieCertificationDao) {
+    public BrowseController(UsersGenresDao usersGenresDao, GenresDao genresDao, MovieDao movieDao, MovieGenreDao movieGenreDao, MovieCertificationDao movieCertificationDao, UsersInfoDao usersInfoDao) {
         this.usersGenresDao = usersGenresDao;
         this.genresDao = genresDao;
         this.movieDao = movieDao;
         this.movieGenreDao = movieGenreDao;
         this.movieCertificationDao = movieCertificationDao;
+        this.usersInfoDao = usersInfoDao;
     }
 
     //methods
@@ -56,20 +58,20 @@ public class BrowseController {
         } if (usersFavoriteGenreCodes.size() > 1) {
 
             recommended = tmdbService.queryForRecommended4u(movieApiResponse, usersFavoriteGenreCodes, vote_average, vote_count, 0, 0);
-            recommended = filterAndTrim(recommended);
+            recommended = filterAndTrim(recommended, id);
             browser.put("recommended4u", recommended);
 
         } for (Integer genre : usersFavoriteGenreCodes) {
 
             recommended = tmdbService.queryForGenreRecommendations(movieApiResponse, genre, vote_average, vote_count, 0, 0);
-            recommended = filterAndTrim(recommended);
+            recommended = filterAndTrim(recommended, id);
             browser.put(genresDao.getGenreNameById(genre), recommended);
 
         } recommended = tmdbService.queryForPopular();
-        recommended = filterAndTrim(recommended);
+        recommended = filterAndTrim(recommended, id);
         browser.put("popular", recommended);
         recommended = tmdbService.queryForAllTimeGreats(movieApiResponse ,vote_average, vote_count, 0 ,0);
-        recommended = filterAndTrim(recommended);
+        recommended = filterAndTrim(recommended, id);
         browser.put("allTimeGreats", recommended);
 
         for (Map.Entry<String, MovieApiResponse> result : browser.entrySet()) {
@@ -80,7 +82,7 @@ public class BrowseController {
 
     }
 
-    private MovieApiResponse filterAndTrim(MovieApiResponse recommended) {
+    private MovieApiResponse filterAndTrim(MovieApiResponse recommended, int user_id) {
 
         TMDB_APIService tmdbApiService = new TMDB_APIService();
         MovieApiResponse goodResults = new MovieApiResponse();
@@ -98,9 +100,7 @@ public class BrowseController {
 
                 movie.setCertification_id(movieCertificationDao.getCertificationByMovieId(movie.getId()));
 
-            }
-
-            if (movie.getCertification_id() > 0 && movie.getCertification_id() < 5 && movie.getPoster_path() != null) {
+            } if (movie.getCertification_id() > 0 && movie.getCertification_id() <= usersInfoDao.getAppropriateCetification(user_id) && movie.getPoster_path() != null) {
 
                 goodResults.getResults().add(movie);
 
@@ -135,7 +135,7 @@ public class BrowseController {
         } for (Integer genre : allGenreCodes) {
 
             recommended = tmdbService.queryForGenreRecommendations(movieApiResponse, genre, vote_average, vote_count, 0, 0);
-            recommended = filterAndTrim(recommended);
+            recommended = filterAndTrim(recommended, 1);
             browser.put(genresDao.getGenreNameById(genre), recommended);
 
         } for (Map.Entry<String, MovieApiResponse> result : browser.entrySet()) {

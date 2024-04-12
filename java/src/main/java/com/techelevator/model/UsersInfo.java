@@ -11,17 +11,19 @@ public class UsersInfo {
     Timestamp  birthday;
     String username;
     Map<String, Boolean> favoriteGenres;
+    boolean nc17_requested;
 
     //constructors
     public UsersInfo() {
     }
-    public UsersInfo(int user_id, String email, String full_name, Timestamp birthday, String username, Map<String, Boolean> favoriteGenres) {
+    public UsersInfo(int user_id, String email, String full_name, Timestamp birthday, String username, Map<String, Boolean> favoriteGenres, boolean nc17_requested) {
         this.user_id = user_id;
         this.email = email;
         this.full_name = full_name;
         this.birthday = birthday;
         this.username = username;
         this.favoriteGenres = favoriteGenres;
+        this.nc17_requested = nc17_requested;
     }
 
     //getters & setter
@@ -68,6 +70,14 @@ public class UsersInfo {
 
     public void setFavoriteGenres(Map<String, Boolean> favoriteGenres) {
         this.favoriteGenres = favoriteGenres;
+    }
+
+    public boolean isNc17_requested() {
+        return nc17_requested;
+    }
+
+    public void setNc17_requested(boolean nc17_requested) {
+        this.nc17_requested = nc17_requested;
     }
 
 }
