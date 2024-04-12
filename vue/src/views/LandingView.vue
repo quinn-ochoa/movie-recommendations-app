@@ -24,7 +24,10 @@
   
     <div class="home">
         <div class="content">
-            <img alt="Glasses logo" src="../assets/logo.png">
+            <!-- <img alt="Glasses logo" src="../assets/logo.png">
+            <img alt="Glasses logo" src="../assets/light-glasses.png"> -->
+            <!-- <img alt="Reel logo" src="../assets/reel.png"> -->
+            <img alt="Grey reel logo" src="../assets/grey-reel.png">
             <h1>WeWatchWhat</h1>
             <p>Discover Your Next Favorite Film: Your Personalized Movie Journey Begins Here!</p>
           
@@ -168,6 +171,11 @@
   .router-button {
     color: white;
     text-decoration: inherit;
+  }
+
+  .content > img {
+    height: 150px;
+
   }
 
   
