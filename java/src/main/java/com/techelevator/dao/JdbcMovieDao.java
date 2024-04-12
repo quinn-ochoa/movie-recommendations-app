@@ -1,11 +1,9 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Genres;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
-import com.techelevator.services.ProfanityFilterService;
-import com.techelevator.services.TMDBService;
+import com.techelevator.services.ProfanityFilterAPIService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -46,20 +44,39 @@ public class JdbcMovieDao implements MovieDao{
     @Override
     public void addMovie(Movie movie) {
 
-        JdbcMovieGenreDao jdbcMovieGenreDao = new JdbcMovieGenreDao(jdbcTemplate);
         String sql = "INSERT INTO movies (id, title, overview, poster_path, vote_average)" +
                 " VALUES (?,?,?,?,?);";
 
         try{
 
             jdbcTemplate.update(sql, movie.getId(), movie.getTitle(), movie.getOverview(), movie.getPoster_path(), movie.getVote_average());
-            jdbcMovieGenreDao.updateMovieGenreAssociation(movie.getGenre_ids(), movie.getId());
 
         } catch (CannotGetJdbcConnectionException e){
 
             throw new DaoException("Unable to connect to server or database", e);
 
         } catch (DataIntegrityViolationException e){
+
+            throw new DaoException("Data integrity violation", e);
+
+        }
+
+    }
+
+    @Override
+    public void markMovieAsDoNotShow(int movie_id) {
+
+        String sql = "UPDATE movies SET do_not_show = true WHERE id = ?;";
+
+        try {
+
+            jdbcTemplate.update(sql, movie_id);
+
+        } catch (CannotGetJdbcConnectionException e) {
+
+            throw new DaoException("Unable to connect to server or database", e);
+
+        } catch (DataIntegrityViolationException e) {
 
             throw new DaoException("Data integrity violation", e);
 
@@ -101,10 +118,10 @@ public class JdbcMovieDao implements MovieDao{
     @Override
     public MovieApiResponse throwOutBadMovies(MovieApiResponse movieApiResponse) {
 
-        ProfanityFilterService profanityFilterService = new ProfanityFilterService();
-        MovieApiResponse filtered = profanityFilterService.checkForProfaneTitle(movieApiResponse);
-        filtered.setTotal_pages(movieApiResponse.getTotal_pages());
-        return filtered;
+        ProfanityFilterAPIService profanityFilterService = new ProfanityFilterAPIService();
+      //  MovieApiResponse filtered = profanityFilterService.checkForProfaneTitle();
+      //  filtered.setTotal_pages(movieApiResponse.getTotal_pages());
+        return null;
 
     }
 
