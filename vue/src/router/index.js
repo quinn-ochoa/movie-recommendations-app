@@ -7,7 +7,8 @@ import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import LandingView from '../views/LandingView.vue';
-import AddGenresView from '../views/AddGenresView.vue';
+import UpdateGenresView from '../views/UpdateGenresView.vue';
+import EditGenresView from '../views/EditGenresView.vue';
 import MovieDetailView from '../views/MovieDetailView.vue';
 
 /**
@@ -60,10 +61,17 @@ const routes = [
     },
   },
   {
-    path: '/create',
-    name: 'AddGenresView',
-    component: AddGenresView
+    path: '/update',
+    name: 'UpdateGenresView',
+    component: UpdateGenresView
   },
+
+  {
+    path: '/create',
+    name: 'EditGenresView',
+    component: EditGenresView
+  },
+
   {
     path: '/movie/:movieId',
     name: 'MovieDetailView',

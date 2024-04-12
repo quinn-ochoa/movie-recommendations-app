@@ -8,7 +8,34 @@ export function createStore(currentToken, currentUser) {
   let store = _createStore({
     state: {
       token: currentToken || '',
-      user: currentUser || {}
+      user: currentUser || {},
+      // userProfile:{
+      //   email:"",
+      //   full_name:"",
+      //   username: this.$store.state.user.username,
+      //   birthday:"",
+      //   favoriteGenres: {
+      //       Action: false,
+      //       Adventure: false,
+      //       Horror: false,
+      //       Romance: false,
+      //       War: false,
+      //       History: false,
+      //       ScienceFiction: false,
+      //       Western: false,
+      //       Documentary: false,
+      //       Drama: false,
+      //       TVMovie: false,
+      //       Thriller: false,
+      //       Music: false,
+      //       Crime: false,
+      //       Fantasy: false,
+      //       Animation: false,
+      //       Family: false,
+      //       Comedy: false,
+      //       Mystery: false
+      //   }
+      // }
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -27,35 +54,10 @@ export function createStore(currentToken, currentUser) {
         state.user = {};
         axios.defaults.headers.common = {};
       },
-
-      //ADDED SET NOTIFICATION HERE
-      SET_NOTIFICATION(state, notification) {
-        // Clear the current notification if one exists
-        if (state.notification) {
-          this.commit('CLEAR_NOTIFICATION');
-        }
-
-        if (typeof notification === 'string') {
-          // If only a string was sent, create a notification object with defaults
-          notification = {
-            message: notification,
-            type: 'error',
-            timeout: NOTIFICATION_TIMEOUT
-          }
-        } else {
-          // Else add default values if needed
-          notification.type = notification.type || 'error';
-          notification.timeout = notification.timeout || NOTIFICATION_TIMEOUT;
-        }
-
-        // Set the notification in state
-        state.notification = notification;
-
-        // Clear the message after timeout (see https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)
-        notification.timer = window.setTimeout(() => {
-          this.commit('CLEAR_NOTIFICATION');
-        }, notification.timeout);
+      SET_PROFILE(state, userProfile) {
+        state.user.push(userProfile);
       }
+      
     },
   });
   return store;

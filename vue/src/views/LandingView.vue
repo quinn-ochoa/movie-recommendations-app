@@ -9,7 +9,6 @@
         alt="Movie Poster Collage"
       />
 
-      <!-- test -->
       <movie-card 
         class="movie-container" 
         v-for="movie in movies" 
@@ -18,7 +17,7 @@
       > 
               
       </movie-card>
-      <!-- test -->
+
     </div>
 
   
@@ -48,6 +47,8 @@
                 Create Account
               </router-link>
             </button>
+
+
         </div>
     </div>
 

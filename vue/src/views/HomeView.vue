@@ -15,8 +15,14 @@
     <body>
       <button 
         class="btn-add" 
-        v-on:click="$router.push({ name: 'AddGenresView' })">
-          Edit Profile
+        v-on:click="$router.push({ name: 'EditGenresView' })">
+          Create Profile
+      </button>
+
+      <button 
+        class="btn-add" 
+        v-on:click="$router.push({ name: 'UpdateGenresView' })">
+          Update Profile
       </button>
 
       <h2>Based on popular demand</h2>
@@ -83,7 +89,7 @@
 </template>
 
 <script>
-import MovieSection from '../components/MovieSection.vue';
+// import MovieSection from '../components/MovieSection.vue';
 import userInfoService from '../services/UserInfoService';
 
 

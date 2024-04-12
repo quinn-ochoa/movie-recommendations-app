@@ -9,7 +9,7 @@
         <div class="poster">
             <img  :src ="'https://image.tmdb.org/t/p/original' + movie.poster_path"/>
         </div>
-        <br/>
+        
     </div>
 </template>
 
@@ -18,6 +18,11 @@
         name:'movie-card',
         props:{
             movie: Object
+        },
+        data(){
+            return{
+                flipped: false
+            }
         }
     }
 </script>
