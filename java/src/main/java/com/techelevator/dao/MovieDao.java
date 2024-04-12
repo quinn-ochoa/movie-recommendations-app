@@ -17,4 +17,6 @@ public interface MovieDao {
 
     Movie addGenreNameToMovie(Movie movie);
 
+    void markMovieAsDoNotShow(int movie_id);
+
 }

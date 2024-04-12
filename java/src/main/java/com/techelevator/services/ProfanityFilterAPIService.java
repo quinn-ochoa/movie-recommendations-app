@@ -1,5 +1,6 @@
 package com.techelevator.services;
 
+import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -10,27 +11,27 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @Component
-public class ProfanityFilterService {
+public class ProfanityFilterAPIService {
     //properties
     private final String API_BASE_URL = "http://localhost:9001/";
     private RestTemplate restTemplate = new RestTemplate();
 
     //methods
-    public MovieApiResponse checkForProfaneTitle(MovieApiResponse movieApiResponse) {
+    public Movie checkForProfaneTitle(Movie movie) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<MovieApiResponse> entity = new HttpEntity<>(movieApiResponse, headers);
+        HttpEntity<Movie> entity = new HttpEntity<>(movie, headers);
 
         try {
 
-            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + "movieApiResponse/", HttpMethod.POST, entity, MovieApiResponse.class);
-            movieApiResponse = response.getBody();
+            ResponseEntity<Movie> response = restTemplate.exchange(API_BASE_URL + "movieApiResponse/", HttpMethod.POST, entity, Movie.class);
+            movie = response.getBody();
 
         } catch (RestClientException e) {
 
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movieAPIResponse object from in house API.", e);
 
-        } return movieApiResponse;
+        } return movie;
 
     }
 
