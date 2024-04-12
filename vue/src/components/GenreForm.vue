@@ -98,8 +98,8 @@
             </section>
 
             <div class="actions">
-            <button class="btn-submit" type="submit" >Submit</button>
-            <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
+                <button class="btn-submit" type="submit" >Submit</button>
+                <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
             </div>
         </fieldset>
     </form>
@@ -110,15 +110,11 @@
 import userInfoService from '../services/UserInfoService'
 
 export default{
-    props:{
-        profile:{
-            type: Object
-        }
-    },
 
     data(){
         return {
             showForm: false,
+            
             userProfile:{
                 email:"",
                 full_name:"",
@@ -151,19 +147,11 @@ export default{
     },
     methods:{
         submitForm(){
-            // if(this.userProfile.full_name)
             userInfoService
             .addUserInfo(this.userProfile)
-            .then(response =>{
-                if(response.status === 201){
-                
-                    this.$store.commit(
-                        'SET_NOTIFICATION', {
-                        message:'Added new user info',
-                        type:'success'
-                        }
-                );
-                this.$router.push({name: 'HomeView'})
+            .then(response => {
+                if (response.status === 201) {
+                    this.$router.push({name:'home'});
                 }
             })
         },
@@ -171,6 +159,7 @@ export default{
             // Go back to previous page
             this.$router.back();
         },
+        
     }
 }
 
