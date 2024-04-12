@@ -89,6 +89,23 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
+    public int updatePassword (String username){
+        //update query changes password where username = String username
+        int rowsAffected = 0;
+        String updateUserSql = "UPDATE users set password_hash = ? WHERE username = ?;";
+        String password_hash = new BCryptPasswordEncoder().encode(username);
+        try {
+            rowsAffected = jdbcTemplate.update(updateUserSql,password_hash,username );
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return rowsAffected;
+
+    }
+
+    @Override
     public int getIdByUsername(String username) {
 
         String sql = "SELECT user_id FROM users WHERE username = ?;";

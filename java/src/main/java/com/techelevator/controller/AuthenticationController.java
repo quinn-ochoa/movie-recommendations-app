@@ -69,5 +69,17 @@ public class AuthenticationController {
         }
     }
 
+    @RequestMapping(path = "/forgotPassword/", method = RequestMethod.POST)
+    public ResponseEntity<String> updatePassword(@RequestBody password_hash){
+        int rowsAffected = userDao.updatePassword(password_hash);
+                if (rowsAffected == 1){
+                    return ResponseEntity.ok( "Password Updated");
+                }else{
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update password");
+                }
+
+    }
+
+
 }
 
