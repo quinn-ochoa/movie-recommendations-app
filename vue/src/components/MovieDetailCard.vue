@@ -39,6 +39,8 @@
                 <div class="overview">{{ movie.overview }}</div>  
             </div>
             <div>
+                <button v-on:click="$router.push({ name: 'UpdateGenresView' })">
+                    Add Review</button>
                 <i onclick="flipLikeButton()" class="fa fa-thumbs-up" aria-hidden="true" id="fas"></i>
                 <i onclick="flipLikeButton()" class="fa fa-thumbs-down" aria-hidden="true" id="fas"></i>
             </div>
@@ -154,6 +156,16 @@ footer {
 
 .fa:hover{
     color: navy;
+}
+
+button {
+  background-color: #012F6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
 }
 
 
