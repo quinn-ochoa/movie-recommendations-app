@@ -3,6 +3,12 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         
     </head>
+      <!-- commented header out because repeating from another view -->
+    <header>
+      <img alt="movie reel logo" src="../assets/grey-reel.png"/>
+      <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
+
+    </header>
     <!-- <div class="detail-card"
         v-bind:key="movie.id"
     > -->

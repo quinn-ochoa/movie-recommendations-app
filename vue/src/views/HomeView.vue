@@ -8,7 +8,12 @@
   <div class="home">
     <header>
       <img alt="Glasses logo" src="../assets/logo.png"/>
-      <div>Search Bar</div>
+      <div>
+          <form class="search" @submit.prevent="getMovies">
+              <input type="search" class="form-control" v-model="query" />
+              <input type="submit" class="btn"/>
+          </form>
+      </div>
       <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
 
     </header>
@@ -25,6 +30,24 @@
           Update Profile
       </button>
 
+      <!-- SEARCH RESULT -->
+      <h2>Search results</h2>
+      <div id="search-container" v-if="searchMovies.length != 0">
+        <div 
+          class="display-card" 
+          v-for="movie in searchMovies" 
+          v-bind:key="movie.id"
+          v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: movie.id } })"
+        >
+              <div class="title">{{ movie.title }}</div>
+              <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + movie.poster_path"/>
+        </div>
+      </div>
+      <div v-else><p>No search results</p></div>
+      <!-- END OF SEARCH RESULT -->
+
+
+      <!-- POPULAR MOVIES -->
       <h2>Based on popular demand</h2>
       <div id="popular-container">
         
@@ -40,30 +63,33 @@
         </div>
       </div>
 
+      <!-- FAVORITE MOVIES -->
       <h2 v-if="selectFavoriteGenres() != 0">Based on favorite genres</h2>
       <div id="favorite-genres-container" v-if="selectFavoriteGenres() != 0">
         
         <div class="display-card" v-for="result in selectFavoriteGenres()" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
-          <div class="title">{{ result.title }}</div>
+              <div class="title">{{ result.title }}</div>
               <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
         </div>
       </div>
 
+      <!-- CLASSIC MOVIES -->
       <h2>All classics</h2>
       <div id="all-time-greats-container">
         
         <!-- <div>{{ allTimeGreats.results }}</div> -->
         <div class="display-card" v-for="result in allTimeGreats.results" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
-          <div class="title"> {{ result.title }}</div>
+              <div class="title"> {{ result.title }}</div>
               <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
         </div>
       </div>
 
+      <!-- RECOMMENDED MOVIES -->
       <h2 v-if="recommended4u.results != 0" >Recommended for you</h2>
       <div id="recommended-container" v-if="recommended4u.results != 0">
         
         <div class="display-card" v-for="result in recommended4u.results" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
-          <div class="title">{{ result.title }}</div>
+              <div class="title">{{ result.title }}</div>
               <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
         </div>
       </div>
@@ -80,7 +106,8 @@
 
     <footer>
       <div>
-        <i class="fa-brands fa-facebook social-icon" ></i><i class="fa-brands fa-instagram social-icon"></i>
+        <i class="fa-brands fa-facebook social-icon" ></i>
+        <i class="fa-brands fa-instagram social-icon"></i>
       </div>
     </footer>
 
@@ -91,7 +118,7 @@
 <script>
 // import MovieSection from '../components/MovieSection.vue';
 import userInfoService from '../services/UserInfoService';
-
+import axios from 'axios';
 
 export default {
   components: {
@@ -101,13 +128,9 @@ export default {
   data() {
     return{
 
-      // movies: {          
-      //     id: null,
-      //     title: "",
-      //     overview:"",
-      //     poster_path:"",
-      //     vote_average: null
-      // }
+      query: null,
+      searchMovies: [],
+
       popular : {
         results : []
       },
@@ -132,6 +155,7 @@ export default {
   },
 
   methods: {
+
     selectFavoriteGenres(){
       let favGenres = this.genres;
       let resultArray = [];
@@ -146,8 +170,15 @@ export default {
       return resultArray;
     },
 
-    
+    async getMovies(){
+        await axios.get(`http://localhost:9000/search/${this.query}/`)
+        .then((response) => {
+          this.searchMovies = response.data.results;
+
+        })
     },
+
+  },
   created() {
     let userId = this.$store.state.user.id;
     userInfoService.getRecommended(userId)
@@ -161,121 +192,121 @@ export default {
 };
 </script>
 
-<style>
-img {
-  margin-left: 10px;
-  height: 100px;
-}
+<style scoped>
+    img {
+      margin-left: 10px;
+      height: 100px;
+    }
 
-header {
-  background-color: #FECE00;
-  display: flex;
-  justify-content: space-between;
+    header {
+      background-color: #FECE00;
+      display: flex;
+      justify-content: space-between;
 
-}
+    }
 
-footer {
-  background-color: lightgrey;
-  text-align: center;
-  height: 100px;
-}
+    footer {
+      background-color: lightgrey;
+      text-align: center;
+      height: 100px;
+    }
 
-h1 {
-  font-size: medium;
-  margin-right: 10px;
-}
+    h1 {
+      font-size: medium;
+      margin-right: 10px;
+    }
 
-h2 {
-  font-size: medium;
-  height: 100px;
-}
+    h2 {
+      font-size: medium;
+      height: 100px;
+    }
 
-.social-icon {
-  font-size: 20px;
-  height: 20px;
-  margin-top: 40px;
-  margin-right: 20px;
-}
+    .social-icon {
+      font-size: 20px;
+      height: 20px;
+      margin-top: 40px;
+      margin-right: 20px;
+    }
 
-#popular-container, #favorite-genres-container,
-#all-time-greats-container, #recommended-container {
-  display: flex;
-  overflow: auto;
-  border-top: solid;
-  padding-top: 10px;
-}
-
-
-
-h2 {
-
-  padding: 0px;
-  margin-bottom: 5px;
-  height: 20px;
-  
-
-}
-
-button {
-    background-color: #012f6d;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-  }
+    #popular-container, #favorite-genres-container,
+    #all-time-greats-container, #recommended-container, #search-container {
+      display: flex;
+      overflow: auto;
+      border-top: solid;
+      padding-top: 10px;
+    }
 
 
 
-.display-card{
-  position: relative;
+    h2 {
 
-  /* change width */
-  height: 200px;
-  width: auto;
-  /* width: 400px; */
-  
-}
+      padding: 0px;
+      margin-bottom: 5px;
+      height: 20px;
+      
 
-.movie-poster{
-  display: block;
-  height: 200px;
-  width: auto;
-  /* width: 100%; */
+    }
 
-}
-
-.title {
-  text-align: center;
-  /* transition: 0.8s; */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(225, 225, 225, 0.8);
-  color: black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.25s;
-  margin-left: 5px;
-  font-weight: bold;
-  
-}
-
-.title:hover {
-  opacity: 1;
-}
+    button {
+        background-color: #012f6d;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+      }
 
 
-/* img:hover {
-  opacity: 0.20;
-  z-index: 0;
-} */
+
+    .display-card{
+      position: relative;
+
+      /* change width */
+      height: 250px;
+      width: auto;
+      /* width: 400px; */
+      
+    }
+
+    .movie-poster{
+      display: block;
+      height: 240px;
+      width: auto;
+      /* width: 100%; */
+
+    }
+
+    .title {
+      text-align: center;
+      /* transition: 0.8s; */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(225, 225, 225, 0.8);
+      color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s;
+      margin-left: 5px;
+      font-weight: bold;
+      
+    }
+
+    .title:hover {
+      opacity: 1;
+    }
+
+
+    /* img:hover {
+      opacity: 0.20;
+      z-index: 0;
+    } */
 
 
 </style>

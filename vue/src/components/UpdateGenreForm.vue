@@ -1,11 +1,15 @@
 <template>
+        <header>
+        <img alt="Glasses logo" src="../assets/logo.png"/>
+        <div>Search Bar</div>
+        <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
+    </header>
     <div>
-        <h2>Name: {{ userProfile.full_name }}</h2>
+        <h3>Update Profile TEst</h3>
+        <h3>Name: {{ userProfile.full_name }}</h3>
         <p>Email: {{ userProfile.email }}</p>
         <p>Birthday: {{ userProfile.birthday }}</p>
-    
-       
-        {{  }}
+        genres: {{ userProfile.favoriteGenres }}
         <fieldset>
             <legend>Choose your genres</legend>
             <section>
@@ -34,7 +38,6 @@
                     <label for="documentary">Documentary</label>
                 </div>
             </section>
-
             <section>
                 <div>
                     <input type="checkbox" id="drama" name="genre" value="true" v-model="genres.Drama"/>
@@ -65,7 +68,6 @@
                     <label for="mystery">Mystery</label>
                 </div>
             </section>
-
             <section>
                 <div>
                     <input type="checkbox" id="romance" name="genre" value="true" v-model="genres.Romance"/>
@@ -92,7 +94,6 @@
                     <label for="western">Western</label>
                 </div>
             </section>
-
             <div class="actions">
                 <button class="btn-submit" type="submit" v-on:click.prevent="saveProfile()">
                     Save
@@ -103,12 +104,9 @@
             </div>
         </fieldset>
     </div>
-
 </template>
-
 <script>
 import userInfoService from '../services/UserInfoService'
-
 export default{
     props:['userProfile'],
     data(){
@@ -125,9 +123,9 @@ export default{
                 user_id: this.$store.state.user.id,
                 email: current.email,
                 full_name: current.full_name,
-                username: current.username,
+                username: this.$store.state.user.username,
                 birthday: current.birthday,
-                favoriteGenres: current.genres
+                favoriteGenres: this.genres
             };
             userInfoService.updateUserInfo(info)
             .then(response => {
@@ -136,15 +134,15 @@ export default{
                 }
             })
         },
+        convertDate(day){
+            return day.toDateString();
+        },
         cancelForm() {
                 // Go back to previous page
             this.$router.back();
         },
     }
 }
-
 </script>
-
 <style scoped>
-
 </style>

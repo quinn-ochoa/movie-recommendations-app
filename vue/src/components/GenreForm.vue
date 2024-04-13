@@ -1,4 +1,11 @@
 <template>
+        <header>
+        <img alt="Glasses logo" src="../assets/logo.png"/>
+        <div>Search Bar</div>
+        <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
+    </header>
+
+    <h3>Create Profile</h3>
     
     <form v-on:submit.prevent="submitForm">
         <!-- ="submitForm()"  -->
@@ -108,7 +115,7 @@
 </template>
 
 <script>
-import userInfoService from '../services/UserInfoService'
+import userInfoService from '../services/UserInfoService';
 
 export default{
 
@@ -152,7 +159,7 @@ export default{
             userInfoService
             .addUserInfo(this.userProfile)
             .then((response) => {
-                if (response.status === 201) {
+                if (response.status === 200) {
                     this.$router.push({name:'home'});
                 }
             })

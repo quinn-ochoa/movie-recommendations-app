@@ -54,9 +54,9 @@ export function createStore(currentToken, currentUser) {
         state.user = {};
         axios.defaults.headers.common = {};
       },
-      SET_PROFILE(state, userProfile) {
-        state.user.push(userProfile);
-      }
+      // SET_PROFILE(state, userProfile) {
+      //   state.userProfile = userProfile;
+      // }
       
     },
   });
