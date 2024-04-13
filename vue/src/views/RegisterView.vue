@@ -1,6 +1,6 @@
 <template>
   <div id="register" class="text-center">
-      <img alt="Glasses logo" src="../assets/logo.png">
+      <img alt="Movie reel logo" src="../assets/grey-reel.png">
       <h1>WeWatchWhat</h1>
       <h2>Create an account</h2>
       <form v-on:submit.prevent="register">

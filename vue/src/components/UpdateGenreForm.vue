@@ -1,6 +1,6 @@
 <template>
         <header>
-        <img alt="Glasses logo" src="../assets/logo.png"/>
+        <img alt="Movie reel logo" src="../assets/grey-reel.png"/>
         <div>Search Bar</div>
         <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
     </header>
@@ -145,4 +145,18 @@ export default{
 }
 </script>
 <style scoped>
+
+header {
+
+background-color: #FECE00;
+display: flex;
+justify-content: space-between;
+
+}
+
+header > img {
+ height: 100px;   
+}
+
+
 </style>

@@ -45,6 +45,8 @@
                 <div class="overview">{{ movie.overview }}</div>  
             </div>
             <div>
+                <button v-on:click="$router.push({ name: 'home' })">
+                    Home</button>
                 <button v-on:click="$router.push({ name: 'UpdateGenresView' })">
                     Add Review</button>
                 <i onclick="flipLikeButton()" class="fa fa-thumbs-up" aria-hidden="true" id="fas"></i>
@@ -89,6 +91,24 @@
 </script>
 
 <style>
+
+header {
+
+    background-color: #FECE00;
+    display: flex;
+    justify-content: space-between;
+
+    }
+
+header > img {
+ height: 100px;   
+}
+
+h1 {
+    font-size: 15px;
+    margin-right: 10px;
+}
+
  .detail-card {
     /* margin: auto; */
     margin-left: 10%;
@@ -96,6 +116,7 @@
     display: flex;
     gap: 20px;
     justify-content: space-evenly;
+    height: 50vh;
     
  }
 
@@ -140,19 +161,20 @@
     gap: 8px;
 }
 
-
+h2 {
+    font-size: 15px;
+}
 
 .overview {
     margin-top: 8px;
     width: 80%;
 }
 
-footer {
-    margin-top: 20px;
-}
+
 
 .titles{
     font-weight: bold;
+    font-size: 15px;
 }
 .fa {
   font-size: 70px;
@@ -173,6 +195,15 @@ button {
   cursor: pointer;
   border-radius: 10px;
 }
+
+footer {
+    background-color: lightgrey;
+    text-align: center;
+    height: 50vh;
+    margin-top: 40px;
+}
+
+
 
 
 

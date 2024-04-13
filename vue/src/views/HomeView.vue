@@ -7,7 +7,7 @@
   
   <div class="home">
     <header>
-      <img alt="Glasses logo" src="../assets/logo.png"/>
+      <img alt="Movie reel logo" src="../assets/grey-reel.png"/>
       <div>
           <form class="search" @submit.prevent="getMovies">
               <input type="search" class="form-control" v-model="query" />
