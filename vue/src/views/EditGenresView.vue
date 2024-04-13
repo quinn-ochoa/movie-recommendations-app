@@ -1,17 +1,11 @@
 <template>
-    <!-- <header>
-        <img alt="Glasses logo" src="../assets/logo.png"/>
-        <div>Search Bar</div>
-        <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
-    </header> -->
 
-    <!-- <h3>Create Profile</h3> -->
     <genre-form/>
     <!-- <genre-form v-bind:genre="genre" /> -->
 
     <!-- PRINT OUT CURRENT USER  -->
-    {{ $store.state.user }}
-    {{ $store.state.userProfile }}
+    <!-- {{ $store.state.user }}
+    {{ $store.state.userProfile }} -->
 
     <footer>
         <div>

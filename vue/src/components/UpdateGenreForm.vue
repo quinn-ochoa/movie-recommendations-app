@@ -9,7 +9,10 @@
         <h3>Name: {{ userProfile.full_name }}</h3>
         <p>Email: {{ userProfile.email }}</p>
         <p>Birthday: {{ userProfile.birthday }}</p>
-        genres: {{ userProfile.favoriteGenres }}
+        <p>Genres: </p>
+        <p v-for="(value, key, index) in userProfile.favoriteGenres" v-bind:key="index">{{ value ? key : "" }}
+        </p>
+        
         <fieldset>
             <legend>Choose your genres</legend>
             <section>
@@ -94,55 +97,65 @@
                     <label for="western">Western</label>
                 </div>
             </section>
-            <div class="actions">
+            
+        </fieldset>
+
+        <div class="actions">
                 <button class="btn-submit" type="submit" v-on:click.prevent="saveProfile()">
                     Save
                 </button>
                 <button class="btn-cancel" type="button" v-on:click.prevent="cancelForm()">
                     Cancel
                 </button>
-            </div>
-        </fieldset>
+        </div>
     </div>
 </template>
 <script>
-import userInfoService from '../services/UserInfoService'
-export default{
-    props:['userProfile'],
-    data(){
-        return{
-            // userProfile: this.userProfile
-            // favoriteGenres: this.userProfile.favoriteGenres
-            genres: this.userProfile.favoriteGenres
+    import userInfoService from '../services/UserInfoService'
+    export default{
+        props:['userProfile'],
+        data(){
+            return{
+                // userProfile: this.userProfile
+                // favoriteGenres: this.userProfile.favoriteGenres
+                genres: this.userProfile.favoriteGenres
+            }
+        },
+        methods:{
+            saveProfile(){
+                const current = this.userProfile;
+                const info = {
+                    user_id: this.$store.state.user.id,
+                    email: current.email,
+                    full_name: current.full_name,
+                    username: this.$store.state.user.username,
+                    birthday: current.birthday,
+                    favoriteGenres: this.genres
+                };
+                userInfoService.updateUserInfo(info)
+                .then(response => {
+                    if (response.status === 200) {
+                        this.$router.push({name:'home'});
+                    }
+                })
+            },
+            convertDate(day){
+                return day.toDateString();
+            },
+            cancelForm() {
+                    // Go back to previous page
+                this.$router.back();
+            },
         }
-    },
-    methods:{
-        saveProfile(){
-            const current = this.userProfile;
-            const info = {
-                user_id: this.$store.state.user.id,
-                email: current.email,
-                full_name: current.full_name,
-                username: this.$store.state.user.username,
-                birthday: current.birthday,
-                favoriteGenres: this.genres
-            };
-            userInfoService.updateUserInfo(info)
-            .then(response => {
-                if (response.status === 200) {
-                    this.$router.push({name:'home'});
-                }
-            })
-        },
-        convertDate(day){
-            return day.toDateString();
-        },
-        cancelForm() {
-                // Go back to previous page
-            this.$router.back();
-        },
     }
-}
 </script>
 <style scoped>
+    fieldset{
+        display: flex;
+    }
+
+    section{
+        flex-grow: 1;
+    }
+
 </style>

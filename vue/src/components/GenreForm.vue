@@ -2,7 +2,7 @@
         <header>
         <img alt="Glasses logo" src="../assets/logo.png"/>
         <div>Search Bar</div>
-        <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
+        <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile </h1>
     </header>
 
     <h3>Create Profile</h3>
@@ -45,13 +45,14 @@
                     <input type="checkbox" id="documentary" name="genre" value="true" v-model="userProfile.favoriteGenres.Documentary"/>
                     <label for="documentary">Documentary</label>
                 </div>
-            </section>
-
-            <section>
                 <div>
                     <input type="checkbox" id="drama" name="genre" value="true" v-model="userProfile.favoriteGenres.Drama"/>
                     <label for="drama">Drama</label>
                 </div>
+            </section>
+
+            <section>
+                
                 <div>
                     <input type="checkbox" id="family" name="genre" value="true" v-model="userProfile.favoriteGenres.Family"/>
                     <label for="family">Family</label>
@@ -105,11 +106,12 @@
                 </div>
             </section>
 
-            <div class="actions">
+           
+        </fieldset>
+        <div class="actions">
                 <button class="btn-submit" type="submit" v-on:click.prevent="submitForm()">Submit</button>
                 <button class="btn-cancel" type="button" v-on:click.prevent="cancelForm()">Cancel</button>
-            </div>
-        </fieldset>
+        </div>
     </form>
 
 </template>
@@ -176,3 +178,14 @@ export default{
 }
 
 </script>
+
+<style scoped>
+    fieldset{
+        display: flex;
+    }
+
+    section{
+        flex-grow: 1;
+    }
+
+</style>

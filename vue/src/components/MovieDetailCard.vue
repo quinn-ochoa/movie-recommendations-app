@@ -6,7 +6,7 @@
       <!-- commented header out because repeating from another view -->
     <header>
       <img alt="movie reel logo" src="../assets/grey-reel.png"/>
-      <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
+      <h1><i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }}</h1>
 
     </header>
     <!-- <div class="detail-card"
