@@ -2,7 +2,7 @@
   <div class="container">
       <div id="login">
         <form v-on:submit.prevent="login">
-          <img alt="Glasses logo" src="../assets/logo.png">  
+          <img alt="Movie reel logo" src="../assets/grey-reel.png">  
           <h1>WeWatchWhat</h1>
             <div role="alert" v-if="invalidCredentials">
               Invalid username and password!
@@ -101,6 +101,10 @@ button {
   cursor: pointer;
   border-radius: 10px;
 
+}
+
+img {
+  height: 100px;
 }
 
 </style>

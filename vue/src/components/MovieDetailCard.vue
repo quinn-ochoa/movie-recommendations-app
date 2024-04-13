@@ -5,8 +5,14 @@
     </head>
       <!-- commented header out because repeating from another view -->
     <header>
-      <img alt="movie reel logo" src="../assets/grey-reel.png"/>
-      <h1><i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }}</h1>
+        <router-link v-bind:to="{ name: 'home' }">
+            <img alt="Movie reel logo" src="../assets/grey-reel.png"/>
+        </router-link>
+
+        <h1>
+            <i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }} &nbsp;|&nbsp;
+            <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+        </h1>
 
     </header>
     <!-- <div class="detail-card"
@@ -45,10 +51,19 @@
                 <div class="overview">{{ movie.overview }}</div>  
             </div>
             <div>
+                <button v-on:click="$router.push({ name: 'home' })">
+                    Back 
+                </button>
                 <button v-on:click="$router.push({ name: 'UpdateGenresView' })">
-                    Add Review</button>
-                <i onclick="flipLikeButton()" class="fa fa-thumbs-up" aria-hidden="true" id="fas"></i>
-                <i onclick="flipLikeButton()" class="fa fa-thumbs-down" aria-hidden="true" id="fas"></i>
+                    Add Review
+                </button>
+                    
+                <!-- <router-link class="btn btn-submit" :to="{ name: 'AddReviewView', params: {  } }">
+                    Add Review
+                </router-link> -->
+
+                <i onclick="flipLikeButton()" class="fa fa-thumbs-up fa-2x" aria-hidden="true" id="fas"></i>&nbsp;&nbsp;
+                <i onclick="flipLikeButton()" class="fa fa-thumbs-down fa-2x" aria-hidden="true" id="fas"></i>
             </div>
            
         </section>
@@ -89,6 +104,24 @@
 </script>
 
 <style>
+
+header {
+
+    background-color: #FECE00;
+    display: flex;
+    justify-content: space-between;
+
+    }
+
+img {
+ height: 100px;   
+}
+
+h1 {
+    font-size: 15px;
+    margin-right: 10px;
+}
+
  .detail-card {
     /* margin: auto; */
     margin-left: 10%;
@@ -96,6 +129,7 @@
     display: flex;
     gap: 20px;
     justify-content: space-evenly;
+    height: 50vh;
     
  }
 
@@ -130,7 +164,8 @@
 }
 
 #title-info {
-    border-bottom: solid;
+    color: #012F6D;
+    border-bottom: solid #012f6d;
     width: 80%;
 }
 
@@ -140,19 +175,20 @@
     gap: 8px;
 }
 
-
+h2 {
+    font-size: 15px;
+}
 
 .overview {
     margin-top: 8px;
     width: 80%;
 }
 
-footer {
-    margin-top: 20px;
-}
+
 
 .titles{
     font-weight: bold;
+    font-size: 15px;
 }
 .fa {
   font-size: 70px;
@@ -173,6 +209,15 @@ button {
   cursor: pointer;
   border-radius: 10px;
 }
+
+footer {
+    background-color: lightgrey;
+    text-align: center;
+    height: 50vh;
+    margin-top: 40px;
+}
+
+
 
 
 

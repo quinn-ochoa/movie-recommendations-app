@@ -1,8 +1,12 @@
 <template>
-        <header>
-        <img alt="Glasses logo" src="../assets/logo.png"/>
-        <div>Search Bar</div>
-        <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile </h1>
+    <header>
+        <router-link v-bind:to="{ name: 'home' }">
+            <img alt="Movie reel logo" src="../assets/grey-reel.png"/>
+        </router-link>
+        <h1>
+            <i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }} &nbsp;|&nbsp;
+            <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+        </h1>
     </header>
 
     <h3>Create Profile</h3>
@@ -180,12 +184,24 @@ export default{
 </script>
 
 <style scoped>
-    fieldset{
-        display: flex;
-    }
+header {
 
-    section{
-        flex-grow: 1;
-    }
+background-color: #FECE00;
+display: flex;
+justify-content: space-between;
+
+}
+
+ img {
+ height: 100px;   
+}
+
+fieldset{
+        display: flex;
+}
+
+section{
+    flex-grow: 1;
+}
 
 </style>

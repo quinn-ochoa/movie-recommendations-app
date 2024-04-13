@@ -78,6 +78,7 @@ const routes = [
     component: MovieDetailView
   },
   
+  //ADD REVIEW AND GET REVIEW
 
 ];
 

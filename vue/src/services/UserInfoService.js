@@ -16,5 +16,11 @@ export default {
 
   getRecommended(userId) {
     return axios.get(`/user/${userId}/recommended/`)
-  }
+  },
+
+  //ADD REVIEW AND GET REVIEW
+  //TO BE CONFIRMED
+  addReview(review) {
+    return axios.post('/review', review);
+  },
 }

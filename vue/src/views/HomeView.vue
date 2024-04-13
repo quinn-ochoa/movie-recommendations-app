@@ -7,14 +7,19 @@
   
   <div class="home">
     <header>
-      <img alt="Glasses logo" src="../assets/logo.png"/>
+      <router-link v-bind:to="{ name: 'home' }">
+        <img alt="Movie reel logo" src="../assets/grey-reel.png"/>
+      </router-link>
       <div>
           <form class="search" @submit.prevent="getMovies">
               <input type="search" class="form-control" v-model="query" />
               <input type="submit" class="btn"/>
           </form>
       </div>
-      <h1><i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }}</h1>
+      <h1>
+        <i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }} &nbsp;|&nbsp;
+        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      </h1>
 
     </header>
     <body>
@@ -234,7 +239,7 @@ export default {
     #all-time-greats-container, #recommended-container, #search-container {
       display: flex;
       overflow: auto;
-      border-top: solid;
+      border-top: solid #012f6d;
       padding-top: 10px;
     }
 
