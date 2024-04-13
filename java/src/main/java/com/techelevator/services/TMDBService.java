@@ -141,15 +141,6 @@ public class TMDBService {
 
     }
 
-    public Movie getMovieById(int id) {
-        for (MovieApiResponse movieApiResponse) {
-            if (id == movies.getId()) {
-
-                return movie;
-            }
-        }
-        return null;
-    }
 
     private String createGenresAsApiInput(String genresAsApiInput, List<Integer> genres) {
 

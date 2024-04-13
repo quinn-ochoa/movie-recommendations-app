@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -70,12 +71,21 @@ public class AuthenticationController {
     }
 
     @RequestMapping(path = "/forgotPassword/", method = RequestMethod.POST)
-    public ResponseEntity<String> updatePassword(@RequestBody password_hash){
-        int rowsAffected = userDao.updatePassword(password_hash);
-                if (rowsAffected == 1){
-                    return ResponseEntity.ok( "Password Updated");
+    public ResponseEntity<String> updatePassword(@RequestBody RegisterUserDto request){
+        if(!request.getPassword().equals(request.getConfirmPassword())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Passwords do not match");
+        }
+        String username = request.getUsername();
+        String newPassword = request.getPassword();
+
+        String passwordHash = new BCryptPasswordEncoder().encode(newPassword);
+
+        boolean passwordUpdated = userDao.updatePassword(username,newPassword);//fix this
+
+                if (passwordUpdated){
+                    return ResponseEntity.ok( "Password has successfully updated!");
                 }else{
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update password");
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update password, try again!");
                 }
 
     }

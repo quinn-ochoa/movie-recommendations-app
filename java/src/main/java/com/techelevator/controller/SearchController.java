@@ -19,20 +19,20 @@ public class SearchController {
 
     //methods
 
-
-    @RequestMapping(path = "", method =RequestMethod.GET)
-    public MovieApiResponse getMovieByID(@PathVariable int id){
-
-
-            if (!movieDao.isMovieInDatabase(movie.getId())) {
-
-                movieDao.addMovie(movie);
-
-            }
-
-
-        return movieApiResponse;
-
-    }
+//
+//    @RequestMapping(path = "", method =RequestMethod.GET)
+//    public MovieApiResponse getMovieByID(@PathVariable int id){
+//
+//
+//            if (!movieDao.isMovieInDatabase(movie.getId())) {
+//
+//                movieDao.addMovie(movie);
+//
+//            }
+//
+//
+//        return movieApiResponse;
+//
+//    }
 
 }
