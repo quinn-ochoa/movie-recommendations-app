@@ -4,10 +4,14 @@
         v-bind:key="movie.id"
     >
         <br/>
-        <div class="movie-title">{{ movie.title }}</div>
-        <!-- <p>{{ movie.genre_id }}</p> -->
-        <div class="poster">
-            <img  :src ="'https://image.tmdb.org/t/p/original' + movie.poster_path"/>
+        <div class="front" v-on:click="toggleCard(movie)">
+            <div class="movie-title">{{ movie.title }}</div>
+            <div class="poster">
+                <img  :src ="'https://image.tmdb.org/t/p/original' + movie.poster_path"/>
+            </div>
+        </div>
+        <div>
+            <!-- <p>{{ movie.genre_id }}</p> -->
         </div>
         
     </div>
@@ -23,6 +27,12 @@
             return{
                 flipped: false
             }
+        },
+        methods:{
+            toggleCard(card) {
+                card.flipped = !card.flipped;
+            }
+
         }
     }
 </script>

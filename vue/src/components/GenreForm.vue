@@ -152,7 +152,7 @@ export default{
             userInfoService
             .addUserInfo(this.userProfile)
             .then((response) => {
-                if (response.status === 201) {
+                if (response.status === 200) {
                     this.$router.push({name:'home'});
                 }
             })

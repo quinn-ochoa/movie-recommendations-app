@@ -1,14 +1,14 @@
 <template>
     <div>
-        <h2>Name: {{ userProfile.full_name }}</h2>
+        <h3>Name: {{ userProfile.full_name }}</h3>
         <p>Email: {{ userProfile.email }}</p>
         <p>Birthday: {{ userProfile.birthday }}</p>
-        {{  }}
+        genres: {{ userProfile.favoriteGenres }}
         <fieldset>
             <legend>Choose your genres</legend>
             <section>
                 <div>
-                    <input type="checkbox" id="action" name="genres" value="true" v-model="genres.Action"/>
+                    <input type="checkbox" id="action" name="genres" value="true" v-model=" genres.Action"/>
                     <label for="action">Action</label>
                 </div>
                 <div>
@@ -117,9 +117,9 @@ export default{
                 user_id: this.$store.state.user.id,
                 email: current.email,
                 full_name: current.full_name,
-                username: current.username,
+                username: this.$store.state.user.username,
                 birthday: current.birthday,
-                favoriteGenres: current.genres
+                favoriteGenres: this.genres
             };
             userInfoService.updateUserInfo(info)
             .then(response => {
@@ -127,6 +127,9 @@ export default{
                     this.$router.push({name:'home'});
                 }
             })
+        },
+        convertDate(day){
+            return day.toDateString();
         },
         cancelForm() {
                 // Go back to previous page
