@@ -184,24 +184,31 @@ export default{
 </script>
 
 <style scoped>
-header {
-
-background-color: #FECE00;
-display: flex;
-justify-content: space-between;
-
-}
-
- img {
- height: 100px;   
-}
-
-fieldset{
+    header {
+        background-color: #FECE00;
         display: flex;
-}
+        justify-content: space-between;
+        align-items: center;
+    }
 
-section{
-    flex-grow: 1;
-}
+    img {
+        height: 100px;   
+    }
 
+    fieldset{
+        display: flex;
+    }
+
+    section{
+        flex-grow: 1;
+    }
+
+    #birthday, #email, #name{
+        padding: 3px 10px;
+        margin: 3px;
+        border-radius:5px;
+        /* border: none; */
+        height: 35px;
+        text-align: left;
+    }
 </style>

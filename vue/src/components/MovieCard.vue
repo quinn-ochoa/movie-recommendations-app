@@ -37,26 +37,24 @@
     }
 </script>
 
-<style>
+<style scoped>
  .movie-card{
     position: relative;
+    object-fit: fill;
     /* height: 200px;
     width: auto; */
     /* width: 152px;
     height: 250px;
     margin-bottom: 5px;
     margin-top: -10px; */
-    /* border: 1px solid red; */
   }
 
   .movie-card img{
     display: block;
-  /* height: 200px;
-  width: auto; */
-    /* height: 100%;
-    width: 100%;
+    height: 200px;
+    width: auto;
+  
     object-fit: fill;
-    padding-top: -10px; */
   }
 
   .movie-title {

@@ -110,8 +110,8 @@ header {
     background-color: #FECE00;
     display: flex;
     justify-content: space-between;
-
-    }
+    align-items: center;
+}
 
 img {
  height: 100px;   

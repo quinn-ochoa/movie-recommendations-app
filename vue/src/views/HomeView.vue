@@ -99,8 +99,7 @@
               <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
         </div>
       </div>
-      
-
+    
       <!-- test -->
       
       <!-- {{ popular.results }} -->
@@ -209,7 +208,7 @@ export default {
       background-color: #FECE00;
       display: flex;
       justify-content: space-between;
-
+      align-items: center;
     }
 
     footer {
@@ -226,6 +225,24 @@ export default {
     h2 {
       font-size: medium;
       height: 100px;
+    }
+    .form-control{
+      padding: 14px 20px;
+      margin: 8px;
+      border-radius:10px;
+      border: none;
+      height: 40px;
+      text-align: left;
+    }
+
+    .btn {
+      background-color: #012f6d;
+      color: white;
+      padding: 14px 20px;
+      margin: 4px;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
     }
 
     .social-icon {
