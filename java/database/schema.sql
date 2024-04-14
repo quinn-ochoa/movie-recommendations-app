@@ -10,7 +10,7 @@ CREATE TABLE users (
 
 CREATE TABLE movies (
 	id INT,
-	title VARCHAR(100) NOT NULL,
+	title VARCHAR(200) NOT NULL,
 	overview TEXT,
 	poster_path VARCHAR(200),
 	vote_average DECIMAL (5,3),
@@ -45,7 +45,7 @@ CREATE TABLE users_info (
 CREATE TABLE movies_genres (
     movie_id INT,
     genre_id INT,
-    CONSTRAINT PK_movies_genrse PRIMARY KEY (movie_id, genre_id),
+    CONSTRAINT PK_movies_genres PRIMARY KEY (movie_id, genre_id),
     CONSTRAINT FK_movie_id FOREIGN KEY (movie_id) REFERENCES movies(id),
     CONSTRAINT FK_genre_id FOREIGN KEY (genre_id) REFERENCES genres(id)
 );

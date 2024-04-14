@@ -6,7 +6,6 @@ import com.techelevator.dao.MovieGenreDao;
 import com.techelevator.dao.UsersInfoDao;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
-import com.techelevator.model.UsersInfo;
 import com.techelevator.services.ProfanityFilterAPIService;
 import com.techelevator.services.TMDB_APIService;
 import org.springframework.web.bind.annotation.*;
@@ -69,7 +68,7 @@ public class SearchController {
                 }
 
             } page++;
-
+            System.out.println(page);
         } goodResults = movieDao.addGenreNameToResponse(goodResults);
         return goodResults;
 
@@ -83,7 +82,7 @@ public class SearchController {
         MovieApiResponse movieApiResponse = new MovieApiResponse();
         MovieApiResponse goodResults = new MovieApiResponse();
 
-        while ((page == 1 || page<= movieApiResponse.getTotal_pages()) && goodResults.getResults().size() < 20) {
+        while ((page == 1 || (page<= movieApiResponse.getTotal_pages()) && goodResults.getResults().size() < 20)) {
 
             movieApiResponse = tmdbApiService.getMoviesByTitle(term, page);
 
@@ -102,7 +101,7 @@ public class SearchController {
 
                 }
 
-                if (movie.getCertification_id() > 0 && movie.getCertification_id() <= usersInfoDao.getAppropriateCetification(user_id) && movie.getPoster_path() != null) {
+                if (movie.getCertification_id() > 0 && movie.getCertification_id() <= usersInfoDao.getAppropriateCertification(user_id) && movie.getPoster_path() != null) {
 
                     goodResults.getResults().add(movie);
 

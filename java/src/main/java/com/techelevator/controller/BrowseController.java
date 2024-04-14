@@ -37,16 +37,14 @@ public class BrowseController {
     //methods
     @RequestMapping(path = "/user/{id}/recommended/", method = RequestMethod.GET)
     public Map<String, MovieApiResponse> getRecommendedMoviesByUserId(@PathVariable int id) {
-        //TODO NEW CODE
+
         Map<String, Boolean> usersFavoriteGenres = usersGenresDao.getGenresByUserId(id);
         List<Integer> usersFavoriteGenreCodes = new ArrayList<>();
         TMDB_APIService tmdbService = new TMDB_APIService();
-        double vote_average = 8;
-        double vote_count = 10000;
-        MovieApiResponse movieApiResponse = new MovieApiResponse();
-        MovieApiResponse recommended;
+        MovieApiResponse recommended = new MovieApiResponse();
+        MovieApiResponse moviesAlreadyReturned = new MovieApiResponse();
         Map<String, MovieApiResponse> browser = new HashMap<>();
-
+        //get user favorite genres and converts it to code readable by the api
         for (Map.Entry<String, Boolean> usersFavoriteGenre : usersFavoriteGenres.entrySet()) {
 
             if (usersFavoriteGenre.getValue()) {
@@ -54,25 +52,68 @@ public class BrowseController {
                 usersFavoriteGenreCodes.add(genresDao.getGenreIdByGenreName(usersFavoriteGenre.getKey()));
 
             }
+        //only gets Recommended4u if user has more than one favorite genre
+        }
+        while (usersFavoriteGenreCodes.size() > 1 && recommended.getResults().size() < 20) {
+            //gets 50 movies, filters out unwanted, reduces to 20, and adds them to the browser return map
+             MovieApiResponse moviesReturned = tmdbService.queryForRecommended4u(moviesAlreadyReturned, usersFavoriteGenreCodes, usersInfoDao.getAppropriateCertification(id));
 
-        } if (usersFavoriteGenreCodes.size() > 1) {
+            for (Movie movie : moviesReturned.getResults()) {
 
-            recommended = tmdbService.queryForRecommended4u(movieApiResponse, usersFavoriteGenreCodes, vote_average, vote_count, 0, 0);
-            recommended = filterAndTrim(recommended, id);
-            browser.put("recommended4u", recommended);
+                moviesAlreadyReturned.getResults().add(movie);
+                recommended.getResults().add(movie);
 
-        } for (Integer genre : usersFavoriteGenreCodes) {
+            } recommended = filterAndTrim(recommended, id);
 
-            recommended = tmdbService.queryForGenreRecommendations(movieApiResponse, genre, vote_average, vote_count, 0, 0);
-            recommended = filterAndTrim(recommended, id);
-            browser.put(genresDao.getGenreNameById(genre), recommended);
+        } browser.put("recommended4u", recommended);
+        moviesAlreadyReturned = new MovieApiResponse();
+        recommended = new MovieApiResponse();
+        //get recommended genre lists
+        for (Integer genre : usersFavoriteGenreCodes) {
 
-        } recommended = tmdbService.queryForPopular();
-        recommended = filterAndTrim(recommended, id);
-        browser.put("popular", recommended);
-        recommended = tmdbService.queryForAllTimeGreats(movieApiResponse ,vote_average, vote_count, 0 ,0);
-        recommended = filterAndTrim(recommended, id);
-        browser.put("allTimeGreats", recommended);
+            while (recommended.getResults().size() < 20) {
+
+                MovieApiResponse moviesReturned = tmdbService.queryForGenreRecommendations(moviesAlreadyReturned, genre, usersInfoDao.getAppropriateCertification(id));
+
+                for (Movie movie : moviesReturned.getResults()) {
+
+                    moviesAlreadyReturned.getResults().add(movie);
+                    recommended.getResults().add(movie);
+
+                } recommended = filterAndTrim(recommended, id);
+
+            } browser.put(genresDao.getGenreNameById(genre), recommended);
+            moviesAlreadyReturned = new MovieApiResponse();
+            recommended = new MovieApiResponse();
+        //get popular movies
+        }
+        while (recommended.getResults().size() < 20) {
+
+            MovieApiResponse moviesReturned = tmdbService.queryForPopular(moviesAlreadyReturned ,usersInfoDao.getAppropriateCertification(id));
+
+            for (Movie movie : moviesReturned.getResults()) {
+
+                moviesAlreadyReturned.getResults().add(movie);
+                recommended.getResults().add(movie);
+
+            } recommended = filterAndTrim(recommended, id);
+
+        } browser.put("popular", recommended);
+        moviesAlreadyReturned = new MovieApiResponse();
+        recommended = new MovieApiResponse();
+
+        while (recommended.getResults().size() < 20) {
+
+            MovieApiResponse moviesReturned = tmdbService.queryForAllTimeGreats(moviesAlreadyReturned, usersInfoDao.getAppropriateCertification(id));
+
+            for (Movie movie : moviesReturned.getResults()) {
+
+                moviesAlreadyReturned.getResults().add(movie);
+                recommended.getResults().add(movie);
+
+            } recommended = filterAndTrim(recommended, id);
+
+        } browser.put("allTimeGreats", recommended);
 
         for (Map.Entry<String, MovieApiResponse> result : browser.entrySet()) {
 
@@ -100,7 +141,7 @@ public class BrowseController {
 
                 movie.setCertification_id(movieCertificationDao.getCertificationByMovieId(movie.getId()));
 
-            } if (movie.getCertification_id() > 0 && movie.getCertification_id() <= usersInfoDao.getAppropriateCetification(user_id) && movie.getPoster_path() != null) {
+            } if (movie.getCertification_id() > 0 && movie.getCertification_id() <= usersInfoDao.getAppropriateCertification(user_id) && movie.getPoster_path() != null) {
 
                 goodResults.getResults().add(movie);
 
@@ -134,7 +175,7 @@ public class BrowseController {
 
         } for (Integer genre : allGenreCodes) {
 
-            recommended = tmdbService.queryForGenreRecommendations(movieApiResponse, genre, vote_average, vote_count, 0, 0);
+            recommended = tmdbService.queryForGenreRecommendations(movieApiResponse, genre, 4);
             recommended = filterAndTrim(recommended, 1);
             browser.put(genresDao.getGenreNameById(genre), recommended);
 

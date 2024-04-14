@@ -10,5 +10,5 @@ public interface UsersInfoDao {
 
     UsersInfo getUserInfo(int user_id);
 
-    int getAppropriateCetification(int userId);
+    int getAppropriateCertification(int userId);
 }

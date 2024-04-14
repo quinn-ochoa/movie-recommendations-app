@@ -4,6 +4,7 @@ import com.techelevator.dao.UsersInfoDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.User;
 import com.techelevator.model.UsersInfo;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -31,7 +32,7 @@ public class JdbcUsersInfoDao implements UsersInfoDao {
     @Override
     public void addProfileInfo(UsersInfo usersInfo) {
 
-        String sql = "INSERT INTO users_info (user_id, email, full_name, birthday, nc17_requested) VALUES (?,?,?,?);";
+        String sql = "INSERT INTO users_info (user_id, email, full_name, birthday, nc17_requested) VALUES (?,?,?,?, ?);";
 
         try{
 
@@ -95,7 +96,7 @@ public class JdbcUsersInfoDao implements UsersInfoDao {
     }
 
     @Override
-    public int getAppropriateCetification(int userId) {
+    public int getAppropriateCertification(int userId) {
 
         String sql = "SELECT birthday FROM users_info WHERE user_id = ?;";
 
@@ -137,7 +138,12 @@ public class JdbcUsersInfoDao implements UsersInfoDao {
 
             throw new DaoException("Data integrity violation", e);
 
+        } catch (DataAccessException e) {
+
+            return 4;
+
         }
+
     }
 
     private UsersInfo mapRowToUser(SqlRowSet results) {
