@@ -54,7 +54,7 @@ public class BrowseController {
             }
         //only gets Recommended4u if user has more than one favorite genre
         }
-        while (usersFavoriteGenreCodes.size() > 1) {
+        if (usersFavoriteGenreCodes.size() > 1) {
 
             while (recommended.getResults().size() < 20) {
                 //gets 50 movies, filters out unwanted, reduces to 20, and adds them to the browser return map
@@ -65,14 +65,14 @@ public class BrowseController {
                     moviesAlreadyReturned.getResults().add(movie);
                     recommended.getResults().add(movie);
 
-                }
-                recommended = filterAndTrim(recommended, id);
+                } recommended = filterAndTrim(recommended, id);
 
             } browser.put("recommended4u", recommended);
             moviesAlreadyReturned = new MovieApiResponse();
             recommended = new MovieApiResponse();
 
         }
+
         //get recommended genre lists
         for (Integer genre : usersFavoriteGenreCodes) {
 
