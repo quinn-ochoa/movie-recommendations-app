@@ -54,20 +54,25 @@ public class BrowseController {
             }
         //only gets Recommended4u if user has more than one favorite genre
         }
-        while (usersFavoriteGenreCodes.size() > 1 && recommended.getResults().size() < 20) {
-            //gets 50 movies, filters out unwanted, reduces to 20, and adds them to the browser return map
-             MovieApiResponse moviesReturned = tmdbService.queryForRecommended4u(moviesAlreadyReturned, usersFavoriteGenreCodes, usersInfoDao.getAppropriateCertification(id));
+        while (usersFavoriteGenreCodes.size() > 1) {
 
-            for (Movie movie : moviesReturned.getResults()) {
+            while (recommended.getResults().size() < 20) {
+                //gets 50 movies, filters out unwanted, reduces to 20, and adds them to the browser return map
+                MovieApiResponse moviesReturned = tmdbService.queryForRecommended4u(moviesAlreadyReturned, usersFavoriteGenreCodes, usersInfoDao.getAppropriateCertification(id));
 
-                moviesAlreadyReturned.getResults().add(movie);
-                recommended.getResults().add(movie);
+                for (Movie movie : moviesReturned.getResults()) {
 
-            } recommended = filterAndTrim(recommended, id);
+                    moviesAlreadyReturned.getResults().add(movie);
+                    recommended.getResults().add(movie);
 
-        } browser.put("recommended4u", recommended);
-        moviesAlreadyReturned = new MovieApiResponse();
-        recommended = new MovieApiResponse();
+                }
+                recommended = filterAndTrim(recommended, id);
+
+            } browser.put("recommended4u", recommended);
+            moviesAlreadyReturned = new MovieApiResponse();
+            recommended = new MovieApiResponse();
+
+        }
         //get recommended genre lists
         for (Integer genre : usersFavoriteGenreCodes) {
 

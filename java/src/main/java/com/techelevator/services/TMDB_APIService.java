@@ -256,9 +256,10 @@ public class TMDB_APIService {
         MovieApiResponse moviesToReturn = new MovieApiResponse();
         double vote_average = 8.7;
         double vote_count = 25000;
-        int page = 1;
 
         while (moviesToReturn.getResults().size() < 50) {
+
+            int page = 1;
 
             while (page == 1 || page <= moviesPulledFromApi.getTotal_pages()) {
 

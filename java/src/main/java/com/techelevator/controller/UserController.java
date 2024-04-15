@@ -64,11 +64,18 @@ public class UserController {
 
     }
 
-    @RequestMapping(path = "user/movie/update", method = RequestMethod.PUT)
+    @RequestMapping(path = "user/movie/favorite/", method = RequestMethod.POST)
     public void updateUserMovieOpinions(@Valid @RequestBody MoviesUsers moviesUsers) {
-//TODO start here
-//        moviesUsersDao.checkForMovieUserAssosication(moviesUsers);
-//        moviesUsersDao.updateMoviesUsers(moviesUsers);
+
+        if (!moviesUsersDao.checkForMovieUserAssociation(moviesUsers)) {
+
+            moviesUsersDao.addMoviesUsers(moviesUsers);
+
+        } else {
+
+            moviesUsersDao.updateMoviesUsers(moviesUsers);
+
+        }
 
     }
 
