@@ -8,6 +8,8 @@ import com.techelevator.model.UsersInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -98,6 +100,21 @@ public class UserController {
     @RequestMapping(path = "/user/{user_id}/movie/{movie_id}/review/", method = RequestMethod.GET)
     public String getUsersReviewOfAMovie(@PathVariable int user_id, @PathVariable int movie_id) {
         return moviesUsersDao.getUserReviewOfMovie(user_id, movie_id);
+    }
+
+    @RequestMapping(path = "/user/{user_id}/reviews/", method = RequestMethod.GET)
+    public Map<String, Movie> getAllUserReviews(@PathVariable int user_id) {
+
+        List<Movie> reviewedMovies = movieDao.getAllMoviesReviewedByUser(user_id);
+        Map<String, Movie> movieReviews = new HashMap<>();
+
+        for (Movie reviewedMovie : reviewedMovies) {
+
+            reviewedMovie.setGenre_ids(movieGenreDao.getGenreIdsByMovieId(reviewedMovie.getId()));
+            movieReviews.put(moviesUsersDao.getUserReviewOfMovie(user_id, reviewedMovie.getId()), reviewedMovie);
+
+        } return movieReviews;
+
     }
 
 }
