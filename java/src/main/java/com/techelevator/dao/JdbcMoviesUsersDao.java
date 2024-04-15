@@ -1,10 +1,12 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
+import com.techelevator.model.Genres;
 import com.techelevator.model.MoviesUsers;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,7 +28,7 @@ public class JdbcMoviesUsersDao implements MoviesUsersDao{
         try {
 
             jdbcTemplate.update(sql, moviesUsers.isLiked(), moviesUsers.getReview(), moviesUsers.getMovie_id(), moviesUsers.getUser_id());
-            System.out.println(moviesUsers.isLiked());
+
         } catch (CannotGetJdbcConnectionException e) {
 
             throw new DaoException("Unable to connect to server or database", e);
@@ -80,6 +82,28 @@ public class JdbcMoviesUsersDao implements MoviesUsersDao{
             throw new DaoException("Data integrity violation", e);
 
         }
+
+    }
+
+    @Override
+    public String getUserReviewOfMovie(int userId, int movieId) {
+
+        String sql = "SELECT review FROM movies_users WHERE movie_id = ? AND user_id = ?;";
+        String review;
+
+        try{
+
+            review = jdbcTemplate.queryForObject(sql, String.class, movieId, userId);
+
+        } catch (CannotGetJdbcConnectionException e){
+
+            throw new DaoException("Unable to connect to server or database", e);
+
+        } catch (DataIntegrityViolationException e){
+
+            throw new DaoException("Data integrity violation", e);
+
+        } return review;
 
     }
 

@@ -36,4 +36,20 @@ public class MoviesUsers {
         return review;
     }
 
+    public void setMovie_id(int movie_id) {
+        this.movie_id = movie_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
 }

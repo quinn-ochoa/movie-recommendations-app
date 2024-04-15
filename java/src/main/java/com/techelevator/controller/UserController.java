@@ -95,4 +95,9 @@ public class UserController {
 
     }
 
+    @RequestMapping(path = "/user/{user_id}/movie/{movie_id}/review/", method = RequestMethod.GET)
+    public String getUsersReviewOfAMovie(@PathVariable int user_id, @PathVariable int movie_id) {
+        return moviesUsersDao.getUserReviewOfMovie(user_id, movie_id);
+    }
+
 }

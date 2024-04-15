@@ -8,4 +8,6 @@ public interface MoviesUsersDao {
     boolean checkForMovieUserAssociation(MoviesUsers moviesUsers);
 
     void addMoviesUsers(MoviesUsers moviesUsers);
+
+    String getUserReviewOfMovie(int userId, int movieId);
 }
