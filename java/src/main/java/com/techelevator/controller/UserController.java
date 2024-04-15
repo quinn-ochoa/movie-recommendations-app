@@ -1,7 +1,9 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.MoviesUsersDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.dao.UsersGenresDao;
+import com.techelevator.model.MoviesUsers;
 import com.techelevator.model.UsersInfo;
 import com.techelevator.dao.UsersInfoDao;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +19,14 @@ public class UserController {
     UsersGenresDao usersGenresDao;
     UsersInfoDao usersInfoDao;
     UserDao userDao;
+    MoviesUsersDao moviesUsersDao;
 
     //constructors
-    public UserController(UsersGenresDao usersGenresDao, UsersInfoDao usersInfoDao, UserDao userDao) {
+    public UserController(UsersGenresDao usersGenresDao, UsersInfoDao usersInfoDao, UserDao userDao, MoviesUsersDao moviesUsersDao) {
         this.usersGenresDao = usersGenresDao;
         this.usersInfoDao = usersInfoDao;
-        this.userDao =userDao;
+        this.userDao = userDao;
+        this.moviesUsersDao = moviesUsersDao;
     }
 
     //methods
@@ -57,6 +61,21 @@ public class UserController {
         usersInfo.setUser_id(userDao.getIdByUsername(usersInfo.getUsername()));
         usersInfoDao.updateProfileInfo(usersInfo);
         usersGenresDao.setUsersGenresAssociations(usersInfo.getUser_id(), usersInfo.getFavoriteGenres());
+
+    }
+
+    @RequestMapping(path = "user/movie/favorite/", method = RequestMethod.POST)
+    public void updateUserMovieOpinions(@Valid @RequestBody MoviesUsers moviesUsers) {
+
+        if (!moviesUsersDao.checkForMovieUserAssociation(moviesUsers)) {
+
+            moviesUsersDao.addMoviesUsers(moviesUsers);
+
+        } else {
+
+            moviesUsersDao.updateMoviesUsers(moviesUsers);
+
+        }
 
     }
 

@@ -2,17 +2,17 @@ package com.techelevator.model;
 
 public class ReleaseDates {
     //properties
-    int type;
+    String certification;
 
     //constructors
     public ReleaseDates() {
     }
-    public ReleaseDates(int type) {
-        this.type = type;
+    public ReleaseDates(String certification) {
+        this.certification = certification;
     }
 
     //methods
-    public Integer getType() {
-        return type;
+    public String getCertification() {
+        return certification;
     }
 }

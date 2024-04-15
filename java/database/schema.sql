@@ -10,12 +10,21 @@ CREATE TABLE users (
 
 CREATE TABLE movies (
 	id INT,
-	title VARCHAR(100) NOT NULL,
+	title VARCHAR(200) NOT NULL,
 	overview TEXT,
 	poster_path VARCHAR(200),
 	vote_average DECIMAL (5,3),
 	do_not_show boolean,
 	CONSTRAINT PK_movie_id PRIMARY KEY (id)
+);
+
+CREATE TABLE movies_users(
+	movie_id int,
+	user_id int,
+	liked boolean,
+	CONSTRAINT PK_movie_user_id PRIMARY KEY (movie_id, user_id),
+	CONSTRAINT FK_movie_id FOREIGN KEY (movie_id) REFERENCES movies(id),
+	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE genres (
@@ -32,11 +41,14 @@ CREATE TABLE certifications (
 	CONSTRAINT PK_certification_id PRIMARY KEY (certification_id)
 );
 
+
+
 CREATE TABLE users_info (
 	user_id SERIAL,
 	email varchar(50),
 	full_name varchar(200),
 	birthday DATE NOT NULL,
+	nc17_requested boolean,
 	CONSTRAINT PK_user_id PRIMARY KEY (user_id),
 	CONSTRAINT FK_user_info FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
@@ -44,7 +56,7 @@ CREATE TABLE users_info (
 CREATE TABLE movies_genres (
     movie_id INT,
     genre_id INT,
-    CONSTRAINT PK_movies_genrse PRIMARY KEY (movie_id, genre_id),
+    CONSTRAINT PK_movies_genres PRIMARY KEY (movie_id, genre_id),
     CONSTRAINT FK_movie_id FOREIGN KEY (movie_id) REFERENCES movies(id),
     CONSTRAINT FK_genre_id FOREIGN KEY (genre_id) REFERENCES genres(id)
 );
