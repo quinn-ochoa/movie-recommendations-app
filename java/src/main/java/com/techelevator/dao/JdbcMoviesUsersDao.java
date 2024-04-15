@@ -25,7 +25,7 @@ public class JdbcMoviesUsersDao implements MoviesUsersDao{
 
         try {
 
-            jdbcTemplate.update(sql, moviesUsers.isLiked(), moviesUsers.getMovie_id(), moviesUsers.getUser_id(), moviesUsers.getReview());
+            jdbcTemplate.update(sql, moviesUsers.isLiked(), moviesUsers.getReview(), moviesUsers.getMovie_id(), moviesUsers.getUser_id());
             System.out.println(moviesUsers.isLiked());
         } catch (CannotGetJdbcConnectionException e) {
 
@@ -65,7 +65,7 @@ public class JdbcMoviesUsersDao implements MoviesUsersDao{
     public void addMoviesUsers(MoviesUsers moviesUsers) {
 
         String sql = "INSERT INTO movies_users (movie_id, user_id, liked, review)" +
-                " VALUES (?,?,?);";
+                " VALUES (?,?,?,?);";
 
         try{
 

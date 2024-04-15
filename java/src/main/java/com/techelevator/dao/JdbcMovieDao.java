@@ -199,6 +199,7 @@ public class JdbcMovieDao implements MovieDao{
         movie.setOverview(result.getString("overview"));
         movie.setPoster_path(result.getString("poster_path"));
         movie.setVote_average(result.getBigDecimal("vote_average"));
+        movie.setId(result.getInt("id"));
         return movie;
 
     }

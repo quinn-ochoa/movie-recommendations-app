@@ -120,6 +120,14 @@ public class BrowseController {
 
         } browser.put("allTimeGreats", recommended);
         MovieApiResponse moviesReturned = movieDao.getFavoriteMovies(id);
+
+        for (Movie movie : moviesReturned.getResults()) {
+
+            movie.setGenre_ids(movieGenreDao.getGenreIdsByMovieId(movie.getId()));
+
+        }
+
+        moviesReturned = filterAndTrim(moviesReturned, id);
         browser.put("favorites", moviesReturned);
 
         for (Map.Entry<String, MovieApiResponse> result : browser.entrySet()) {
