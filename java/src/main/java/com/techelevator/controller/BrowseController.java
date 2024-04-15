@@ -54,7 +54,7 @@ public class BrowseController {
             }
         //only gets Recommended4u if user has more than one favorite genre
         }
-        while (usersFavoriteGenreCodes.size() > 1) {
+        if (usersFavoriteGenreCodes.size() > 1) {
 
             while (recommended.getResults().size() < 20) {
                 //gets 50 movies, filters out unwanted, reduces to 20, and adds them to the browser return map
@@ -65,14 +65,14 @@ public class BrowseController {
                     moviesAlreadyReturned.getResults().add(movie);
                     recommended.getResults().add(movie);
 
-                }
-                recommended = filterAndTrim(recommended, id);
+                } recommended = filterAndTrim(recommended, id);
 
             } browser.put("recommended4u", recommended);
             moviesAlreadyReturned = new MovieApiResponse();
             recommended = new MovieApiResponse();
 
         }
+
         //get recommended genre lists
         for (Integer genre : usersFavoriteGenreCodes) {
 
@@ -119,6 +119,13 @@ public class BrowseController {
             } recommended = filterAndTrim(recommended, id);
 
         } browser.put("allTimeGreats", recommended);
+        MovieApiResponse moviesReturned = movieDao.getFavoriteMovies(id);
+
+        for (Movie movie : moviesReturned.getResults()) {
+
+            movie.setGenre_ids(movieGenreDao.getGenreIdsByMovieId(movie.getId()));
+
+        } browser.put("favorites", moviesReturned);
 
         for (Map.Entry<String, MovieApiResponse> result : browser.entrySet()) {
 
@@ -146,7 +153,7 @@ public class BrowseController {
 
                 movie.setCertification_id(movieCertificationDao.getCertificationByMovieId(movie.getId()));
 
-            } if (movie.getCertification_id() > 0 && movie.getCertification_id() <= usersInfoDao.getAppropriateCertification(user_id) && movie.getPoster_path() != null) {
+            } if (movie.getCertification_id() > 0 && movie.getCertification_id() <= usersInfoDao.getAppropriateCertification(user_id) && movie.getPoster_path() != null && !movie.isBadName()) {
 
                 goodResults.getResults().add(movie);
 

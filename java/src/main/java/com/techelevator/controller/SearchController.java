@@ -55,7 +55,7 @@ public class SearchController {
 
                 }
 
-                if (movie.getCertification_id() > 0 && movie.getCertification_id() < 5 && movie.getPoster_path() != null) {
+                if (movie.getCertification_id() > 0 && movie.getCertification_id() < 5 && movie.getPoster_path() != null && !movie.isBadName()) {
 
                     goodResults.getResults().add(movie);
 
@@ -100,7 +100,7 @@ public class SearchController {
 
                 }
 
-                if (movie.getCertification_id() > 0 && movie.getCertification_id() <= usersInfoDao.getAppropriateCertification(user_id) && movie.getPoster_path() != null) {
+                if (movie.getCertification_id() > 0 && movie.getCertification_id() <= usersInfoDao.getAppropriateCertification(user_id) && movie.getPoster_path() != null && !movie.isBadName()) {
 
                     goodResults.getResults().add(movie);
 
