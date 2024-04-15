@@ -22,6 +22,7 @@ CREATE TABLE movies_users(
 	movie_id int,
 	user_id int,
 	liked boolean,
+	review TEXT,
 	CONSTRAINT PK_movie_user_id PRIMARY KEY (movie_id, user_id),
 	CONSTRAINT FK_movie_id FOREIGN KEY (movie_id) REFERENCES movies(id),
 	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
