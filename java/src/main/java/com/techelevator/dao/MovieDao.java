@@ -11,14 +11,11 @@ public interface MovieDao {
 
     MovieApiResponse addGenreNameToResponse(MovieApiResponse movieApiResponse);
 
-    MovieApiResponse throwOutBadMovies(MovieApiResponse movieApiResponse);
-
-
     Movie getMovieById(int movie_id);
 
     Movie addGenreNameToMovie(Movie movie);
 
     void markMovieAsDoNotShow(int movie_id);
 
-
+    MovieApiResponse getFavoriteMovies(int id);
 }

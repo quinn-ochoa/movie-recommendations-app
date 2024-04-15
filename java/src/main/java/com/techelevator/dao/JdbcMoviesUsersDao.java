@@ -21,11 +21,11 @@ public class JdbcMoviesUsersDao implements MoviesUsersDao{
     @Override
     public void updateMoviesUsers(MoviesUsers moviesUsers) {
 
-        String sql = "UPDATE movies_users SET liked = ? WHERE movie_id = ? AND user_id = ?;";
+        String sql = "UPDATE movies_users SET liked = ?, review = ? WHERE movie_id = ? AND user_id = ?;";
 
         try {
 
-            jdbcTemplate.update(sql, moviesUsers.isLiked(), moviesUsers.getMovie_id(), moviesUsers.getUser_id());
+            jdbcTemplate.update(sql, moviesUsers.isLiked(), moviesUsers.getMovie_id(), moviesUsers.getUser_id(), moviesUsers.getReview());
             System.out.println(moviesUsers.isLiked());
         } catch (CannotGetJdbcConnectionException e) {
 
@@ -64,12 +64,12 @@ public class JdbcMoviesUsersDao implements MoviesUsersDao{
     @Override
     public void addMoviesUsers(MoviesUsers moviesUsers) {
 
-        String sql = "INSERT INTO movies_users (movie_id, user_id, liked)" +
+        String sql = "INSERT INTO movies_users (movie_id, user_id, liked, review)" +
                 " VALUES (?,?,?);";
 
         try{
 
-            jdbcTemplate.update(sql, moviesUsers.getMovie_id(), moviesUsers.getUser_id(), moviesUsers.isLiked());
+            jdbcTemplate.update(sql, moviesUsers.getMovie_id(), moviesUsers.getUser_id(), moviesUsers.isLiked(), moviesUsers.getReview());
 
         } catch (CannotGetJdbcConnectionException e){
 

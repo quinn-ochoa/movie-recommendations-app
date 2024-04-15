@@ -119,6 +119,8 @@ public class BrowseController {
             } recommended = filterAndTrim(recommended, id);
 
         } browser.put("allTimeGreats", recommended);
+        MovieApiResponse moviesReturned = movieDao.getFavoriteMovies(id);
+        browser.put("favorites", moviesReturned);
 
         for (Map.Entry<String, MovieApiResponse> result : browser.entrySet()) {
 
@@ -146,7 +148,7 @@ public class BrowseController {
 
                 movie.setCertification_id(movieCertificationDao.getCertificationByMovieId(movie.getId()));
 
-            } if (movie.getCertification_id() > 0 && movie.getCertification_id() <= usersInfoDao.getAppropriateCertification(user_id) && movie.getPoster_path() != null) {
+            } if (movie.getCertification_id() > 0 && movie.getCertification_id() <= usersInfoDao.getAppropriateCertification(user_id) && movie.getPoster_path() != null && !movie.isBadName()) {
 
                 goodResults.getResults().add(movie);
 
