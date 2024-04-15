@@ -85,6 +85,32 @@ public class JdbcMovieDao implements MovieDao{
     }
 
     @Override
+    public MovieApiResponse getFavoriteMovies(int user_id) {
+
+        MovieApiResponse movieApiResponse = new MovieApiResponse();
+        Movie movie;
+        String sql = "SELECT * FROM movies WHERE id in (SELECT movie_id FROM movies_users WHERE user_id = ?);";
+
+        try {
+
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, user_id);
+
+            while (result.next()){
+
+                movie = mapRowToMovie(result);
+                movieApiResponse.getResults().add(movie);
+
+            }
+
+        } catch (CannotGetJdbcConnectionException e){
+
+            throw new DaoException("Unable to connect to server or database");
+
+        } return movieApiResponse;
+
+    }
+
+    @Override
     public MovieApiResponse addGenreNameToResponse(MovieApiResponse movieApiResponse) {
 
         String sql = "SELECT name FROM genres WHERE id = ?;";
@@ -112,16 +138,6 @@ public class JdbcMovieDao implements MovieDao{
             }
 
         } return movieApiResponse;
-
-    }
-
-    @Override
-    public MovieApiResponse throwOutBadMovies(MovieApiResponse movieApiResponse) {
-
-        ProfanityFilterAPIService profanityFilterService = new ProfanityFilterAPIService();
-      //  MovieApiResponse filtered = profanityFilterService.checkForProfaneTitle();
-      //  filtered.setTotal_pages(movieApiResponse.getTotal_pages());
-        return null;
 
     }
 
@@ -183,6 +199,7 @@ public class JdbcMovieDao implements MovieDao{
         movie.setOverview(result.getString("overview"));
         movie.setPoster_path(result.getString("poster_path"));
         movie.setVote_average(result.getBigDecimal("vote_average"));
+        movie.setId(result.getInt("id"));
         return movie;
 
     }
