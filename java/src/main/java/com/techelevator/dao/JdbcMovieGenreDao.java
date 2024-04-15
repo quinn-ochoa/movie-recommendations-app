@@ -20,21 +20,25 @@ public class JdbcMovieGenreDao implements MovieGenreDao{
     @Override
     public void updateMovieGenreAssociation(List<Integer> genreIds, int movieId) {
 
-        String sql = "INSERT INTO movies_genres (movie_id, genre_id) VALUES (?,?);";
+        String sql = "INSERT INTO movies_genres (movie_id, genre_id) VALUES (?,?) ON CONFLICT (movie_id, genre_id) DO NOTHING;";
 
-        for (Integer genreId: genreIds) {
+        if ( genreIds != null) {
 
-            try{
+            for (Integer genreId : genreIds) {
 
-                jdbcTemplate.update(sql, movieId, genreId);
+                try {
 
-            } catch (CannotGetJdbcConnectionException e){
+                    jdbcTemplate.update(sql, movieId, genreId);
 
-                throw new DaoException("Unable to connect to server or database", e);
+                } catch (CannotGetJdbcConnectionException e) {
 
-            } catch (DataIntegrityViolationException e){
+                    throw new DaoException("Unable to connect to server or database", e);
 
-                throw new DaoException("Data integrity violation", e);
+                } catch (DataIntegrityViolationException e) {
+
+                    throw new DaoException("Data integrity violation", e);
+
+                }
 
             }
 

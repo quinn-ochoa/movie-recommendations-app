@@ -3,6 +3,9 @@ BEGIN TRANSACTION;
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
+INSERT INTO users_info (user_id, email, full_name, birthday)VALUES (1, 'random@gmail.com', 'John Snow',(CURRENT_DATE - INTERVAL '18 years'));
+
+
 INSERT INTO genres (id,name) VALUES (28,'Action');
 INSERT INTO genres (id,name) VALUES (12,'Adventure');
 INSERT INTO genres (id,name) VALUES (16,'Animation');

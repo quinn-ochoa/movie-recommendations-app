@@ -89,6 +89,19 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
+    public boolean updatePassword(String username, String newPassword){
+        String password_hash = new BCryptPasswordEncoder().encode(newPassword);
+        String updateUserSql = "UPDATE users set password_hash = ? WHERE username = ?;";
+        try {
+            int rowsAffected = jdbcTemplate.update(updateUserSql,password_hash,username);
+            return rowsAffected > 0;
+        }catch (DataIntegrityViolationException e) {
+            throw new DaoException("Failed to update password", e);
+        }
+
+    }
+
+    @Override
     public int getIdByUsername(String username) {
 
         String sql = "SELECT user_id FROM users WHERE username = ?;";

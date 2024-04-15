@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -68,6 +69,31 @@ public class AuthenticationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User registration failed.");
         }
     }
+
+    @RequestMapping(path = "/forgotPassword/", method = RequestMethod.PUT)
+    public ResponseEntity<String> updatePassword(@RequestBody RegisterUserDto request){
+
+        String newPassword = request.getPassword();
+        String confirmPassword = request.getConfirmPassword();
+
+        if(!newPassword.equals(confirmPassword)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Passwords do not match");
+        }
+
+        String username = request.getUsername();
+
+        String password_hash = new BCryptPasswordEncoder().encode(newPassword);
+
+        boolean passwordUpdated = userDao.updatePassword(username,password_hash);
+
+                if (passwordUpdated){
+                    return ResponseEntity.ok( "Password has successfully updated!");
+                }else{
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update password, try again!");
+                }
+
+    }
+
 
 }
 
