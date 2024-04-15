@@ -21,6 +21,6 @@ export default {
   //ADD REVIEW AND GET REVIEW
   //TO BE CONFIRMED
   addReview(review) {
-    return axios.post('/review', review);
+    return axios.post('/user/movie/favorite/', review);
   },
 }

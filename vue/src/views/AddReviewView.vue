@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h1>Add New Review</h1>
+      
       <review-form v-bind:card="card" />
     </div>
 </template>
@@ -11,9 +11,11 @@
         components:{
             ReviewForm
         },
-        data(){
-            return{}
-        }
+        // data(){
+        //     return{}
+        // }
+        
     }
+    
 
 </script>

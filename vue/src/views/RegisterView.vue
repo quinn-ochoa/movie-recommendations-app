@@ -43,7 +43,7 @@
       </section>
       <section id="buttons-section">
         <button type="submit">Sign up</button>
-        <button type="cancel">Cancel</button>
+        <button type="cancel">Cancel</button><br/>
         <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
       </section>
     </form>

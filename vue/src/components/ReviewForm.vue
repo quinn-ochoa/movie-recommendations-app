@@ -1,37 +1,64 @@
 <template>
+    <header>
+        <router-link v-bind:to="{ name: 'home' }">
+            <img alt="Movie reel logo" src="../assets/grey-reel.png"/>
+        </router-link>
+        <h1>
+            <i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }} &nbsp;|&nbsp;
+            <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+        </h1>
+    </header>
+
     <form v-on:submit.prevent="submitForm" class="cardForm">
-      <div class="form-group">
-        <label for="title">Title:</label>
-        <input id="title" type="text" class="form-control" v-model="editCard.title" autocomplete="off" />
-      </div>
+      <h1>Add New Review</h1>
+      <div>Favorite?<input type="checkbox" v-bind:checked="addCard.liked" v-on:change="onFavoriteChange"/> </div>
   
       <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" class="form-control" v-model="editCard.description"></textarea>
+        <label for="description">Your review:</label>
+        <textarea id="description" class="form-control" v-model="addCard.review"></textarea>
       </div>
 
       <button class="btn btn-submit">Submit</button>
       <button class="btn btn-cancel" v-on:click="cancelForm" type="button">Cancel</button>
     </form>
+    {{ addCard }}
 </template>
 
 <script>
+import userInfoService from '../services/UserInfoService';
 
 export default {
-    props: {
-        card: {
-        type: Object,
-        required: true
-        }
+    // props: {
+    //     card: {
+    //     type: Object,
+    //     required: true
+    //     }
+    // },
+    data(){
+      return {
+        addCard:{
+          movie_id: this.$route.params.movieId,
+          user_id: this.$store.state.user.id,
+          liked: false,
+          review:""
+        } 
+      }
     },
     methods: {
         submitForm(){
-
+          userInfoService
+          .addReview(this.addCard)
+          .then(
+            this.$router.push({name:'MovieDetailView'})
+          )
         },
         cancelForm() {
         // Go back to previous page
         this.$router.back();
         },
+        onFavoriteChange() {
+          this.addCard.liked = !this.addCard.liked;
+        }
     }
     
 }

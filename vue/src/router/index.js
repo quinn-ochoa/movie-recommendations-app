@@ -10,6 +10,7 @@ import LandingView from '../views/LandingView.vue';
 import UpdateGenresView from '../views/UpdateGenresView.vue';
 import EditGenresView from '../views/EditGenresView.vue';
 import MovieDetailView from '../views/MovieDetailView.vue';
+import AddReviewView from '../views/AddReviewView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -79,6 +80,11 @@ const routes = [
   },
   
   //ADD REVIEW AND GET REVIEW
+  {
+    path: '/movie/:movieId/review/create',
+    name: 'AddReviewView',
+    component: AddReviewView
+  }
 
 ];
 

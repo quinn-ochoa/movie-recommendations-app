@@ -76,8 +76,18 @@
         </div>
       </div>
 
-      <!-- FAVORITE MOVIES -->
-      <h2 v-if="selectFavoriteGenres() != 0">Based on favorite genres</h2>
+      <!-- LIKED MOVIES BY USER -->
+      <h2 v-if="favorites.results != 0" >Movies you liked</h2>
+      <div id="recommended-container" v-if="favorites.results != 0">
+        
+        <div class="display-card" v-for="result in favorites.results" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
+              <div class="title">{{ result.title }}</div>
+              <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+        </div>
+      </div>
+
+      <!-- FAVORITE GENRES -->
+      <h2 v-if="selectFavoriteGenres() != 0">Based on your favorite genres</h2>
       <div id="favorite-genres-container" v-if="selectFavoriteGenres() != 0">
         
         <div class="display-card" v-for="result in selectFavoriteGenres()" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
@@ -87,7 +97,7 @@
       </div>
 
       <!-- CLASSIC MOVIES -->
-      <h2>All classics</h2>
+      <h2>All time classic</h2>
       <div id="all-time-greats-container">
         
         <!-- <div>{{ allTimeGreats.results }}</div> -->
@@ -156,6 +166,10 @@ export default {
         results : []
       },
 
+      favorites : {
+        results : []
+      },
+
       genres: {}
 
     };
@@ -175,6 +189,7 @@ export default {
       delete this.genres.popular;
       delete this.genres.allTimeGreats;
       delete this.genres.recommended4u;
+      delete this.genres.favorites;
       for (let key in favGenres){
         for (let item of favGenres[key].results){
           resultArray.push(item);
@@ -200,6 +215,7 @@ export default {
       this.popular.results = response.data.popular.results;
       this.allTimeGreats.results = response.data.allTimeGreats.results;
       this.recommended4u.results = response.data.recommended4u.results;
+      this.favorites.results = response.data.favorites.results;
     })
   },
 };

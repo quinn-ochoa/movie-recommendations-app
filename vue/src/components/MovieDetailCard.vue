@@ -55,9 +55,9 @@
                 <button v-on:click="$router.push({ name: 'home' })">
                     Back 
                 </button>
-                <button v-on:click="$router.push({ name: 'UpdateGenresView' })">
+                <button v-on:click="$router.push({ name: 'AddReviewView' })">
                     Add Review</button>
-                <p>Favorite?<input type="checkbox"/> </p>
+                
 
                 <!-- v-bind:id="'favorite_' + review.id" v-bind:checked="review.favorited"
                     v-on:click="onFavoritedChange(review)" -->
@@ -65,15 +65,11 @@
                 <!-- <i onclick="flipLikeButton(this)" class="fa fa-thumbs-up fa-lg" id="fas"></i> -->
                 <!-- <i onclick="flipLikeButton(this)" class="fa fa-thumbs-down" aria-hidden="true" id="fas"></i> -->
             </div>
-
-            
-    
- 
-   
-   
            
         </section>
       
+        <!-- PRINT OUT MOVIE DETAIL -->
+        <!-- {{ movie }} -->
     
     </div>
     </body>
@@ -112,144 +108,139 @@
 
 <style>
 
-header {
+    header {
 
-    background-color: #FECE00;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-img {
- height: 100px;   
-}
-
-h1 {
-    font-size: 15px;
-    margin-right: 10px;
-}
-
- .detail-card {
-    /* margin: auto; */
-    margin-left: 10%;
-    margin-top: 5%;
-    margin-bottom: 10%;
-    display: flex;
-    gap: 20px;
-    justify-content: space-evenly;
-    height: 50vh;
-    
- }
-
-#card-info{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-}
-
-#poster > img {
-    height: 300px;
-}
-
-.genres {
-    display: flex;
-
-}
-
-#stars{
-    margin-left: 15px;
-    margin-top: 5px;
-}
-
-.checked {
-  color: orange;
-  
-}
-
-.unchecked, .checked {
-    margin-left: 3px;
-}
-
-#title-info {
-    color: #012F6D;
-    border-bottom: solid #012f6d;
-    width: 80%;
-}
-
-#genre-info {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-}
-
-h2 {
-    font-size: 15px;
-}
-
-.overview {
-    margin-top: 8px;
-    width: 80%;
-}
-
-
-
-.titles{
-    font-weight: bold;
-    font-size: 15px;
-}
-.fa {
-  font-size: 70px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.fa:hover{
-    color: navy;
-}
-
-p {
-    display: inline-block;
-    margin-left: 10px;
-}
-
-button {
-  background-color: #012F6D;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
-}
-
-
-
-footer {
-    display: flex;
-    background-color: lightgrey;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    margin-top: 40px;
-    flex-direction: column;
-    gap: 15px
-}
-
-footer > div > img {
-    height: 50px;
-    width: 70px;
-}
-
-footer > :first-child {
-    display: flex;
-    gap: 10px
-}
-
-.social-icon {
-      font-size: 20px;
-      height: 20px;
+        background-color: #FECE00;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
+
+    img {
+        height: 100px;   
+    }
+
+    h1 {
+        font-size: 15px;
+        margin-right: 10px;
+    }
+
+    .detail-card {
+        /* margin: auto; */
+        margin-left: 10%;
+        margin-top: 5%;
+        margin-bottom: 10%;
+        display: flex;
+        gap: 20px;
+        justify-content: space-evenly;
+        height: 50vh;
+        
+    }
+
+    #card-info{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #poster > img {
+        height: 300px;
+    }
+
+    .genres {
+        display: flex;
+
+    }
+
+    #stars{
+        margin-left: 15px;
+        margin-top: 5px;
+    }
+
+    .checked {
+    color: orange;
+    
+    }
+
+    .unchecked, .checked {
+        margin-left: 3px;
+    }
+
+    #title-info {
+        color: #012F6D;
+        border-bottom: solid #012f6d;
+        width: 80%;
+    }
+
+    #genre-info {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+    }
+
+    h2 {
+        font-size: 15px;
+    }
+
+    .overview {
+        margin-top: 8px;
+        width: 80%;
+    }
+
+    .titles{
+        font-weight: bold;
+        font-size: 15px;
+    }
+    .fa {
+    font-size: 70px;
+    cursor: pointer;
+    user-select: none;
+    }
+
+    .fa:hover{
+        color: navy;
+    }
+
+    p {
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    button {
+    background-color: #012F6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    }
+
+    footer {
+        display: flex;
+        background-color: lightgrey;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        margin-top: 40px;
+        flex-direction: column;
+        gap: 15px
+    }
+
+    footer > div > img {
+        height: 50px;
+        width: 70px;
+    }
+
+    footer > :first-child {
+        display: flex;
+        gap: 10px
+    }
+
+    .social-icon {
+        font-size: 20px;
+        height: 20px;
+        }
 
 </style>
