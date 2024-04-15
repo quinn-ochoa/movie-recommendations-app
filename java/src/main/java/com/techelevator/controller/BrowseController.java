@@ -3,6 +3,8 @@ package com.techelevator.controller;
 import com.techelevator.dao.*;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
+import com.techelevator.model.MoviesUsers;
+import com.techelevator.model.User;
 import com.techelevator.services.TMDB_APIService;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,16 +24,20 @@ public class BrowseController {
     MovieGenreDao movieGenreDao;
     MovieCertificationDao movieCertificationDao;
     UsersInfoDao usersInfoDao;
+    UserDao userDao;
+    MoviesUsersDao moviesUsersDao;
 
 
     //constructors
-    public BrowseController(UsersGenresDao usersGenresDao, GenresDao genresDao, MovieDao movieDao, MovieGenreDao movieGenreDao, MovieCertificationDao movieCertificationDao, UsersInfoDao usersInfoDao) {
+    public BrowseController(UsersGenresDao usersGenresDao, GenresDao genresDao, MovieDao movieDao, MovieGenreDao movieGenreDao, MovieCertificationDao movieCertificationDao, UsersInfoDao usersInfoDao, UserDao userDao, MoviesUsersDao moviesUsersDao) {
         this.usersGenresDao = usersGenresDao;
         this.genresDao = genresDao;
         this.movieDao = movieDao;
         this.movieGenreDao = movieGenreDao;
         this.movieCertificationDao = movieCertificationDao;
         this.usersInfoDao = usersInfoDao;
+        this.userDao = userDao;
+        this.moviesUsersDao = moviesUsersDao;
     }
 
     //methods
@@ -196,6 +202,20 @@ public class BrowseController {
             movieDao.addGenreNameToResponse(result.getValue());
 
         } return browser;
+
+    }
+
+    @RequestMapping(path = "/movie/{movie_id}/reviews/", method = RequestMethod.GET)
+    public Map<String, String> getAllReviewsOfAMovie(@PathVariable int movie_id) {
+
+        List<String> usernames = userDao.getUsernameWhoReviewedMovie(movie_id);
+        Map<String, String> usersReviews = new HashMap<>();
+
+        for (String username : usernames) {
+
+            usersReviews.put(username, moviesUsersDao.getUserReviewOfMovie(userDao.getIdByUsername(username), movie_id));
+
+        } return usersReviews;
 
     }
 

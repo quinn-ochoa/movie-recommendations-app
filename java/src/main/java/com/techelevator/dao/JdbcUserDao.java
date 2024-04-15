@@ -123,6 +123,30 @@ public class JdbcUserDao implements UserDao {
 
     }
 
+    @Override
+    public List<String> getUsernameWhoReviewedMovie(int movieId) {
+
+        String sql = "SELECT username FROM users WHERE user_id in (SELECT user_id FROM movies_users WHERE movie_id = ?);";
+        List<String> usernames = new ArrayList<>();
+
+        try {
+
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, movieId);
+
+            while (result.next()){
+
+                usernames.add(result.getString("username"));
+
+            }
+
+        } catch (CannotGetJdbcConnectionException e){
+
+            throw new DaoException("Unable to connect to server or database");
+
+        } return usernames;
+
+    }
+
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
         user.setId(rs.getInt("user_id"));
