@@ -18,6 +18,15 @@ CREATE TABLE movies (
 	CONSTRAINT PK_movie_id PRIMARY KEY (id)
 );
 
+CREATE TABLE movies_users(
+	movie_id int,
+	user_id int,
+	liked boolean,
+	CONSTRAINT PK_movie_user_id PRIMARY KEY (movie_id, user_id),
+	CONSTRAINT FK_movie_id FOREIGN KEY (movie_id) REFERENCES movies(id),
+	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
 CREATE TABLE genres (
     id INT,
     name VARCHAR(30) NOT NULL,
@@ -31,6 +40,8 @@ CREATE TABLE certifications (
 	meaning TEXT,
 	CONSTRAINT PK_certification_id PRIMARY KEY (certification_id)
 );
+
+
 
 CREATE TABLE users_info (
 	user_id SERIAL,
