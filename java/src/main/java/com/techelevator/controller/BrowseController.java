@@ -125,10 +125,7 @@ public class BrowseController {
 
             movie.setGenre_ids(movieGenreDao.getGenreIdsByMovieId(movie.getId()));
 
-        }
-
-        moviesReturned = filterAndTrim(moviesReturned, id);
-        browser.put("favorites", moviesReturned);
+        } browser.put("favorites", moviesReturned);
 
         for (Map.Entry<String, MovieApiResponse> result : browser.entrySet()) {
 

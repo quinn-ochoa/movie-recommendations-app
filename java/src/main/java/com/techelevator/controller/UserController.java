@@ -1,11 +1,10 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.MoviesUsersDao;
-import com.techelevator.dao.UserDao;
-import com.techelevator.dao.UsersGenresDao;
+import com.techelevator.dao.*;
+import com.techelevator.model.Movie;
+import com.techelevator.model.MovieApiResponse;
 import com.techelevator.model.MoviesUsers;
 import com.techelevator.model.UsersInfo;
-import com.techelevator.dao.UsersInfoDao;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,13 +19,17 @@ public class UserController {
     UsersInfoDao usersInfoDao;
     UserDao userDao;
     MoviesUsersDao moviesUsersDao;
+    MovieDao movieDao;
+    MovieGenreDao movieGenreDao;
 
     //constructors
-    public UserController(UsersGenresDao usersGenresDao, UsersInfoDao usersInfoDao, UserDao userDao, MoviesUsersDao moviesUsersDao) {
+    public UserController(UsersGenresDao usersGenresDao, UsersInfoDao usersInfoDao, UserDao userDao, MoviesUsersDao moviesUsersDao, MovieDao movieDao, MovieGenreDao movieGenreDao) {
         this.usersGenresDao = usersGenresDao;
         this.usersInfoDao = usersInfoDao;
         this.userDao = userDao;
         this.moviesUsersDao = moviesUsersDao;
+        this.movieDao = movieDao;
+        this.movieGenreDao = movieGenreDao;
     }
 
     //methods
@@ -64,7 +67,7 @@ public class UserController {
 
     }
 
-    @RequestMapping(path = "user/movie/favorite/", method = RequestMethod.POST)
+    @RequestMapping(path = "/user/movie/favorite/", method = RequestMethod.POST)
     public void updateUserMovieOpinions(@Valid @RequestBody MoviesUsers moviesUsers) {
 
         if (!moviesUsersDao.checkForMovieUserAssociation(moviesUsers)) {
@@ -76,6 +79,19 @@ public class UserController {
             moviesUsersDao.updateMoviesUsers(moviesUsers);
 
         }
+
+    }
+
+    @RequestMapping(path = "/user/{user_id}/movie/favorites/",  method = RequestMethod .GET)
+    public MovieApiResponse getAllFavoriteMovies(@Valid @PathVariable int user_id) {
+
+        MovieApiResponse moviesReturned = movieDao.getFavoriteMovies(user_id);
+
+        for (Movie movie : moviesReturned.getResults()) {
+
+            movie.setGenre_ids(movieGenreDao.getGenreIdsByMovieId(movie.getId()));
+
+        } return moviesReturned;
 
     }
 
