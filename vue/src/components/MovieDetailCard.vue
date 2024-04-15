@@ -12,6 +12,7 @@
     <!-- <div class="detail-card"
         v-bind:key="movie.id"
     > -->
+    <body >
     <div class="detail-card" v-bind:movie="movie">
         <div id="poster">
             <img  :src ="'https://image.tmdb.org/t/p/original' + movie.poster_path"/> 
@@ -49,14 +50,26 @@
                     Home</button>
                 <button v-on:click="$router.push({ name: 'UpdateGenresView' })">
                     Add Review</button>
-                <i onclick="flipLikeButton()" class="fa fa-thumbs-up" aria-hidden="true" id="fas"></i>
-                <i onclick="flipLikeButton()" class="fa fa-thumbs-down" aria-hidden="true" id="fas"></i>
+                <p>Favorite?<input type="checkbox"/> </p>
+
+                <!-- v-bind:id="'favorite_' + review.id" v-bind:checked="review.favorited"
+                    v-on:click="onFavoritedChange(review)" -->
+
+                <!-- <i onclick="flipLikeButton(this)" class="fa fa-thumbs-up fa-lg" id="fas"></i> -->
+                <!-- <i onclick="flipLikeButton(this)" class="fa fa-thumbs-down" aria-hidden="true" id="fas"></i> -->
             </div>
+
+            
+    
+ 
+   
+   
            
         </section>
       
     
     </div>
+    </body>
 </template>
 
 
@@ -85,7 +98,7 @@
             },
 
 
-        }
+        },
     };
   
 </script>
@@ -112,7 +125,8 @@ h1 {
  .detail-card {
     /* margin: auto; */
     margin-left: 10%;
-    margin-top: 20px;
+    margin-top: 5%;
+    margin-bottom: 10%;
     display: flex;
     gap: 20px;
     justify-content: space-evenly;
@@ -179,11 +193,16 @@ h2 {
 .fa {
   font-size: 70px;
   cursor: pointer;
-  
+  user-select: none;
 }
 
 .fa:hover{
     color: navy;
+}
+
+p {
+    display: inline-block;
+    margin-left: 10px;
 }
 
 button {
@@ -196,16 +215,33 @@ button {
   border-radius: 10px;
 }
 
+
+
 footer {
+    display: flex;
     background-color: lightgrey;
     text-align: center;
-    height: 50vh;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
     margin-top: 40px;
+    flex-direction: column;
+    gap: 15px
 }
 
+footer > div > img {
+    height: 50px;
+    width: 70px;
+}
 
+footer > :first-child {
+    display: flex;
+    gap: 10px
+}
 
-
-
+.social-icon {
+      font-size: 20px;
+      height: 20px;
+    }
 
 </style>

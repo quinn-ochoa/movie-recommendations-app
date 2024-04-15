@@ -15,7 +15,11 @@
 
     <footer>
       <div>
-        <i class="fa-brands fa-facebook social-icon" ></i><i class="fa-brands fa-instagram social-icon"></i>
+        <i class="fa-brands fa-facebook social-icon" ></i>
+        <i class="fa-brands fa-instagram social-icon"></i>
+      </div>
+      <div class="tmdb-container">
+        <img alt="tmdb logo" src="../assets/tmdb-logo.png"/>
       </div>
     </footer>
 </template>
@@ -47,4 +51,6 @@ export default {
         }
 }
 </script>
+
+
 
