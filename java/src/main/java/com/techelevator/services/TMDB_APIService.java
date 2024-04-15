@@ -48,10 +48,8 @@ public class TMDB_APIService {
 
     }
 
-    public MovieApiResponse queryForRecommended4u(MovieApiResponse alreadyReturned,List<Integer> passedInGenres, int userAgeRating) {
-        // removed parameter (double vote_average, double vote_count, int neededLayers, int currentLayer,)
-        //TODO new code
-        //set headers and variables
+    public MovieApiResponse queryForRecommended4u(MovieApiResponse alreadyReturned, List<Integer> passedInGenres, int userAgeRating) {
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + BEARER_TOKEN);
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -81,7 +79,7 @@ public class TMDB_APIService {
                     while (page == 1 || page <= moviesPulledFormApi.getTotal_pages()) {
 
                         try {
-//                            String URL = "https://api.themoviedb.org/3/discover/movie?certification=G%7CPG&certification_country=US&include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&vote_average.gte=2&vote_count.gte=200";
+
                             ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genresAsApiInput, HttpMethod.GET, entity, MovieApiResponse.class);
                             moviesPulledFormApi = response.getBody();
                             page++;
@@ -262,32 +260,37 @@ public class TMDB_APIService {
 
         while (moviesToReturn.getResults().size() < 50) {
 
-            try {
+            while (page == 1 || page <= moviesPulledFromApi.getTotal_pages()) {
 
-                ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count, HttpMethod.GET, entity, MovieApiResponse.class);
-                moviesPulledFromApi = response.getBody();
+                try {
 
-            } catch (RestClientException e) {
+                    ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count, HttpMethod.GET, entity, MovieApiResponse.class);
+                    moviesPulledFromApi = response.getBody();
 
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
+                } catch (RestClientException e) {
 
-            } for (Movie movie : moviesPulledFromApi.getResults()) {
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving movie from API using search term.", e);
 
-                if (!moviesToReturn.getResults().contains(movie) && !alreadyReturned.getResults().contains(movie)) {
+                }
+                for (Movie movie : moviesPulledFromApi.getResults()) {
 
-                    moviesToReturn.getResults().add(movie);
+                    if (!moviesToReturn.getResults().contains(movie) && !alreadyReturned.getResults().contains(movie)) {
 
-                    if (moviesToReturn.getResults().size() >= 50) {
+                        moviesToReturn.getResults().add(movie);
 
-                        return moviesToReturn;
+                        if (moviesToReturn.getResults().size() >= 50) {
+
+                            return moviesToReturn;
+
+                        }
 
                     }
 
-                }
+                } page++;
 
             } vote_average *= .9;
             vote_count *= .9;
-            page++;
+
 
         } return  moviesToReturn;
 

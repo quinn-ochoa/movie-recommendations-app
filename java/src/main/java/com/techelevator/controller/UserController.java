@@ -1,7 +1,9 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.MoviesUsersDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.dao.UsersGenresDao;
+import com.techelevator.model.MoviesUsers;
 import com.techelevator.model.UsersInfo;
 import com.techelevator.dao.UsersInfoDao;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +19,14 @@ public class UserController {
     UsersGenresDao usersGenresDao;
     UsersInfoDao usersInfoDao;
     UserDao userDao;
+    MoviesUsersDao moviesUsersDao;
 
     //constructors
-    public UserController(UsersGenresDao usersGenresDao, UsersInfoDao usersInfoDao, UserDao userDao) {
+    public UserController(UsersGenresDao usersGenresDao, UsersInfoDao usersInfoDao, UserDao userDao, MoviesUsersDao moviesUsersDao) {
         this.usersGenresDao = usersGenresDao;
         this.usersInfoDao = usersInfoDao;
-        this.userDao =userDao;
+        this.userDao = userDao;
+        this.moviesUsersDao = moviesUsersDao;
     }
 
     //methods
@@ -60,5 +64,12 @@ public class UserController {
 
     }
 
+    @RequestMapping(path = "user/movie/update", method = RequestMethod.PUT)
+    public void updateUserMovieOpinions(@Valid @RequestBody MoviesUsers moviesUsers) {
+//TODO start here
+//        moviesUsersDao.checkForMovieUserAssosication(moviesUsers);
+//        moviesUsersDao.updateMoviesUsers(moviesUsers);
+
+    }
 
 }

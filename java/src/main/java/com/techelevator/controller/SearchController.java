@@ -68,7 +68,7 @@ public class SearchController {
                 }
 
             } page++;
-            System.out.println(page);
+
         } goodResults = movieDao.addGenreNameToResponse(goodResults);
         return goodResults;
 
@@ -77,7 +77,6 @@ public class SearchController {
     @RequestMapping(path = "/search/{term}/user/{user_id}/", method = RequestMethod.GET)
     public MovieApiResponse getMoviesBySearchTermAndUserId(@PathVariable String term, @PathVariable int user_id) {
         TMDB_APIService tmdbApiService = new TMDB_APIService();
-        ProfanityFilterAPIService profanityFilterAPIService = new ProfanityFilterAPIService();
         int page = 1;
         MovieApiResponse movieApiResponse = new MovieApiResponse();
         MovieApiResponse goodResults = new MovieApiResponse();
