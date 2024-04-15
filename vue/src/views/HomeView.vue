@@ -1,5 +1,5 @@
 <template>
-    <head>
+  <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" 
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" 
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -7,43 +7,56 @@
   
   <div class="home">
     <header>
-      <img alt="Movie reel logo" src="../assets/grey-reel.png"/>
+      <router-link v-bind:to="{ name: 'home' }">
+        <img alt="Movie reel logo" src="../assets/grey-reel.png"/>
+      </router-link>
       <div>
           <form class="search" @submit.prevent="getMovies">
               <input type="search" class="form-control" v-model="query" />
-              <input type="submit" class="btn"/>
+              <input type="submit" class="btn"/> 
+              <!-- <i  type="submit" class=" fas fa-search btn"></i> -->
           </form>
       </div>
-      <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
+      <h1>
+        <i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }} &nbsp;|&nbsp;
+        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      </h1>
 
     </header>
     <body>
-      <button 
-        class="btn-add" 
-        v-on:click="$router.push({ name: 'EditGenresView' })">
-          Create Profile
-      </button>
-
-      <button 
+      <button v-if="selectFavoriteGenres() != 0"
         class="btn-add" 
         v-on:click="$router.push({ name: 'UpdateGenresView' })">
           Update Profile
       </button>
 
+      <button v-else
+        class="btn-add" 
+        v-on:click="$router.push({ name: 'EditGenresView' })">
+          Create Profile
+      </button>
+      
       <!-- SEARCH RESULT -->
       <h2>Search results</h2>
-      <div id="search-container" v-if="searchMovies.length != 0">
-        <div 
-          class="display-card" 
-          v-for="movie in searchMovies" 
-          v-bind:key="movie.id"
-          v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: movie.id } })"
-        >
-              <div class="title">{{ movie.title }}</div>
-              <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + movie.poster_path"/>
-        </div>
-      </div>
-      <div v-else><p>No search results</p></div>
+      <!-- <div class="loading" v-if="isLoading">
+          <img src="../assets/hourglass.gif" />
+      </div> -->
+      <!-- <div class="notLoading" v-else> -->
+          <div id="search-container" v-if="searchMovies.length != 0">
+            <div 
+              class="display-card" 
+              v-for="movie in searchMovies" 
+              v-bind:key="movie.id"
+              v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: movie.id } })"
+            >
+                  <div class="title">{{ movie.title }}</div>
+                  <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + movie.poster_path"/>
+            </div>
+          </div>
+          <div v-else>
+            <p>No search results</p>
+          </div>
+      <!-- </div> -->
       <!-- END OF SEARCH RESULT -->
 
 
@@ -93,12 +106,11 @@
               <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
         </div>
       </div>
-      
-
+    
       <!-- test -->
       
       <!-- {{ popular.results }} -->
-      <!-- {{ $store.state.user }} -->
+      <!-- {{ $store.state.user.username }} -->
       <!-- {{ selectFavoriteGenres() }} -->
       <!-- test -->
 
@@ -121,13 +133,14 @@ import userInfoService from '../services/UserInfoService';
 import axios from 'axios';
 
 export default {
+
   components: {
     // MovieSection
   },
 
   data() {
     return{
-
+      isLoading: true,
       query: null,
       searchMovies: [],
 
@@ -173,8 +186,8 @@ export default {
     async getMovies(){
         await axios.get(`http://localhost:9000/search/${this.query}/`)
         .then((response) => {
+          // this.isLoading=false;
           this.searchMovies = response.data.results;
-
         })
     },
 
@@ -202,7 +215,7 @@ export default {
       background-color: #FECE00;
       display: flex;
       justify-content: space-between;
-
+      align-items: center;
     }
 
     footer {
@@ -220,6 +233,24 @@ export default {
       font-size: medium;
       height: 100px;
     }
+    .form-control{
+      padding: 14px 20px;
+      margin: 8px;
+      border-radius:10px;
+      border: none;
+      height: 40px;
+      text-align: left;
+    }
+
+    .btn {
+      background-color: #012f6d;
+      color: white;
+      padding: 14px 20px;
+      margin: 4px;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+    }
 
     .social-icon {
       font-size: 20px;
@@ -232,7 +263,7 @@ export default {
     #all-time-greats-container, #recommended-container, #search-container {
       display: flex;
       overflow: auto;
-      border-top: solid;
+      border-top: solid #012f6d;
       padding-top: 10px;
     }
 

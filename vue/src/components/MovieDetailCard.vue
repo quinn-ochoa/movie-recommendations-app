@@ -5,8 +5,14 @@
     </head>
       <!-- commented header out because repeating from another view -->
     <header>
-      <img alt="movie reel logo" src="../assets/grey-reel.png"/>
-      <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
+        <router-link v-bind:to="{ name: 'home' }">
+            <img alt="Movie reel logo" src="../assets/grey-reel.png"/>
+        </router-link>
+
+        <h1>
+            <i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }} &nbsp;|&nbsp;
+            <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+        </h1>
 
     </header>
     <!-- <div class="detail-card"
@@ -47,7 +53,8 @@
             </div>
             <div>
                 <button v-on:click="$router.push({ name: 'home' })">
-                    Home</button>
+                    Back 
+                </button>
                 <button v-on:click="$router.push({ name: 'UpdateGenresView' })">
                     Add Review</button>
                 <p>Favorite?<input type="checkbox"/> </p>
@@ -110,10 +117,10 @@ header {
     background-color: #FECE00;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
 
-    }
-
-header > img {
+img {
  height: 100px;   
 }
 
@@ -165,7 +172,8 @@ h1 {
 }
 
 #title-info {
-    border-bottom: solid;
+    color: #012F6D;
+    border-bottom: solid #012f6d;
     width: 80%;
 }
 
