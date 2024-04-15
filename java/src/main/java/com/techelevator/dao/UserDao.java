@@ -15,7 +15,7 @@ public interface UserDao {
 
     User createUser(RegisterUserDto user);
 
-    User updatePassword(String user, String passwordHash);
+    boolean updatePassword(String user, String passwordHash);
 
 
     int getIdByUsername(String username);
