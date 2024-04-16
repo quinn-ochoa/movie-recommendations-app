@@ -10,6 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class JdbcMovieDao implements MovieDao{
 
@@ -89,7 +92,7 @@ public class JdbcMovieDao implements MovieDao{
 
         MovieApiResponse movieApiResponse = new MovieApiResponse();
         Movie movie;
-        String sql = "SELECT * FROM movies WHERE id in (SELECT movie_id FROM movies_users WHERE user_id = ?);";
+        String sql = "SELECT * FROM movies WHERE id in (SELECT movie_id FROM movies_users WHERE user_id = ? AND liked = true);";
 
         try {
 
@@ -107,6 +110,30 @@ public class JdbcMovieDao implements MovieDao{
             throw new DaoException("Unable to connect to server or database");
 
         } return movieApiResponse;
+
+    }
+
+    @Override
+    public List<Movie> getAllMoviesReviewedByUser(int userId) {
+
+        String sql = "SELECT * FROM movies WHERE id in (SELECT movie_id FROM movies_users WHERE user_id = ?);";
+        List<Movie> moviesReviewed = new ArrayList<>();
+
+        try {
+
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, userId);
+
+            while (result.next()){
+
+                moviesReviewed.add(mapRowToMovie(result));
+
+            }
+
+        } catch (CannotGetJdbcConnectionException e){
+
+            throw new DaoException("Unable to connect to server or database");
+
+        } return moviesReviewed;
 
     }
 
@@ -200,6 +227,7 @@ public class JdbcMovieDao implements MovieDao{
         movie.setPoster_path(result.getString("poster_path"));
         movie.setVote_average(result.getBigDecimal("vote_average"));
         movie.setId(result.getInt("id"));
+        movie.setBadName(result.getBoolean("do_not_show"));
         return movie;
 
     }

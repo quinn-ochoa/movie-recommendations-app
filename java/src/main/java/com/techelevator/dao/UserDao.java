@@ -17,7 +17,7 @@ public interface UserDao {
 
     boolean updatePassword(String user, String passwordHash);
 
-
     int getIdByUsername(String username);
 
+    List<String> getUsernameWhoReviewedMovie(int movieId);
 }
