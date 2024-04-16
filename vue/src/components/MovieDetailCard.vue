@@ -55,8 +55,12 @@
                 <button v-on:click="$router.push({ name: 'home' })">
                     Back 
                 </button>
-                <button v-on:click="$router.push({ name: 'AddReviewView' })">
-                    Add Review</button>
+                <button v-if="!collectFavMoviesId().includes(movie.id)" v-on:click="$router.push({ name: 'AddReviewView' })">
+                    Add Review
+                </button>
+                <button v-else v-on:click.prevent="removeFavorite()">
+                    Unlike
+                </button>
                 
 
                 <!-- v-bind:id="'favorite_' + review.id" v-bind:checked="review.favorited"
@@ -64,22 +68,32 @@
 
                 <!-- <i onclick="flipLikeButton(this)" class="fa fa-thumbs-up fa-lg" id="fas"></i> -->
                 <!-- <i onclick="flipLikeButton(this)" class="fa fa-thumbs-down" aria-hidden="true" id="fas"></i> -->
+            
+                <!-- PRINT OUT MOVIE DETAIL -->
+                <!-- {{ movie }} -->
+                {{ collectFavMoviesId() }}
+                {{ removeFavorite(collectFavMoviesId()) }}
             </div>
            
         </section>
-      
-        <!-- PRINT OUT MOVIE DETAIL -->
-        <!-- {{ movie }} -->
-    
     </div>
     </body>
 </template>
 
 
 
-<script>            
+<script>  
+    import userInfoService from '../services/UserInfoService';
+
     export default{
         name:'detail-card',
+        data(){
+            return{
+                favorites : {
+                    results : []
+                },
+            }
+        },
         props:{
             movie: Object
         },
@@ -99,9 +113,32 @@
                 let convertedRating = parseFloat((movieRating / 2).toFixed(1));
                 return convertedRating;
             },
-
-
         },
+        methods:{
+            collectFavMoviesId(){
+                const resultArr = [];
+                for (let i = 0; i < this.favorites.results.length; i++ ){
+                    resultArr.push(this.favorites.results[i].id);
+                }
+                return resultArr;
+            },
+            removeFavorite(movieIdArr){
+                const newArr = [];
+                for(let i=0; i<movieIdArr.length; i++){
+                        if (movieIdArr[i] !== this.movie.id ){
+                            newArr.push(movieIdArr[i])
+                        }
+                }
+                return newArr;
+            }
+        },
+        created(){
+            let userId = this.$store.state.user.id;
+            userInfoService.getRecommended(userId)
+            .then(response => {
+                this.favorites.results = response.data.favorites.results;
+            })
+        }
     };
   
 </script>

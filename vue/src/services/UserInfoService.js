@@ -23,4 +23,8 @@ export default {
   addReview(review) {
     return axios.post('/user/movie/favorite/', review);
   },
+
+  updateFavMovie(id) {
+    return axios.put('/user/movie/favorite/', id);
+  },
 }
