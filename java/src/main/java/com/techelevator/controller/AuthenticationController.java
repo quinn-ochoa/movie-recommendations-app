@@ -82,9 +82,7 @@ public class AuthenticationController {
 
         String username = request.getUsername();
 
-        String password_hash = new BCryptPasswordEncoder().encode(newPassword);
-
-        boolean passwordUpdated = userDao.updatePassword(username,password_hash);
+        boolean passwordUpdated = userDao.updatePassword(username, newPassword);
 
                 if (passwordUpdated){
                     return ResponseEntity.ok( "Password has successfully updated!");

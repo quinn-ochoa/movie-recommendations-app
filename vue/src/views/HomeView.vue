@@ -94,12 +94,14 @@
       </div>
 
       <!-- FAVORITE GENRES -->
-      <h2 v-if="selectFavoriteGenres() != 0">Based on your favorite genres</h2>
-      <div id="favorite-genres-container" v-if="selectFavoriteGenres() != 0">
+      <div v-for="(genre, key) in genres" :key="key">
+        <h2>{{ key }} movies you may enjoy</h2>
+        <div id="favorite-genres-container" v-if="genre.results != 0">
         
-        <div class="display-card" v-for="result in selectFavoriteGenres()" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
+          <div class="display-card" v-for="result in genre.results" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
               <div class="title">{{ result.title }}</div>
               <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+          </div>
         </div>
       </div>
 
@@ -149,10 +151,12 @@
 
 <script>
 // import MovieSection from '../components/MovieSection.vue';
+import { reactive } from 'vue';
 import userInfoService from '../services/UserInfoService';
 import axios from 'axios';
 
 export default {
+  
 
   components: {
     // MovieSection
@@ -180,7 +184,7 @@ export default {
         results : []
       },
 
-      genres: {}
+      genres: {},
 
     };
   },   
@@ -193,9 +197,10 @@ export default {
 
   methods: {
 
+    //I don't think this is needed anymore -Devin
     selectFavoriteGenres(){
       let favGenres = this.genres;
-      let resultArray = [];
+      let resultArray = []
       delete this.genres.popular;
       delete this.genres.allTimeGreats;
       delete this.genres.recommended4u;

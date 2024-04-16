@@ -62,7 +62,7 @@ public class TMDB_APIService {
         double vote_count = 10000;
 
         //do until 50 movies seleted
-        while (moviesPulledFormApi.getResults().size() < 50) {
+        while ((moviesToReturn.getResults().size() < 50 && userAgeRating != 1) || moviesToReturn.getResults().size() < 25) {
 
             for (int i = 0; i < genres.size(); i++) {
 
@@ -80,9 +80,17 @@ public class TMDB_APIService {
 
                         try {
 
-                            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genresAsApiInput, HttpMethod.GET, entity, MovieApiResponse.class);
-                            moviesPulledFormApi = response.getBody();
-                            page++;
+                            if (userAgeRating == 1) {
+
+                                ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + "discover/movie?certification=G&certification_country=US&include_adult=false&include_video=false&language=en-US&page=" + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genresAsApiInput, HttpMethod.GET, entity, MovieApiResponse.class);
+                                moviesPulledFormApi = response.getBody();
+
+                            } else {
+
+                                ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genresAsApiInput, HttpMethod.GET, entity, MovieApiResponse.class);
+                                moviesPulledFormApi = response.getBody();
+
+                            } page++;
 
                         } catch (RestClientException e) {
 
@@ -97,7 +105,7 @@ public class TMDB_APIService {
 
                                 moviesToReturn.getResults().add(movie);
 
-                                if (moviesToReturn.getResults().size() >= 50) {
+                                if (moviesToReturn.getResults().size() >= 50 || (moviesToReturn.getResults().size() >= 25 && userAgeRating == 1)) {
 
                                     return moviesToReturn;
 
@@ -123,9 +131,17 @@ public class TMDB_APIService {
 
                     try {
 
-                        ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genresAsApiInput, HttpMethod.GET, entity, MovieApiResponse.class);
-                        moviesPulledFormApi = response.getBody();
-                        page++;
+                        if (userAgeRating == 1) {
+
+                            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + "discover/movie?certification=G&certification_country=US&include_adult=false&include_video=false&language=en-US&page=" + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genresAsApiInput, HttpMethod.GET, entity, MovieApiResponse.class);
+                            moviesPulledFormApi = response.getBody();
+
+                        } else {
+
+                            ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genresAsApiInput, HttpMethod.GET, entity, MovieApiResponse.class);
+                            moviesPulledFormApi = response.getBody();
+
+                        } page++;
 
                     } catch (RestClientException e) {
 
@@ -138,7 +154,7 @@ public class TMDB_APIService {
 
                             moviesToReturn.getResults().add(movie);
 
-                            if (moviesToReturn.getResults().size() >= 50) {
+                            if (moviesToReturn.getResults().size() >= 50 || (moviesToReturn.getResults().size() >= 25 && userAgeRating == 1)) {
 
                                 return moviesToReturn;
 
@@ -168,7 +184,7 @@ public class TMDB_APIService {
         double vote_average = 7.0;
         double vote_count = 10000;
 
-        while (moviesToReturn.getResults().size() < 50) {
+        while ((moviesToReturn.getResults().size() < 50 && userAgeRating != 1) || moviesToReturn.getResults().size() < 25) {
 
             int page = 1;
 
@@ -176,9 +192,17 @@ public class TMDB_APIService {
 
                 try {
 
-                    ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genre, HttpMethod.GET, entity, MovieApiResponse.class);
-                    moviesPulledFromApi = response.getBody();
-                    page++;
+                    if (userAgeRating == 1) {
+
+                        ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + "discover/movie?certification=G&certification_country=US&include_adult=false&include_video=false&language=en-US&page=" + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genre, HttpMethod.GET, entity, MovieApiResponse.class);
+                        moviesPulledFromApi = response.getBody();
+
+                    } else {
+
+                        ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count + "&with_genres=" + genre, HttpMethod.GET, entity, MovieApiResponse.class);
+                        moviesPulledFromApi = response.getBody();
+
+                    } page++;
 
                 } catch (RestClientException e) {
 
@@ -190,7 +214,7 @@ public class TMDB_APIService {
 
                         moviesToReturn.getResults().add(movie);
 
-                        if (moviesToReturn.getResults().size() >= 50) {
+                        if (moviesToReturn.getResults().size() >= 50 || (moviesToReturn.getResults().size() >= 25 && userAgeRating == 1)) {
 
                             return moviesToReturn;
 
@@ -216,12 +240,20 @@ public class TMDB_APIService {
         MovieApiResponse moviesPulledFromApi;
         MovieApiResponse moviesToReturn = new MovieApiResponse();
 
-        while (moviesToReturn.getResults().size() < 50) {
+        while ((moviesToReturn.getResults().size() < 50 && userAgeRating != 1) || moviesToReturn.getResults().size() < 25) {
 
             try {
 
-                ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc", HttpMethod.GET, entity, MovieApiResponse.class);
-                moviesPulledFromApi = response.getBody();
+                if (userAgeRating == 1) {
+
+                    ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + "discover/movie?certification=G&certification_country=US&include_adult=false&include_video=false&language=en-US&page=" + page + "&sort_by=popularity.desc", HttpMethod.GET, entity, MovieApiResponse.class);
+                    moviesPulledFromApi = response.getBody();
+
+                } else {
+
+                    ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc", HttpMethod.GET, entity, MovieApiResponse.class);
+                    moviesPulledFromApi = response.getBody();
+                }
 
             } catch (RestClientException e) {
 
@@ -233,7 +265,7 @@ public class TMDB_APIService {
 
                     moviesToReturn.getResults().add(movie);
 
-                    if (moviesToReturn.getResults().size() >= 50) {
+                    if (moviesToReturn.getResults().size() >= 50 || (moviesToReturn.getResults().size() >= 25 && userAgeRating == 1)) {
 
                         return moviesToReturn;
 
@@ -257,7 +289,7 @@ public class TMDB_APIService {
         double vote_average = 8.7;
         double vote_count = 25000;
 
-        while (moviesToReturn.getResults().size() < 50) {
+        while ((moviesToReturn.getResults().size() < 50 && userAgeRating != 1) || moviesToReturn.getResults().size() < 25) {
 
             int page = 1;
 
@@ -265,8 +297,17 @@ public class TMDB_APIService {
 
                 try {
 
-                    ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count, HttpMethod.GET, entity, MovieApiResponse.class);
-                    moviesPulledFromApi = response.getBody();
+                    if (userAgeRating == 1) {
+
+                        ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + "discover/movie?certification=G&certification_country=US&include_adult=false&include_video=false&language=en-US&page=" + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count, HttpMethod.GET, entity, MovieApiResponse.class);
+                        moviesPulledFromApi = response.getBody();
+
+                    } else {
+
+                        ResponseEntity<MovieApiResponse> response = restTemplate.exchange(API_BASE_URL + DISCOVER + page + "&sort_by=popularity.desc&vote_average.gte=" + vote_average + "&vote_count.gte=" + vote_count, HttpMethod.GET, entity, MovieApiResponse.class);
+                        moviesPulledFromApi = response.getBody();
+
+                    }
 
                 } catch (RestClientException e) {
 
@@ -279,7 +320,7 @@ public class TMDB_APIService {
 
                         moviesToReturn.getResults().add(movie);
 
-                        if (moviesToReturn.getResults().size() >= 50) {
+                        if (moviesToReturn.getResults().size() >= 50 || (moviesToReturn.getResults().size() >= 25 && userAgeRating == 1)) {
 
                             return moviesToReturn;
 
