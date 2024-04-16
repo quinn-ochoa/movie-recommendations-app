@@ -21,8 +21,8 @@
         <i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }} &nbsp;|&nbsp;
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
       </h1>
-
     </header>
+
     <body>
       <button v-if="selectFavoriteGenres() != 0"
         class="btn-add" 
@@ -47,7 +47,7 @@
         v-on:click="$router.push({ name: 'ReviewsDisplayView', params: { userId: $store.state.user.id } })">
           See Reviews
       </button>
-      
+
       <!-- SEARCH RESULT -->
       <h2>Search results</h2>
       <!-- <div class="loading" v-if="isLoading">
@@ -78,10 +78,8 @@
         
           <div class="display-card" v-for="result in popular.results" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
             <!-- <router-link v-bind:to="{name: 'MovieDetailView', params: {movieId: result.id}}" class="title" >{{ result.title }}</router-link> -->
-
             <div class="title">{{ result.title }}</div>
-                
-                <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path" />
+            <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path" />
           </div>
         <div>
           <movie-section title="Recommended by your favorite genre" v-bind:movies="recommendedByGenre" />
@@ -219,7 +217,7 @@ export default {
     },
 
     async getMovies(){
-        await axios.get(`http://localhost:9000/search/${this.query}/`)
+        await axios.get(`http://localhost:9000/search/${this.query}/user/${this.$store.state.user.id}/`)
         .then((response) => {
           // this.isLoading=false;
           this.searchMovies = response.data.results;
