@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <header>
         <router-link v-bind:to="{ name: 'home' }">
             <img alt="Movie reel logo" src="../assets/grey-reel.png"/>
@@ -13,16 +13,17 @@
     <form @submit.prevent="saveNewPassword">
 
         <div>
-            <input type="password" class="form-control" v-model="password" placeholder="Password"/>
+            <input type="password" class="form-control" v-model="user.password" placeholder="Password"/>
         </div>
         <div>
-            <input type="password" class="form-control" v-model="confirmPassword" placeholder="Confirm Password"/>
+            <input type="password" class="form-control" v-model="user.confirmPassword" placeholder="Confirm Password"/>
         </div>
-        <button class="btn-submit" type="submit" v-on:click.prevent="saveNewPassword()">
-            Submit</button>
+        <button class="btn-submit" type="submit">
+            Submit
+        </button>
 
     </form>
-    
+    {{ user }}
 </template>
 
 <script>
@@ -34,15 +35,16 @@ export default {
     name: 'Reset',
     data(){
         return {
-
-            password: '',
-            passwordConfirm: ''
-            // user: {
-            //     username: '',
-            //     password: '',
-            //     confirmPassword: '',
-            //     role: ''
-            // }
+            // password: '',
+            // passwordConfirm: ''
+            user: {
+                username: this.$store.state.user.username,
+                password: '',
+                confirmPassword: '',
+                role: this.$store.state.user.role
+            },
+            resetPasswordErrors: false,
+            resetPasswordErrorMsg: 'There were problems resetting this password.',
         };
     },
     
@@ -56,26 +58,39 @@ export default {
 
         // }
 
+        // saveNewPassword(){
+        //     const resetInfo = {
+        //         username: this.$store.state.user.username,
+        //         password: this.password,
+        //         confirmPassword: this.confirmPassword,
+        //         role: this.role
+        //     };
+        //     updatePasswordService
+        //     .updatePassword(resetInfo)
+        //     .then(response => {
+        //         if (response.status === 200 || response.status === 201) {
+        //                 this.$router.push({name:'home'});
+        //         }
+        //     });
+        // }
 
         saveNewPassword(){
-            const resetInfo = {
-                username: this.$store.state.user.username,
-                password: this.password,
-                confirmPassword: this.confirmPassword,
-                role: this.role
-            };
-            updatePasswordService
-            .updatePassword(resetInfo)
-            .then(response => {
-                if (response.status === 200 || response.status === 201) {
+            if (this.user.password != this.user.confirmPassword) {
+                this.resetPasswordErrors = true;
+                this.resetPasswordErrorMsg = 'Password & Confirm Password do not match.';
+            } else {
+                updatePasswordService
+                .updatePassword(this.user)
+                .then((response) => {
+                    if (response.status == 201) {
                         this.$router.push({name:'home'});
-                }
-            });
-
+                    }
+                })
+            }
         }
     }
 
 };
 
 
-</script>
+</script> -->
