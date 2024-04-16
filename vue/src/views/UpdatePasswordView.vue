@@ -28,22 +28,28 @@ export default {
             <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
         </h1>
     </header>
-    <h1>Update Password</h1>
+    <div class="form-container">
+        <h1>Update Password</h1>
 
-    <form @submit.prevent="saveNewPassword">
+        <form @submit.prevent="saveNewPassword">
 
-        <div>
-            <input type="password" class="form-control" v-model="user.password" placeholder="Password"/>
-        </div>
-        <div>
-            <input type="password" class="form-control" v-model="user.confirmPassword" placeholder="Confirm Password"/>
-        </div>
-        <button class="btn-submit" type="submit">
-            Submit
-        </button>
+            <div>
+                <input type="password" class="form-control" v-model="user.password" placeholder="Password"/>
+            </div>
+            <div>
+                <input type="password" class="form-control" v-model="user.confirmPassword" placeholder="Confirm Password"/>
+            </div>
+            <button class="btn-submit" type="submit">
+                Submit
+            </button>
+            <button class="btn-submit" type="button" v-on:click.prevent="cancelForm()">
+                Cancel
+            </button>
 
-    </form>
-    {{ user }}
+        </form>
+    </div>
+    
+    <!-- {{ user }} -->
 </template>
 
 <script>
@@ -109,6 +115,10 @@ export default {
                     }
                 })
             }
+        },
+        cancelForm() {
+            // Go back to previous page
+            this.$router.back();
         }
     }
 
@@ -116,3 +126,19 @@ export default {
 
 
 </script>
+
+<style scoped>
+    .form-container{
+        margin-left: 20px;
+    }
+    .form-control{
+        padding: 3px 30px;
+        margin: 10px 3px;
+        border-radius:10px;
+        border: 1px solid #012f6d;
+        height: 35px;
+        text-align: center;
+
+    }
+
+</style>

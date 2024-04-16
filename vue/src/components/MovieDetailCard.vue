@@ -71,8 +71,8 @@
             
                 <!-- PRINT OUT MOVIE DETAIL -->
                 <!-- {{ movie }} -->
-                <!-- {{ collectFavMoviesId() }}
-                {{ removeFavorite(collectFavMoviesId()) }} -->
+                {{ collectFavMoviesId() }}
+                {{ removeFavorite(collectFavMoviesId()) }}
             </div>
            
         </section>

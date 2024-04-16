@@ -36,7 +36,12 @@
           Create Profile
       </button>
 
-      <!-- TO BE UPDATED -->
+      <button
+        class="btn-add" 
+        v-on:click="$router.push({ name: 'UpdatePasswordView' })">
+          Reset Password
+      </button>
+
       <button 
         class="btn-add" 
         v-on:click="$router.push({ name: 'ReviewsDisplayView', params: { userId: $store.state.user.id } })">
