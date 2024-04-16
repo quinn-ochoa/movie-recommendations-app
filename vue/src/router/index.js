@@ -10,6 +10,8 @@ import LandingView from '../views/LandingView.vue';
 import UpdateGenresView from '../views/UpdateGenresView.vue';
 import EditGenresView from '../views/EditGenresView.vue';
 import MovieDetailView from '../views/MovieDetailView.vue';
+import UpdatePasswordView from '../views/UpdatePasswordView.vue';
+import UpdatePasswordForm from '../components/UpdatePasswordForm.vue';
 import AddReviewView from '../views/AddReviewView.vue';
 
 /**
@@ -77,6 +79,12 @@ const routes = [
     path: '/movie/:movieId',
     name: 'MovieDetailView',
     component: MovieDetailView
+  },
+
+  {
+    path: '/forgotPassword/',
+    // name: 'UpdatePasswordView',
+    component: UpdatePasswordForm 
   },
   
   //ADD REVIEW AND GET REVIEW
