@@ -6,16 +6,18 @@ public class MoviesUsers {
     int user_id;
     boolean liked;
     String review;
+    int review_id;
 
     //constructors
     public MoviesUsers() {
     }
 
-    public MoviesUsers(int movie_id, int user_id, boolean isLiked, String review) {
+    public MoviesUsers(int movie_id, int user_id, boolean isLiked, String review, int review_id) {
         this.movie_id = movie_id;
         this.user_id = user_id;
         this.liked = isLiked;
         this.review = review;
+        this.review_id = review_id;
     }
 
     //getters & setters

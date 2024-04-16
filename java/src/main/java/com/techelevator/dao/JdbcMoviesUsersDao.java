@@ -107,4 +107,26 @@ public class JdbcMoviesUsersDao implements MoviesUsersDao{
 
     }
 
+    @Override
+    public int getUserReviewIdOfMovie(int userId, int movieId) {
+
+        String sql = "SELECT review_id FROM movies_users WHERE movie_id = ? AND user_id = ?;";
+        int review_id;
+
+        try{
+
+            review_id = jdbcTemplate.queryForObject(sql, int.class, movieId, userId);
+
+        } catch (CannotGetJdbcConnectionException e){
+
+            throw new DaoException("Unable to connect to server or database", e);
+
+        } catch (DataIntegrityViolationException e){
+
+            throw new DaoException("Data integrity violation", e);
+
+        } return review_id;
+
+    }
+
 }

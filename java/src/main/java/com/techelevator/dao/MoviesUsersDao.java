@@ -10,4 +10,6 @@ public interface MoviesUsersDao {
     void addMoviesUsers(MoviesUsers moviesUsers);
 
     String getUserReviewOfMovie(int userId, int movieId);
+
+    int getUserReviewIdOfMovie(int userId, int movieId);
 }

@@ -111,7 +111,7 @@ public class UserController {
         for (Movie reviewedMovie : reviewedMovies) {
 
             reviewedMovie.setGenre_ids(movieGenreDao.getGenreIdsByMovieId(reviewedMovie.getId()));
-            movieReviews.put(moviesUsersDao.getUserReviewOfMovie(user_id, reviewedMovie.getId()), reviewedMovie);
+            movieReviews.put(moviesUsersDao.getUserReviewOfMovie(user_id, reviewedMovie.getId()) + " review#" + moviesUsersDao.getUserReviewIdOfMovie(user_id, reviewedMovie.getId()), reviewedMovie);
 
         } return movieReviews;
 
