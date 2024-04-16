@@ -2,8 +2,11 @@
   <div class="container">
       <div id="login">
         <form v-on:submit.prevent="login">
-          <img alt="Glasses logo" src="../assets/logo.png">  
-          <h1>WeWatchWhat</h1>
+          <router-link v-bind:to="{ name: 'home' }">
+            <img alt="Movie reel logo" src="../assets/grey-reel.png">
+          </router-link>
+            
+          <h1>Log In</h1>
             <div role="alert" v-if="invalidCredentials">
               Invalid username and password!
             </div>
@@ -88,6 +91,17 @@ export default {
 .form-input-group {
   margin-bottom: 1rem;
 }
+
+#username, #password{
+    padding: 3px 30px;
+    margin: 3px;
+    border-radius:10px;
+    border: none;
+    height: 35px;
+    text-align: center;
+
+}
+
 label {
   margin-right: 0.5rem;
 }
@@ -101,6 +115,10 @@ button {
   cursor: pointer;
   border-radius: 10px;
 
+}
+
+img {
+  height: 100px;
 }
 
 </style>

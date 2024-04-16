@@ -89,6 +89,19 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
+    public boolean updatePassword(String username, String newPassword){
+        String password_hash = new BCryptPasswordEncoder().encode(newPassword);
+        String updateUserSql = "UPDATE users set password_hash = ? WHERE username = ?;";
+        try {
+            int rowsAffected = jdbcTemplate.update(updateUserSql,password_hash,username);
+            return rowsAffected > 0;
+        }catch (DataIntegrityViolationException e) {
+            throw new DaoException("Failed to update password", e);
+        }
+
+    }
+
+    @Override
     public int getIdByUsername(String username) {
 
         String sql = "SELECT user_id FROM users WHERE username = ?;";
@@ -107,6 +120,30 @@ public class JdbcUserDao implements UserDao {
             throw new DaoException("Data integrity violation", e);
 
         }     return id;
+
+    }
+
+    @Override
+    public List<String> getUsernameWhoReviewedMovie(int movieId) {
+
+        String sql = "SELECT username FROM users WHERE user_id in (SELECT user_id FROM movies_users WHERE movie_id = ?);";
+        List<String> usernames = new ArrayList<>();
+
+        try {
+
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, movieId);
+
+            while (result.next()){
+
+                usernames.add(result.getString("username"));
+
+            }
+
+        } catch (CannotGetJdbcConnectionException e){
+
+            throw new DaoException("Unable to connect to server or database");
+
+        } return usernames;
 
     }
 

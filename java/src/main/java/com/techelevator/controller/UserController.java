@@ -1,12 +1,15 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.UserDao;
-import com.techelevator.dao.UsersGenresDao;
+import com.techelevator.dao.*;
+import com.techelevator.model.Movie;
+import com.techelevator.model.MovieApiResponse;
+import com.techelevator.model.MoviesUsers;
 import com.techelevator.model.UsersInfo;
-import com.techelevator.dao.UsersInfoDao;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -17,12 +20,18 @@ public class UserController {
     UsersGenresDao usersGenresDao;
     UsersInfoDao usersInfoDao;
     UserDao userDao;
+    MoviesUsersDao moviesUsersDao;
+    MovieDao movieDao;
+    MovieGenreDao movieGenreDao;
 
     //constructors
-    public UserController(UsersGenresDao usersGenresDao, UsersInfoDao usersInfoDao, UserDao userDao) {
+    public UserController(UsersGenresDao usersGenresDao, UsersInfoDao usersInfoDao, UserDao userDao, MoviesUsersDao moviesUsersDao, MovieDao movieDao, MovieGenreDao movieGenreDao) {
         this.usersGenresDao = usersGenresDao;
         this.usersInfoDao = usersInfoDao;
-        this.userDao =userDao;
+        this.userDao = userDao;
+        this.moviesUsersDao = moviesUsersDao;
+        this.movieDao = movieDao;
+        this.movieGenreDao = movieGenreDao;
     }
 
     //methods
@@ -57,6 +66,54 @@ public class UserController {
         usersInfo.setUser_id(userDao.getIdByUsername(usersInfo.getUsername()));
         usersInfoDao.updateProfileInfo(usersInfo);
         usersGenresDao.setUsersGenresAssociations(usersInfo.getUser_id(), usersInfo.getFavoriteGenres());
+
+    }
+
+    @RequestMapping(path = "/user/movie/favorite/", method = RequestMethod.POST)
+    public void updateUserMovieOpinions(@Valid @RequestBody MoviesUsers moviesUsers) {
+
+        if (!moviesUsersDao.checkForMovieUserAssociation(moviesUsers)) {
+
+            moviesUsersDao.addMoviesUsers(moviesUsers);
+
+        } else {
+
+            moviesUsersDao.updateMoviesUsers(moviesUsers);
+
+        }
+
+    }
+
+    @RequestMapping(path = "/user/{user_id}/movie/favorites/",  method = RequestMethod .GET)
+    public MovieApiResponse getAllFavoriteMovies(@Valid @PathVariable int user_id) {
+
+        MovieApiResponse moviesReturned = movieDao.getFavoriteMovies(user_id);
+
+        for (Movie movie : moviesReturned.getResults()) {
+
+            movie.setGenre_ids(movieGenreDao.getGenreIdsByMovieId(movie.getId()));
+
+        } return moviesReturned;
+
+    }
+
+    @RequestMapping(path = "/user/{user_id}/movie/{movie_id}/review/", method = RequestMethod.GET)
+    public String getUsersReviewOfAMovie(@PathVariable int user_id, @PathVariable int movie_id) {
+        return moviesUsersDao.getUserReviewOfMovie(user_id, movie_id);
+    }
+
+    @RequestMapping(path = "/user/{user_id}/reviews/", method = RequestMethod.GET)
+    public Map<String, Movie> getAllUserReviews(@PathVariable int user_id) {
+
+        List<Movie> reviewedMovies = movieDao.getAllMoviesReviewedByUser(user_id);
+        Map<String, Movie> movieReviews = new HashMap<>();
+
+        for (Movie reviewedMovie : reviewedMovies) {
+
+            reviewedMovie.setGenre_ids(movieGenreDao.getGenreIdsByMovieId(reviewedMovie.getId()));
+            movieReviews.put(moviesUsersDao.getUserReviewOfMovie(user_id, reviewedMovie.getId()) + " review#" + moviesUsersDao.getUserReviewIdOfMovie(user_id, reviewedMovie.getId()), reviewedMovie);
+
+        } return movieReviews;
 
     }
 

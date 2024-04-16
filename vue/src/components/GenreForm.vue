@@ -1,6 +1,18 @@
 <template>
+    <header>
+        <router-link v-bind:to="{ name: 'home' }">
+            <img alt="Movie reel logo" src="../assets/grey-reel.png"/>
+        </router-link>
+        <h1>
+            <i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }} &nbsp;|&nbsp;
+            <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+        </h1>
+    </header>
+
+    <h3>Create Profile</h3>
     
     <form v-on:submit.prevent="submitForm">
+        <!-- ="submitForm()"  -->
         <div class="form-input-group">
           <input type="text" id="name" v-model="userProfile.full_name" placeholder="Name" required autofocus />
         </div>
@@ -37,13 +49,14 @@
                     <input type="checkbox" id="documentary" name="genre" value="true" v-model="userProfile.favoriteGenres.Documentary"/>
                     <label for="documentary">Documentary</label>
                 </div>
-            </section>
-
-            <section>
                 <div>
                     <input type="checkbox" id="drama" name="genre" value="true" v-model="userProfile.favoriteGenres.Drama"/>
                     <label for="drama">Drama</label>
                 </div>
+            </section>
+
+            <section>
+                
                 <div>
                     <input type="checkbox" id="family" name="genre" value="true" v-model="userProfile.favoriteGenres.Family"/>
                     <label for="family">Family</label>
@@ -97,36 +110,27 @@
                 </div>
             </section>
 
-            
-
-            <div class="actions">
-            <button class="btn-submit" type="submit">Submit</button>
-            <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
-            </div>
+           
         </fieldset>
-
-        <br/>
-            <p>OUTPUT</p>
-            <p>{{ userProfile }}</p>
-        <br/>
+        <div class="actions">
+                <button class="btn-submit" type="submit" v-on:click.prevent="submitForm()">Submit</button>
+                <button class="btn-cancel" type="button" v-on:click.prevent="cancelForm()">Cancel</button>
+        </div>
     </form>
 
 </template>
 
 <script>
-import userInfoService from '../services/UserInfoService'
+import userInfoService from '../services/UserInfoService';
 
 export default{
-    props:{
-        profile:{
-            type: Object
-        }
-    },
 
     data(){
         return {
             showForm: false,
+            
             userProfile:{
+                user_id: this.$store.state.user.id,
                 email:"",
                 full_name:"",
                 username: this.$store.state.user.username,
@@ -158,27 +162,53 @@ export default{
     },
     methods:{
         submitForm(){
-            if(this.userProfile.full_name)
             userInfoService
             .addUserInfo(this.userProfile)
-            .then(response =>{
-                if(response.status === 201){
-                
-                    this.$store.commit(
-                        'SET_NOTIFICATION', {
-                        message:'Added new user info',
-                        type:'success'
-                        }
-                );
-                this.$router.push({name: 'HomeView'})
+            .then((response) => {
+                if (response.status === 200) {
+                    this.$router.push({name:'home'});
                 }
             })
+            .catch(error => {
+                console.error(error);
+            });
         },
         cancelForm() {
             // Go back to previous page
             this.$router.back();
         },
+        
     }
 }
 
 </script>
+
+<style scoped>
+    header {
+        background-color: #FECE00;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    img {
+        height: 100px;   
+    }
+
+    fieldset{
+        display: flex;
+    }
+
+    section{
+        flex-grow: 1;
+    }
+
+    #birthday, #email, #name{
+        padding: 3px 10px;
+        margin: 3px;
+        border-radius:5px;
+        /* border: none; */
+        height: 35px;
+        text-align: left;
+    }
+</style>

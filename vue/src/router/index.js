@@ -7,8 +7,13 @@ import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import LandingView from '../views/LandingView.vue';
-import AddGenresView from '../views/AddGenresView.vue';
+import UpdateGenresView from '../views/UpdateGenresView.vue';
+import EditGenresView from '../views/EditGenresView.vue';
 import MovieDetailView from '../views/MovieDetailView.vue';
+import UpdatePasswordView from '../views/UpdatePasswordView.vue';
+import UpdatePasswordForm from '../components/UpdatePasswordForm.vue';
+import AddReviewView from '../views/AddReviewView.vue';
+import ReviewsDisplayView from '../views/ReviewsDisplayView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -60,16 +65,41 @@ const routes = [
     },
   },
   {
-    path: '/create',
-    name: 'AddGenresView',
-    component: AddGenresView
+    path: '/update',
+    name: 'UpdateGenresView',
+    component: UpdateGenresView
   },
+
+  {
+    path: '/create',
+    name: 'EditGenresView',
+    component: EditGenresView
+  },
+
   {
     path: '/movie/:movieId',
     name: 'MovieDetailView',
     component: MovieDetailView
   },
+
+  {
+    path: '/forgotPassword/',
+    // name: 'UpdatePasswordView',
+    component: UpdatePasswordForm 
+  },
   
+  //ADD REVIEW AND GET REVIEW
+  {
+    path: '/movie/:movieId/review/create',
+    name: 'AddReviewView',
+    component: AddReviewView
+  },
+
+  {
+    path: '/user/:userId/reviews',
+    name: 'ReviewsDisplayView',
+    component: ReviewsDisplayView
+  }
 
 ];
 

@@ -9,24 +9,24 @@
         alt="Movie Poster Collage"
       />
 
-      <!-- test -->
       <movie-card 
-        class="movie-container" 
+        
         v-for="movie in movies" 
         v-bind:key="movie.id" 
         v-bind:movie="movie"
       > 
               
       </movie-card>
-      <!-- test -->
+
     </div>
 
   
     <div class="home">
         <div class="content">
-            <img alt="Glasses logo" src="../assets/logo.png">
+            <img alt="Grey reel logo" src="../assets/grey-reel.png">
             <h1>WeWatchWhat</h1>
-            <p>Discover Your Next Favorite Film: Your Personalized Movie Journey Begins Here!</p>
+            <p>Discover Your Next Favorite Film: <br/>
+              Your Personalized Movie Journey Begins Here!</p>
           
             <form class="search" @submit.prevent="getMovies">
               <input type="search" class="form-control" v-model="query" />
@@ -45,13 +45,15 @@
                 Create Account
               </router-link>
             </button>
+
+
         </div>
     </div>
 
   </div>
 </template>
   
-  <script>
+<script>
   import axios from 'axios';
   import MovieCard from '../components/MovieCard.vue';
   import movieService from '../services/MovieService';
@@ -112,9 +114,9 @@
 
     }
   };
-  </script>
+</script>
   
-  <style scoped>
+<style scoped>
   .container{
     background-color: #FECE00;
     display: grid;
@@ -123,7 +125,8 @@
       "image home";
     height: 100vh;
     max-height: 100vh;
-    margin: 0px -10px;
+
+    /* margin: 0px -10px; */
     /* justify-items: center; */
   }
   .image{
@@ -155,20 +158,34 @@
     text-align: center;
   }
  
-  button {
+  button, .btn {
     background-color: #012f6d;
     color: white;
     padding: 14px 20px;
-    margin: 8px;
+    margin: 4px;
     border: none;
     cursor: pointer;
     border-radius: 10px;
+  }
+  .form-control{
+    padding: 14px 20px;
+    margin: 8px;
+    border-radius:10px;
+    border: none;
+    height: 40px;
+    text-align: left;
   }
 
   .router-button {
     color: white;
     text-decoration: inherit;
   }
+
+  .content > img {
+    height: 150px;
+
+  }
+
 
   
   </style>

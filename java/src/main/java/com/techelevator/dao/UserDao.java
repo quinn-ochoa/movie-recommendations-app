@@ -15,6 +15,9 @@ public interface UserDao {
 
     User createUser(RegisterUserDto user);
 
+    boolean updatePassword(String user, String passwordHash);
+
     int getIdByUsername(String username);
 
+    List<String> getUsernameWhoReviewedMovie(int movieId);
 }
