@@ -97,7 +97,7 @@ const routes = [
 
   {
     path: '/user/:userId/reviews',
-    name: ' ReviewsDisplayView',
+    name: 'ReviewsDisplayView',
     component: ReviewsDisplayView
   }
 

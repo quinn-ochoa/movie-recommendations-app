@@ -11,12 +11,21 @@
     </header>
     <h1>Reviews: </h1>
    
-    <div v-for="(review, key) in reviews" v-bind:key="key">
-        {{ (key.split(" ").slice(0, ((key.split(" ")).length-1))).toString().replace(/[!.,]/g, ' ') }}
+    <div v-for="(review, key) in reviews" v-bind:key="key" id="review-container">
+
+        
+
         <h3>{{ review.title }}</h3>
+        
         <div id="poster">
             <img  :src ="'https://image.tmdb.org/t/p/original' + review.poster_path"/> 
         </div>
+
+        <div>
+            {{ (key.split(" ").slice(0, ((key.split(" ")).length-1))).toString().replace(/[!.,]/g, ' ') }}
+        </div>
+
+
     </div>
 
         <!-- <p>{{created}}</p>
@@ -33,8 +42,6 @@
         </div>  -->
 
     <!-- <review-list v-bind:reviews="reviews"/> -->
-
-
    
 </template>
 
@@ -107,5 +114,10 @@ export default {
 </script>
 
 <style scoped>
+
+/* #review-container {
+    display: flex;
+    
+} */
 
 </style>
