@@ -39,7 +39,7 @@
       <!-- TO BE UPDATED -->
       <button 
         class="btn-add" 
-        v-on:click="$router.push({ name: '' })">
+        v-on:click="$router.push({ name: 'ReviewsDisplayView', params: { userId: $store.state.user.id } })">
           See Reviews
       </button>
       
