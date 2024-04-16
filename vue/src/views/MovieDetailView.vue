@@ -22,6 +22,7 @@
         <img alt="tmdb logo" src="../assets/tmdb-logo.png"/>
       </div>
     </footer>
+    
 </template>
 
 <script>

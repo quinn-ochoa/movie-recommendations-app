@@ -11,7 +11,7 @@
     </footer>
 </template>
 
-  <script>
+<script>
   import UpdateGenreForm from '../components/UpdateGenreForm.vue';
   import userInfoService from '../services/UserInfoService';
   export default {

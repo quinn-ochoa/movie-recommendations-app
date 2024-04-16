@@ -21,7 +21,9 @@
       <button class="btn btn-submit">Submit</button>
       <button class="btn btn-cancel" v-on:click="cancelForm" type="button">Cancel</button>
     </form>
-    {{ addCard }}
+
+    <!-- TEST -->
+    <!-- {{ addCard }} -->
 </template>
 
 <script>
@@ -53,8 +55,8 @@ export default {
           )
         },
         cancelForm() {
-        // Go back to previous page
-        this.$router.back();
+          // Go back to previous page
+          this.$router.back();
         },
         onFavoriteChange() {
           this.addCard.liked = !this.addCard.liked;
