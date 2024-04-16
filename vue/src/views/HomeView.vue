@@ -35,6 +35,13 @@
         v-on:click="$router.push({ name: 'EditGenresView' })">
           Create Profile
       </button>
+
+      <!-- TO BE UPDATED -->
+      <button 
+        class="btn-add" 
+        v-on:click="$router.push({ name: '' })">
+          See Reviews
+      </button>
       
       <!-- SEARCH RESULT -->
       <h2>Search results</h2>
@@ -130,6 +137,9 @@
       <div>
         <i class="fa-brands fa-facebook social-icon" ></i>
         <i class="fa-brands fa-instagram social-icon"></i>
+        <div class="tmdb-container">
+        <img alt="tmdb logo" src="../assets/tmdb-logo.png"/>
+        </div>
       </div>
     </footer>
 
@@ -235,9 +245,25 @@ export default {
     }
 
     footer {
-      background-color: lightgrey;
-      text-align: center;
-      height: 100px;
+        display: flex;
+        background-color: lightgrey;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        margin-top: 40px;
+        flex-direction: column;
+        gap: 15px
+    }
+
+    footer > div > img {
+        height: 50px;
+        width: 70px;
+    }
+
+    footer > :first-child {
+        display: flex;
+        gap: 10px
     }
 
     h1 {
