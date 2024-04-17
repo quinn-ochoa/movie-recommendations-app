@@ -53,6 +53,7 @@
       
       <div class="loading" v-if="isLoading">
           <img src="../assets/hourglass.gif" />
+          <!-- <img src="../assets/spinning-movie-reel.gif" /> -->
       </div>
 
       <div class="notLoading" v-else>
@@ -77,6 +78,15 @@
       </div>
       <!-- END OF SEARCH RESULT -->
 
+      <!-- RECOMMENDED MOVIES -->
+      <h2 v-if="recommended4u.results != 0" >Recommended for you</h2>
+      <div id="recommended-container" v-if="recommended4u.results != 0">
+        
+        <div class="display-card" v-for="result in recommended4u.results" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
+              <div class="title">{{ result.title }}</div>
+              <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
+        </div>
+      </div>
 
       <!-- POPULAR MOVIES -->
       <h2>Based on popular demand</h2>
@@ -125,15 +135,7 @@
         </div>
       </div>
 
-      <!-- RECOMMENDED MOVIES -->
-      <h2 v-if="recommended4u.results != 0" >Recommended for you</h2>
-      <div id="recommended-container" v-if="recommended4u.results != 0">
-        
-        <div class="display-card" v-for="result in recommended4u.results" v-bind:key="result.id" v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: result.id } })">
-              <div class="title">{{ result.title }}</div>
-              <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + result.poster_path"/>
-        </div>
-      </div>
+
     
       <!-- test -->
       

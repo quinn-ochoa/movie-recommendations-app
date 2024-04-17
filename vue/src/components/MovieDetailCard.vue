@@ -59,7 +59,7 @@
                 <button v-if="!collectFavMoviesId().includes(movie.id)" v-on:click="$router.push({ name: 'AddReviewView' })">
                     Add Review
                 </button>
-                <button v-else v-bind="updateCard.liked = false" v-on:click.prevent="updateFavorite">
+                <button v-else v-bind="addCard.liked = false" v-on:click.prevent="updateFavorite">
                     Unlike
                 </button>
                 
@@ -72,7 +72,7 @@
             
                 <!-- PRINT OUT MOVIE DETAIL -->
                 <!-- {{ movie }} -->
-                {{ collectFavMoviesId() }}
+                <!-- {{ collectFavMoviesId() }} -->
                 <!-- {{ removeFavorite(collectFavMoviesId()) }} -->
             </div>
            
@@ -93,7 +93,7 @@
                 favorites : {
                     results : []
                 },
-                updateCard:{
+                addCard:{
                     movie_id: this.$route.params.movieId,
                     user_id: this.$store.state.user.id,
                     liked: true,
