@@ -24,7 +24,6 @@
     <div class="home">
         <div class="content">
             <img alt="Grey reel logo" src="../assets/grey-reel.png">
-            <h1>WeWatchWhat</h1>
             <p>Discover Your Next Favorite Film: <br/>
               Your Personalized Movie Journey Begins Here!</p>
           
