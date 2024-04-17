@@ -49,7 +49,7 @@
             </div>
             <div>
                <h2>Overview:</h2>
-                <div class="overview">{{ movie.overview }}</div>  
+                <div class="overview">{{ movie.overview }}</div>
             </div>
             <div>
                 <button v-on:click="$router.push({ name: 'home' })">
@@ -70,8 +70,11 @@
                 <!-- <i onclick="flipLikeButton(this)" class="fa fa-thumbs-down" aria-hidden="true" id="fas"></i> -->
             
                 <!-- PRINT OUT MOVIE DETAIL -->
-                <!-- {{ movie }} -->
-                {{ collectFavMoviesId() }}
+                {{ movie.id }}
+                <!-- {{ collectFavMoviesId() }} -->
+                {{ updateCard }}
+                {{ $store.state.user.id }}
+                <!-- {{ currReview }} -->
                 <!-- {{ removeFavorite(collectFavMoviesId()) }} -->
             </div>
            
@@ -83,12 +86,15 @@
 
 
 <script>  
+    
+    import axios from 'axios';
     import userInfoService from '../services/UserInfoService';
 
     export default{
         name:'detail-card',
         data(){
             return{
+                currReview: null,
                 favorites : {
                     results : []
                 },
@@ -96,8 +102,8 @@
                     movie_id: this.$route.params.movieId,
                     user_id: this.$store.state.user.id,
                     liked: true,
-                    review:this.$store.state.user.review
-                } 
+                    review: this.currReview
+                }, 
             }
         },
         props:{
@@ -121,6 +127,15 @@
             },
         },
         methods:{
+            async getReview(){
+                await axios.get(`http://localhost:9000/user/${this.$store.state.user.id}/movie/${this.movie.id}/review/`)
+                .then((response) => {
+                    let string = response.data;
+                    // this.currReview = response.data;
+                    console.log("current review:" + string.toString());
+                })
+        
+            },
             collectFavMoviesId(){
                 const resultArr = [];
                 for (let i = 0; i < this.favorites.results.length; i++ ){
@@ -128,22 +143,15 @@
                 }
                 return resultArr;
             },
-            // removeFavorite(movieIdArr){
-            //     const newArr = [];
-            //     for(let i=0; i<movieIdArr.length; i++){
-            //             if (movieIdArr[i] !== this.movie.id ){
-            //                 newArr.push(movieIdArr[i])
-            //             }
-            //     }
-            //     return newArr;
-            // },
             updateFavorite(){
                 userInfoService
-                .addReview(this.addCard)
+                .addReview(this.updateCard)
                 .then(
-                    this.$router.push({name:'home'})
+                    this.getReview
+                    // this.$router.push({name:'home'})
                 )
-            }
+            },
+            
         },
         created(){
             let userId = this.$store.state.user.id;
