@@ -58,8 +58,8 @@ public class TMDB_APIService {
         List<Integer> genres = new ArrayList<>();
         for (Integer genre : passedInGenres) {
             genres.add(genre);
-        } double vote_average = 7;
-        double vote_count = 10000;
+        } double vote_average = 6;
+        double vote_count = 5000;
 
         //do until 50 movies seleted
         while ((moviesToReturn.getResults().size() < 50 && userAgeRating != 1) || moviesToReturn.getResults().size() < 25) {
@@ -181,8 +181,8 @@ public class TMDB_APIService {
         HttpEntity<MovieApiResponse> entity = new HttpEntity<>(headers);
         MovieApiResponse moviesPulledFromApi = new MovieApiResponse();
         MovieApiResponse moviesToReturn = new MovieApiResponse();
-        double vote_average = 7.0;
-        double vote_count = 10000;
+        double vote_average = 6;
+        double vote_count = 5000;
 
         while ((moviesToReturn.getResults().size() < 50 && userAgeRating != 1) || moviesToReturn.getResults().size() < 25) {
 
