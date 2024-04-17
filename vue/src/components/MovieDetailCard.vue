@@ -59,7 +59,7 @@
                 <button v-if="!collectFavMoviesId().includes(movie.id)" v-on:click="$router.push({ name: 'AddReviewView' })">
                     Add Review
                 </button>
-                <button v-else v-bind="addCard.liked = false" v-on:click.prevent="updateFavorite">
+                <button v-else v-bind="addCard.liked = false" v-on:click.prevent="updateFavorite()">
                     Unlike
                 </button>
                 
@@ -148,7 +148,7 @@
                 userInfoService
                 .addReview(this.addCard)
                 .then(
-                    this.getReview
+                    this.getReview()
                     // this.$router.push({name:'home'})
                 )
             },
