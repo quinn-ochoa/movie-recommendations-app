@@ -6,7 +6,6 @@ import com.techelevator.dao.MovieGenreDao;
 import com.techelevator.dao.UsersInfoDao;
 import com.techelevator.model.Movie;
 import com.techelevator.model.MovieApiResponse;
-import com.techelevator.services.ProfanityFilterAPIService;
 import com.techelevator.services.TMDB_APIService;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +30,6 @@ public class SearchController {
     @RequestMapping(path = "/search/{term}/", method = RequestMethod.GET)
     public MovieApiResponse getMoviesBySearchTerm(@PathVariable String term) {
         TMDB_APIService tmdbApiService = new TMDB_APIService();
-        ProfanityFilterAPIService profanityFilterAPIService = new ProfanityFilterAPIService();
         int page = 1;
         MovieApiResponse movieApiResponse = new MovieApiResponse();
         MovieApiResponse goodResults = new MovieApiResponse();
