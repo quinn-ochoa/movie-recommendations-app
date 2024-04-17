@@ -13,12 +13,12 @@
    
     <div v-for="(review, key) in reviews" v-bind:key="key" id="review-container">
 
+        <div>
+            <h3>{{ review.title }}</h3>
         
-
-        <h3>{{ review.title }}</h3>
-        
-        <div id="poster">
-            <img  :src ="'https://image.tmdb.org/t/p/original' + review.poster_path"/> 
+            <div id="poster">
+                <img  :src ="'https://image.tmdb.org/t/p/original' + review.poster_path"/> 
+            </div>
         </div>
 
         <div>
@@ -115,9 +115,17 @@ export default {
 
 <style scoped>
 
-/* #review-container {
+#review-container {
+    margin-left: 5%;
+    margin-bottom: 3%;
     display: flex;
+    align-items: center;
+    gap: 20px;
+    border-top: solid;
+   
     
-} */
+}
+
+
 
 </style>
