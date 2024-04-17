@@ -16,7 +16,10 @@
 
         <div>
             <div id="poster">
-                <img  :src ="'https://image.tmdb.org/t/p/original' + review.poster_path"/> 
+                <img  
+                :src ="'https://image.tmdb.org/t/p/original' + review.poster_path"
+                v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: review.id } })"
+                /> 
             </div>
         </div>
 
@@ -83,8 +86,6 @@ export default {
                 return text;
             }
 
-
-            
         },
 
 
@@ -129,9 +130,6 @@ export default {
     align-items: top;
     gap: 20px;
     /* padding-top: 10px; */
-
-   
-    
 }
 
 h1 {
@@ -150,11 +148,9 @@ h1 {
 }
 
 #review-movie-title{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
 </style>
