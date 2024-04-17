@@ -1,8 +1,14 @@
 <!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
 
-  <div class="container">
-   <div class="image">
+  
+
+<div class="container">
+  <div class="loading" v-if="isLoading">
+          <img src="../assets/hourglass.gif" />
+  </div>
+  <div class="notLoading" v-else>
+    <div class="image">
       <img 
         v-if="movies.length == 0" 
         src="../../src/assets/movie_collage.jpg" 
@@ -19,6 +25,12 @@
       </movie-card>
 
     </div>
+    <div v-if="noSearchResults">
+      <p>No search results</p>
+    </div>
+  </div>
+
+   
 
   
     <div class="home">
@@ -74,7 +86,9 @@
           vote_average: null
 
         },
+        noResults: false,
         //placeholder movies db
+        isLoading: false,
         movies:[]
         //end of db
       }
@@ -98,12 +112,21 @@
       //   })
       // },
       async getMovies(){
+        this.isLoading = true;
+
         await axios.get(`http://localhost:9000/search/${this.query}/`)
         .then((response) => {
+          this.isLoading = false;
           this.movies = response.data.results;
           // console.log(this.movies);
           this.results = Object.values(this.movies);
           console.log(this.results);
+
+          if (this.results.length === 0) {
+            this.noResults = true;
+
+          }
+
         })
         
       }
@@ -182,6 +205,14 @@
 
   .content > img {
     height: 150px;
+
+  }
+
+  .container > .loading {
+    text-align: center;
+    justify-content: center;
+    margin-top: 45%;
+    color: #FECE00;
 
   }
 

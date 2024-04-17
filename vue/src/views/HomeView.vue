@@ -49,12 +49,15 @@
       </button>
 
       <!-- SEARCH RESULT -->
-      <h2>Search results</h2>
-      <!-- <div class="loading" v-if="isLoading">
+      <h2 v-if="searchMovies.length != 0">Search results</h2>
+      
+      <div class="loading" v-if="isLoading">
           <img src="../assets/hourglass.gif" />
-      </div> -->
-      <!-- <div class="notLoading" v-else> -->
-          <div id="search-container" v-if="searchMovies.length != 0">
+      </div>
+
+      <div class="notLoading" v-else>
+          
+        <div  id="search-container" v-if="searchMovies.length != 0">
             <div 
               class="display-card" 
               v-for="movie in searchMovies" 
@@ -65,10 +68,13 @@
                   <img class="movie-poster" :src ="'https://image.tmdb.org/t/p/original' + movie.poster_path"/>
             </div>
           </div>
-          <div v-else>
+          <div v-if="noSearchResults">
             <p>No search results</p>
           </div>
-      <!-- </div> -->
+          <!-- <div v-else>
+            <p>No search results</p>
+          </div> -->
+      </div>
       <!-- END OF SEARCH RESULT -->
 
 
@@ -170,6 +176,8 @@ export default {
       isLoading: true,
       query: null,
       searchMovies: [],
+      noSearchResults: false,
+      // noSearchResultsMsg: 'No Search Results',
 
       popular : {
         results : []
@@ -217,11 +225,18 @@ export default {
     },
 
     async getMovies(){
+
+        this.isLoading = true;
+        
         await axios.get(`http://localhost:9000/search/${this.query}/user/${this.$store.state.user.id}/`)
         .then((response) => {
-          // this.isLoading=false;
+          this.isLoading = false;
           this.searchMovies = response.data.results;
-        })
+
+          if (this.searchMovies.length === 0) {
+            this.noSearchResults = true;
+          }
+        });
     },
 
   },
@@ -229,11 +244,13 @@ export default {
     let userId = this.$store.state.user.id;
     userInfoService.getRecommended(userId)
     .then(response => {
+      this.isLoading = false;
       this.genres = response.data;
       this.popular.results = response.data.popular.results;
       this.allTimeGreats.results = response.data.allTimeGreats.results;
       this.recommended4u.results = response.data.recommended4u.results;
       this.favorites.results = response.data.favorites.results;
+    
     })
   },
 };

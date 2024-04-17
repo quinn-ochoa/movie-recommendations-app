@@ -35,6 +35,7 @@
                 <span v-show="fiveStarRating < 3" class="fa fa-star fa-lg unchecked"></span>
                 <span v-show="fiveStarRating < 4" class="fa fa-star fa-lg unchecked" ></span>
                 <span v-show="fiveStarRating < 5" class="fa fa-star fa-lg unchecked"></span>
+                <!-- <span v-show="fiveStarRating < 6" class="fa fa-star fa-lg unchecked"></span> -->
             </div> 
 
         </div>
@@ -110,7 +111,7 @@
 
             fiveStarRating(movie) {
                 let movieRating = this.movie.vote_average
-                let convertedRating = parseFloat((movieRating / 2).toFixed(1));
+                let convertedRating = parseFloat((movieRating / 2));
                 return convertedRating;
             },
         },
