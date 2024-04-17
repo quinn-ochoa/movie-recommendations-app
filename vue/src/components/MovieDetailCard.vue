@@ -131,9 +131,9 @@
             async getReview(){
                 await axios.get(`http://localhost:9000/user/${this.$store.state.user.id}/movie/${this.movie.id}/review/`)
                 .then((response) => {
-                    let string = response.data;
-                    // this.currReview = response.data;
-                    console.log("current review:" + string.toString());
+                    // let string = response.data;
+                    this.currReview = response.data;
+                    // console.log("current review:" + string.toString());
                 })
         
             },
@@ -148,9 +148,12 @@
                 userInfoService
                 .addReview(this.addCard)
                 .then(
-                    this.getReview()
-                    // this.$router.push({name:'home'})
+                    // this.getReview()
+        
+                    this.$router.push({name:'home'})
                 )
+                // console.log("what is" + this);
+                
             },
             
         },
@@ -165,7 +168,7 @@
   
 </script>
 
-<style>
+<style scoped>
 
     header {
 
