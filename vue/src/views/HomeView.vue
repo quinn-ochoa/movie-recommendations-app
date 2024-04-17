@@ -174,6 +174,7 @@ export default {
   data() {
     return{
       isLoading: true,
+      
       query: null,
       searchMovies: [],
       noSearchResults: false,
