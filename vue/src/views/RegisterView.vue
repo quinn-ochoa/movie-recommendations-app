@@ -112,13 +112,15 @@
   }
   h1 {
     text-align: center;
+    font-size: medium;
+      margin-right: 10px;
   }
   h2 {
     text-align: center;
     font-size: medium;
     margin-bottom: 20px;
   }
-  
+
   #left-entries {
 
     display: flex;

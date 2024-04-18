@@ -13,12 +13,16 @@
     <div class="update-container">
         <div class="box"> 
             <h3>Name: {{ userProfile.full_name }}</h3>
-            <p>Email: {{ userProfile.email }}</p>
+            <p>Email: {{ userProfile.email }}</p><br/>
             <p>Birthday: {{ userProfile.birthday }}</p>
             <div>Genres: </div>
             <div v-for="(value, key, index) in userProfile.favoriteGenres" v-bind:key="index">
                 {{ value ? key + ", &nbsp;" : "" }}
             </div>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
         </div>
 
         <div class="box">

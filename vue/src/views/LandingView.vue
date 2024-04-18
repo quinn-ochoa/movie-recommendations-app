@@ -41,7 +41,7 @@
           
             <form class="search" @submit.prevent="getMovies">
               <input type="search" class="form-control" v-model="query" />
-              <input type="submit" class="btn"/>
+              <input type="submit" class="btn" value="Search"/>
             </form>
             <br/>
             
@@ -140,7 +140,7 @@
   
 <style scoped>
   .container{
-    background-color: #FECE00;
+    background-color: white;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas: 

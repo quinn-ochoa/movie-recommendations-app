@@ -5,12 +5,6 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
 
-  <!-- commented header out because repeating from another view -->
-    <!-- <header>
-      <img alt="movie reel logo" src="../assets/grey-reel.png"/>
-      <h1><i class="fa-solid fa-circle-user"></i>&nbsp; User profile</h1>
-
-    </header> -->
     <movie-detail-card v-bind:movie="movie" />
 
     <footer>

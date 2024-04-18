@@ -69,56 +69,66 @@ export default {
 
 <style scoped>
 
-.container{
-  /* position: relative; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .container{
+    /* position: relative; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-#login{
-  width: 400px;
-  height: 400px;
-  padding: 10px;
-  background-color: #FECE00;
-  /* position: absolute;
-  top: 50%; */
-  /* left: 50%; */
-  /* transform: translate(30%, 30%); */
-    /* padding: 10px; */
-  text-align: center;
-}
-.form-input-group {
-  margin-bottom: 1rem;
-}
-
-#username, #password{
-    padding: 3px 30px;
-    margin: 3px;
-    border-radius:10px;
-    border: none;
-    height: 35px;
+  #login{
+    width: 400px;
+    height: 400px;
+    padding: 10px;
+    background-color: #FECE00;
+    /* position: absolute;
+    top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(30%, 30%); */
+      /* padding: 10px; */
     text-align: center;
+  }
+  .form-input-group {
+    margin-bottom: 1rem;
+  }
 
-}
+  #username, #password{
+      padding: 3px 30px;
+      margin: 3px;
+      border-radius:10px;
+      border: none;
+      height: 35px;
+      text-align: center;
 
-label {
-  margin-right: 0.5rem;
-}
+  }
 
-button {
-  background-color: #012f6d;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
+  label {
+    margin-right: 0.5rem;
+  }
 
-}
+  button {
+    background-color: #012f6d;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
 
-img {
-  height: 100px;
-}
+  }
+
+  img {
+    height: 100px;
+  }
+
+  h1 {
+    font-size: medium;
+    margin-right: 10px;
+  }
+
+  h2 {
+    font-size: medium;
+    height: 100px;
+  }
 
 </style>
