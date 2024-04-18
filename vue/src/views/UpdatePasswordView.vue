@@ -128,6 +128,39 @@ export default {
 </script>
 
 <style scoped>
+    img {
+      margin-left: 10px;
+      height: 100px;
+    }
+
+    header {
+      background-color: #FECE00;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer {
+        display: flex;
+        background-color: lightgrey;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        margin-top: 40px;
+        flex-direction: column;
+        gap: 15px
+    }
+
+    footer > div > img {
+        height: 50px;
+        width: 70px;
+    }
+
+    footer > :first-child {
+        display: flex;
+        gap: 10px
+    }
     .form-container{
         margin-left: 20px;
     }
@@ -140,5 +173,15 @@ export default {
         text-align: center;
 
     }
+
+    button {
+        background-color: #012f6d;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+      }
 
 </style>

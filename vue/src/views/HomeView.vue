@@ -13,7 +13,7 @@
       <div>
           <form class="search" @submit.prevent="getMovies">
               <input type="search" class="form-control" v-model="query" />
-              <input type="submit" class="btn"/> 
+              <input type="submit" class="btn" value="Search"/> 
               <!-- <i  type="submit" class=" fas fa-search btn"></i> -->
           </form>
       </div>
@@ -344,8 +344,6 @@ export default {
       padding: 0px;
       margin-bottom: 5px;
       height: 20px;
-      
-
     }
 
     button {
@@ -357,8 +355,6 @@ export default {
         cursor: pointer;
         border-radius: 10px;
       }
-
-
 
     .display-card{
       position: relative;
@@ -403,11 +399,14 @@ export default {
       opacity: 1;
     }
 
+    .tmdb-container > img{
+      height: 50px
+    }
 
     /* img:hover {
       opacity: 0.20;
       z-index: 0;
     } */
-
+    
 
 </style>

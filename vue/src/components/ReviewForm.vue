@@ -68,6 +68,17 @@ export default {
 </script>
 
 <style scoped>
+  img {
+      margin-left: 10px;
+      height: 100px;
+    }
+
+    header {
+      background-color: #FECE00;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     .cardForm {
     padding: 10px;
     margin-bottom: 10px;
@@ -106,5 +117,15 @@ export default {
     display: inline-block;
     margin: 10px 20px 10px 10px;
     }
+
+    button {
+        background-color: #012f6d;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+      }
 
 </style>

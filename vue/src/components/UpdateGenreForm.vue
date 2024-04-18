@@ -13,16 +13,16 @@
     <div class="update-container">
         <div class="box"> 
             <h3>Name: {{ userProfile.full_name }}</h3>
-            <p>Email: {{ userProfile.email }}</p><br/>
-            <p>Birthday: {{ userProfile.birthday }}</p>
+            <p>Email: {{ userProfile.email }}</p>
+            <p>Birthday: {{ userProfile.birthday.split('T')[0] }}</p>
             <div>Genres: </div>
             <div v-for="(value, key, index) in userProfile.favoriteGenres" v-bind:key="index">
                 {{ value ? key + ", &nbsp;" : "" }}
             </div>
-            <label class="switch">
+            <!-- <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
-            </label>
+            </label> -->
         </div>
 
         <div class="box">
@@ -198,5 +198,14 @@
     h1{
         padding-left: 40px;
     }
+    button {
+        background-color: #012f6d;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+      }
 
 </style>

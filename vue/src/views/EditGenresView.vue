@@ -27,4 +27,34 @@
     }
 </script>
 
-<style scoped></style>
+<style scoped>
+    footer {
+        display: flex;
+        background-color: lightgrey;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        margin-top: 40px;
+        flex-direction: column;
+        gap: 15px
+    }
+
+    footer > div > img {
+        height: 50px;
+        width: 70px;
+    }
+
+    footer > :first-child {
+        display: flex;
+        gap: 10px
+    }
+
+    .social-icon {
+      font-size: 20px;
+      height: 20px;
+      margin-top: 40px;
+      margin-right: 20px;
+    }
+
+</style>

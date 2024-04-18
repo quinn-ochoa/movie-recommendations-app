@@ -71,10 +71,10 @@
                 <!-- <i onclick="flipLikeButton(this)" class="fa fa-thumbs-down" aria-hidden="true" id="fas"></i> -->
             
                 <!-- PRINT OUT MOVIE DETAIL -->
-                {{ movie.id }}
+                <!-- {{ movie.id }} -->
                 <!-- {{ collectFavMoviesId() }} -->
-                {{ addCard }}
-                {{ $store.state.user.id }}
+                <!-- {{ addCard }}
+                {{ $store.state.user.id }} -->
                 <!-- {{ currReview }} -->
                 <!-- {{ removeFavorite(collectFavMoviesId()) }} -->
             </div>
@@ -179,7 +179,8 @@
     }
 
     img {
-        height: 100px;   
+      margin-left: 10px;
+      height: 100px;
     }
 
     h1 {
@@ -215,8 +216,13 @@
     }
 
     #stars{
+        display: flex;
         margin-left: 15px;
         margin-top: 5px;
+        font-size: 20px;
+        height: 20px;
+        width: fit-content;
+
     }
 
     .checked {
@@ -226,6 +232,8 @@
 
     .unchecked, .checked {
         margin-left: 3px;
+        height: 10px;
+
     }
 
     #title-info {

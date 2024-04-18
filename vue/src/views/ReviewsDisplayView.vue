@@ -122,6 +122,21 @@ export default {
 
 <style scoped>
 
+    header {
+      background-color: #FECE00;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    img {
+      margin-left: 10px;
+      height: 100px;
+    }
+
+   
+
+
 #review-container {
     /* margin-top: 5%; */
     margin-left: 10%;
@@ -133,7 +148,7 @@ export default {
 }
 
 h1 {
-    font-size: 20px;
+    font-size: medium;
     height: 50px;
     margin-left: 10%;
     padding-top: 10px;
@@ -152,5 +167,14 @@ h1 {
     flex-direction: column;
     gap: 20px;
 }
+
+#poster{
+      display: block;
+      height: 240px;
+      width: auto;
+      /* width: 100%; */
+
+    }
+
 
 </style>
