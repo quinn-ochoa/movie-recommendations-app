@@ -15,7 +15,7 @@
         <!-- v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: review.id } }) -->
 
         <div>
-            <div id="poster">
+            <div id="poster" v-if="!key.includes(null)">
                 <img  
                 :src ="'https://image.tmdb.org/t/p/original' + review.poster_path"
                 v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: review.id } })"
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div id="review-movie-title">
+        <div id="review-movie-title" v-if="!key.includes(null)">
             <div>
               <h2>{{ review.title }}</h2>  
             </div>

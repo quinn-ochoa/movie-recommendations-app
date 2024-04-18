@@ -67,7 +67,7 @@ export default {
 
     footer > :first-child {
         display: flex;
-        gap: 10px
+        gap: 10px;
     }
 
     .social-icon {

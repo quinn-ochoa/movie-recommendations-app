@@ -24,17 +24,17 @@
             <img  :src ="'https://image.tmdb.org/t/p/original' + movie.poster_path"/> 
             <!-- <div class="rating">{{ fiveStarRating }}</div>  -->
             <div id="stars" >
-                <span v-show="fiveStarRating > 1" class="fa fa-star fa-lg checked"></span>
-                <span v-show="fiveStarRating > 2" class="fa fa-star fa-lg checked"></span>
-                <span v-show="fiveStarRating > 3" class="fa fa-star fa-lg checked"></span>
-                <span v-show="fiveStarRating > 4" class="fa fa-star fa-lg checked" ></span>
-                <span v-show="fiveStarRating > 5" class="fa fa-star fa-lg checked"></span>
+                <span v-show="fiveStarRating > 1" class="fa fa-star checked"></span>
+                <span v-show="fiveStarRating > 2" class="fa fa-star checked"></span>
+                <span v-show="fiveStarRating > 3" class="fa fa-star checked"></span>
+                <span v-show="fiveStarRating > 4" class="fa fa-star checked" ></span>
+                <span v-show="fiveStarRating > 5" class="fa fa-star checked"></span>
 
-                <span v-show="fiveStarRating < 1" class="fa fa-star fa-lg unchecked"></span>
-                <span v-show="fiveStarRating < 2" class="fa fa-star fa-lg unchecked"></span>
-                <span v-show="fiveStarRating < 3" class="fa fa-star fa-lg unchecked"></span>
-                <span v-show="fiveStarRating < 4" class="fa fa-star fa-lg unchecked" ></span>
-                <span v-show="fiveStarRating < 5" class="fa fa-star fa-lg unchecked"></span>
+                <span v-show="fiveStarRating < 1" class="fa fa-star unchecked"></span>
+                <span v-show="fiveStarRating < 2" class="fa fa-star unchecked"></span>
+                <span v-show="fiveStarRating < 3" class="fa fa-star unchecked"></span>
+                <span v-show="fiveStarRating < 4" class="fa fa-star unchecked" ></span>
+                <span v-show="fiveStarRating < 5" class="fa fa-star unchecked"></span>
                 <!-- <span v-show="fiveStarRating < 6" class="fa fa-star fa-lg unchecked"></span> -->
             </div> 
 
@@ -217,9 +217,9 @@
 
     #stars{
         display: flex;
-        margin-left: 15px;
+        margin-left: 10px;
         margin-top: 5px;
-        font-size: 20px;
+        font-size: 30px;
         height: 20px;
         width: fit-content;
 
@@ -232,7 +232,7 @@
 
     .unchecked, .checked {
         margin-left: 3px;
-        height: 10px;
+        height: 1px;
 
     }
 
@@ -261,15 +261,6 @@
         font-weight: bold;
         font-size: 15px;
     }
-    .fa {
-    font-size: 70px;
-    cursor: pointer;
-    user-select: none;
-    }
-
-    .fa:hover{
-        color: navy;
-    }
 
     p {
         display: inline-block;
@@ -286,7 +277,7 @@
     border-radius: 10px;
     }
 
-    footer {
+         footer {
         display: flex;
         background-color: lightgrey;
         text-align: center;
@@ -296,7 +287,7 @@
         margin-top: 40px;
         flex-direction: column;
         gap: 15px
-    }
+    } 
 
     footer > div > img {
         height: 50px;

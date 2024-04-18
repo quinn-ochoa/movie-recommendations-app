@@ -184,4 +184,14 @@ export default {
         border-radius: 10px;
       }
 
+    h1 {
+    font-size: medium;
+    margin-right: 10px;
+        }
+
+    h2 {
+    font-size: medium;
+    height: 100px;
+     }
+
 </style>
