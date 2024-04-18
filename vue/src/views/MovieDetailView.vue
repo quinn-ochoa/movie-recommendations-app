@@ -11,9 +11,9 @@
       <div>
         <i class="fa-brands fa-facebook social-icon" ></i>
         <i class="fa-brands fa-instagram social-icon"></i>
-      </div>
-      <div class="tmdb-container">
+        <div class="tmdb-container">
         <img alt="tmdb logo" src="../assets/tmdb-logo.png"/>
+        </div>
       </div>
     </footer>
     
@@ -68,6 +68,15 @@ export default {
     footer > :first-child {
         display: flex;
         gap: 10px;
+    }
+
+    .tmdb-container{
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .tmdb-container > img{
+      height: 20px
     }
 
     .social-icon {

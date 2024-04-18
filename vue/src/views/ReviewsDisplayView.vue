@@ -13,7 +13,7 @@
 <section id="display-list-container">
     <h1>Your Reviews: </h1>
    
-    <div v-for="(review, key) in reviews" v-bind:key="key" id="review-container">
+    <div v-for="(review, key) in reviews" v-bind:key="key" id="review-container" >
         <!-- v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: review.id } }) -->
 
         <div>

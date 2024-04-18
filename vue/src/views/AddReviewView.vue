@@ -52,7 +52,20 @@
         gap: 10px
     }
 
+    .tmdb-container{
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .social-icon {
+      font-size: 20px;
+      height: 20px;
+      margin-top: 40px;
+      margin-right: 20px;
+    }
+
+
     .tmdb-container > img{
-      height: 50px
+      height: 20px
     }
 </style>

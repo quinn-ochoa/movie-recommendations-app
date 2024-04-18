@@ -48,7 +48,12 @@ export default {
 
         </form>
     </div>
-    
+    <footer>
+        <div>
+        <i class="fa-brands fa-facebook social-icon" ></i>
+        <i class="fa-brands fa-instagram social-icon"></i>
+        </div>
+    </footer>
     <!-- {{ user }} -->
 </template>
 

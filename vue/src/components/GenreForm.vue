@@ -192,7 +192,8 @@ export default{
     }
 
     img {
-        height: 100px;   
+        height: 100px;  
+        margin-left: 10px; 
     }
 
     fieldset{
