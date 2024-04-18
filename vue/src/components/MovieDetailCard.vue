@@ -48,9 +48,9 @@
                 <h2>Genre: </h2>
                 <div class="genres">{{ genreText }}</div> 
             </div>
-            <div>
+            <div class="overview">
                <h2>Overview:</h2>
-                <div class="overview">{{ movie.overview }}</div>
+                <div >{{ movie.overview }}</div>
             </div>
             <div>
                 <button v-on:click="$router.push({ name: 'home' })">
@@ -268,13 +268,13 @@
     }
 
     button {
-    background-color: #012F6D;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
+        background-color: #012F6D;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
     }
 
 

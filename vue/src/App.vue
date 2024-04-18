@@ -27,7 +27,7 @@ h1 {
 
   h2 {
     font-size: medium;
-    height: 100px;
+    /* height: 100px; */
   }
 
 </style>
