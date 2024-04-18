@@ -176,6 +176,7 @@
 
     img {
         height: 100px;   
+        margin-left: 10px;
     }
 
     .update-container{

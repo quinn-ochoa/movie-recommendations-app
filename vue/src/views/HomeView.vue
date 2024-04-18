@@ -294,6 +294,11 @@ export default {
         gap: 10px
     }
 
+    .tmdb-container{
+      display: flex;
+      align-items: flex-end;
+    }
+
     h1 {
       font-size: medium;
       margin-right: 10px;
@@ -400,7 +405,7 @@ export default {
     }
 
     .tmdb-container > img{
-      height: 50px
+      height: 20px
     }
 
     /* img:hover {

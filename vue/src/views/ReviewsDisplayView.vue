@@ -13,28 +13,27 @@
    
     <div v-for="(review, key) in reviews" v-bind:key="key" id="review-container" >
         <!-- v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: review.id } }) -->
-        <!-- {{  key }} -->
-        <!-- <div v-if="!key.includes(null)" > -->
-            <div>
-                <div id="poster" v-if="!key.includes(null)">
-                    <img  
-                    :src ="'https://image.tmdb.org/t/p/original' + review.poster_path"
-                    v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: review.id } })"
-                    /> 
-                </div>
-            </div>
 
-            <div id="review-movie-title" v-if="!key.includes(null)">
-                <div>
-                <h2>{{ review.title }}</h2>  
-                </div>
-                <div>
-                <h2>Review: </h2>
-                <div>{{ (key.split(" ").slice(0, ((key.split(" ")).length-1))).toString().replace(/[!.,]/g, ' ') }}</div>
-                </div>
-                
+        <div>
+            <div id="poster" v-if="!key.includes(null)">
+                <img  
+                :src ="'https://image.tmdb.org/t/p/original' + review.poster_path"
+                v-on:click="$router.push({ name: 'MovieDetailView', params: { movieId: review.id } })"
+                /> 
             </div>
-        <!-- </div> -->
+        </div>
+
+        <div id="review-movie-title" v-if="!key.includes(null)">
+            <div>
+              <h2>{{ review.title }}</h2>  
+            </div>
+            <div>
+            <h2>Review: </h2>
+            <div>{{ (key.split(" ").slice(0, ((key.split(" ")).length-1))).toString().replace(/[!.,]/g, ' ') }}</div>
+            </div>
+            
+        </div>
+
 
     </div>
 

@@ -48,7 +48,12 @@ export default {
 
         </form>
     </div>
-    
+    <footer>
+        <div>
+        <i class="fa-brands fa-facebook social-icon" ></i>
+        <i class="fa-brands fa-instagram social-icon"></i>
+        </div>
+    </footer>
     <!-- {{ user }} -->
 </template>
 
@@ -183,5 +188,15 @@ export default {
         cursor: pointer;
         border-radius: 10px;
       }
+
+    h1 {
+    font-size: medium;
+    margin-right: 10px;
+        }
+
+    h2 {
+    font-size: medium;
+    height: 100px;
+     }
 
 </style>
