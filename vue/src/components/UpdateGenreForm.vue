@@ -12,7 +12,7 @@
 
     <div class="update-container">
         <div class="box"> 
-            <h3>Name: {{ userProfile.full_name }}</h3>
+            <h5>Name: {{ userProfile.full_name }}</h5>
             <p>Email: {{ userProfile.email }}</p>
             <p>Birthday: {{ userProfile.birthday.split('T')[0] }}</p>
             <div>Genres: </div>
@@ -198,6 +198,15 @@
     }
     h1{
         padding-left: 40px;
+        font-size: medium;
+        margin-right: 10px;
+    }
+    h2 {
+      font-size: medium;
+      height: 100px;
+    }
+    h5 {
+        font-size: medium;
     }
     button {
         background-color: #012f6d;

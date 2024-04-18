@@ -43,15 +43,15 @@
     object-fit: fill;
     /* height: 200px;
     width: auto; */
-    /* width: 152px;
-    height: 250px;
-    margin-bottom: 5px;
+    /* width: 152px; */
+    height: 280px;
+    /* margin-bottom: 5px;
     margin-top: -10px; */
   }
 
   .movie-card img{
     display: block;
-    height: 200px;
+    height: 250px;
     width: auto;
   
     object-fit: fill;

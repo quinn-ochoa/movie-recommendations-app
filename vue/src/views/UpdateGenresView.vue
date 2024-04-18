@@ -56,5 +56,12 @@
         gap: 10px
     }
 
+    .social-icon {
+      font-size: 20px;
+      height: 20px;
+      margin-top: 40px;
+      margin-right: 20px;
+    }
+
     
   </style>
