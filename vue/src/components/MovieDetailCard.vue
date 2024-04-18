@@ -250,6 +250,8 @@
 
     h2 {
         font-size: 15px;
+        /* border:solid; */
+        /* height: 10px; */
     }
 
     .overview {
