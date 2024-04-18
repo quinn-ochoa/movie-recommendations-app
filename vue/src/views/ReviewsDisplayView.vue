@@ -8,7 +8,9 @@
             <i class="fa-solid fa-circle-user"></i>&nbsp; Welcome {{ $store.state.user.username }} &nbsp;|&nbsp;
             <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
         </h1>
-    </header>
+</header>
+
+<section id="display-list-container">
     <h1>Your Reviews: </h1>
    
     <div v-for="(review, key) in reviews" v-bind:key="key" id="review-container">
@@ -24,18 +26,23 @@
         </div>
 
         <div id="review-movie-title" v-if="!key.includes(null)">
-            <div>
               <h2>{{ review.title }}</h2>  
-            </div>
-            <div>
-            <h2>Review: </h2>
+          <div>
+             <h2>Review: </h2>
             <div>{{ (key.split(" ").slice(0, ((key.split(" ")).length-1))).toString().replace(/[!.,]/g, ' ') }}</div>
-            </div>
+
+          </div>
+           
             
         </div>
 
 
     </div>
+
+    <button v-on:click="$router.push({ name: 'home' })">
+                    Back 
+    </button>
+</section>
 
         <!-- <p>{{created}}</p>
     <div class="review" v-for="review in reviews" v-bind:key="review">
@@ -138,19 +145,21 @@ export default {
 
 
 #review-container {
-    /* margin-top: 5%; */
+    
     margin-left: 10%;
-    margin-bottom: 3%;
     display: flex;
     align-items: top;
     gap: 20px;
-    /* padding-top: 10px; */
+      /* margin-bottom: 3%; */
+      /* padding-top: 10px; */
+
+
 }
 
 h1 {
-    font-size: medium;
+    font-size: 20px;
     height: 50px;
-    margin-left: 10%;
+    margin-left: 11%;
     padding-top: 10px;
 
 }
@@ -163,18 +172,48 @@ h1 {
 }
 
 #review-movie-title{
+    
     display: flex;
+    align-items: top;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 }
 
-#poster{
+/* #poster{
       display: block;
       height: 240px;
       width: auto;
-      /* width: 100%; */
+      width: 100%;
 
+    } */
+
+#poster > img {
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 15px;
+}
+   
+/* #display-list-container {
+        display: flex;
+        flex-direction: column;
+    } */
+
+
+button {
+    background-color: #012F6D;
+    color: white;
+    padding: 14px 20px;
+    margin-left: 11%;
+    margin-bottom: 3%;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
     }
+
+
 
 
 </style>
